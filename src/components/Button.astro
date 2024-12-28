@@ -1,0 +1,127 @@
+---
+import computed_colors from "../style/Colors.ts";
+interface Props {
+  borderWidth?: string;
+  cutout?: string;
+  href?: string;
+}
+
+const { borderWidth = "5px", cutout = "15px", href = "" } = Astro.props;
+
+const fillColor = `rgba(${computed_colors["color-primary-rgb"]}, 0.1)`;
+const sin45 = Math.sin(Math.PI / 4);
+---
+
+<a class="button hvr-shutter-in-vertical" href={href}>
+  <div class="border"></div>
+  <slot />
+</a>
+
+<style define:vars={{ fillColor, borderWidth, cutout, sin45 }}>
+  .button {
+    padding: 0.75em 2em;
+    color: var(--color-text);
+    cursor: pointer;
+    font-size: large;
+    text-decoration: none;
+    clip-path: polygon(
+      0 var(--cutout),
+      0 calc(100% - var(--cutout)),
+      var(--cutout) 100%,
+      calc(100% - var(--cutout)) 100%,
+      100% calc(100% - var(--cutout)),
+      100% var(--cutout),
+      calc(100% - var(--cutout)) 0,
+      var(--cutout) 0
+    );
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .border {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: var(--color-primary);
+    clip-path: polygon(
+      0 var(--cutout),
+      0 calc(100% - var(--cutout)),
+      var(--cutout) 100%,
+      calc(100% - var(--cutout)) 100%,
+      100% calc(100% - var(--cutout)),
+      100% var(--cutout),
+      calc(100% - var(--cutout)) 0,
+      var(--cutout) 0,
+      /* Carve out of the octagon */
+        calc(var(--cutout) + var(--borderWidth) * var(--sin45))
+        var(--borderWidth),
+      calc(100% - var(--cutout) - var(--borderWidth) * var(--sin45))
+        var(--borderWidth),
+      calc(100% - var(--borderWidth))
+        calc(var(--cutout) + var(--borderWidth) * var(--sin45)),
+      calc(100% - var(--borderWidth))
+        calc(100% - var(--cutout) - var(--borderWidth) * var(--sin45)),
+      calc(100% - var(--cutout) - var(--borderWidth) * var(--sin45))
+        calc(100% - var(--borderWidth)),
+      calc(var(--cutout) + var(--borderWidth) * var(--sin45))
+        calc(100% - var(--borderWidth)),
+      var(--borderWidth)
+        calc(100% - var(--cutout) - var(--borderWidth) * var(--sin45)),
+      var(--borderWidth) calc(var(--cutout) + var(--borderWidth) * var(--sin45)),
+      calc(var(--cutout) + var(--borderWidth) * var(--sin45)) var(--borderWidth),
+      var(--cutout) 0
+    );
+  }
+
+  /* Shutter In Vertical */
+  .hvr-shutter-in-vertical {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    position: relative;
+    background: var(--fillColor);
+    -webkit-transition-property: color;
+    transition-property: color;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+  }
+  .hvr-shutter-in-vertical:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--color-primary);
+    -webkit-transform: scaleY(0);
+    transform: scaleY(0);
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+  }
+
+  .hvr-shutter-in-vertical:after {
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+  }
+
+  .hvr-shutter-in-vertical:hover,
+  .hvr-shutter-in-vertical:focus,
+  .hvr-shutter-in-vertical:active {
+    color: var(--color-on-primary);
+  }
+  .hvr-shutter-in-vertical:hover:after,
+  .hvr-shutter-in-vertical:focus:after,
+  .hvr-shutter-in-vertical:active:after {
+    -webkit-transform: scaleY(1);
+    transform: scaleY(1);
+  }
+</style>

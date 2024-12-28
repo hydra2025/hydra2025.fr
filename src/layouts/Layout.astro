@@ -1,22 +1,56 @@
+---
+import Header from "../components/Header.astro";
+import "../style/TTMusselsStencilTrl.astro";
+
+import "@fontsource-variable/open-sans";
+
+import computed_colors from "../style/Colors.ts";
+import Background from "../components/Background.astro";
+---
+
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Hydra</title>
+  </head>
+  <body>
+    <Background />
+    <Header />
+    <slot />
+  </body>
 </html>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+<style define:vars={computed_colors}>
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+  }
+  :root {
+    --side-gap: 10rem;
+    --header-height: 10rem;
+
+    --font-family-title: "TT Mussels Stencil Trl", sans-serif;
+    --font-family-text: "Open Sans Variable", sans-serif;
+
+    color: var(--color-text);
+    background: var(--color-background);
+    font-family: var(--font-family-text);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-family-title);
+    font-weight: bolder;
+  }
 </style>

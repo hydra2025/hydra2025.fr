@@ -1,0 +1,65 @@
+---
+const balls = Array.from({ length: 5 }, () => ({
+  x: Math.random() * 120 - 20,
+  y: Math.random() * 120 - 20,
+  size: 600 + Math.random() * 200,
+  duration: 15 + Math.random() * 20,
+  delay: Math.random() * -20,
+}));
+---
+
+<div class="background">
+  {
+    balls.map((ball) => (
+      <div
+        class="ball"
+        style={`
+        width: ${ball.size}px;
+        height: ${ball.size}px;
+        left: ${ball.x}%;
+        top: ${ball.y}%;
+        animation-duration: ${ball.duration}s;
+        animation-delay: ${ball.delay}s;
+      `}
+      />
+    ))
+  }
+</div>
+
+<style>
+  .background {
+    position: fixed;
+    inset: 0;
+    background: var(--color-background);
+    overflow: hidden;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .ball {
+    z-index: -1;
+    position: absolute;
+    border-radius: 50%;
+    background: var(--color-primary);
+    opacity: 0.2;
+    filter: blur(100px);
+    animation: float infinite ease-in-out;
+    pointer-events: none;
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    25% {
+      transform: translate(200px, 25px) scale(1.2);
+    }
+    50% {
+      transform: translate(0, 150px) scale(1);
+    }
+    75% {
+      transform: translate(-200px, 75px) scale(0.8);
+    }
+  }
+</style>

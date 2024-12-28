@@ -1,0 +1,36 @@
+<style>
+  .hero {
+    display: flex;
+    min-height: calc(100vh - var(--header-height));
+    height: calc(100vh - var(--header-height));
+    width: 100%;
+  }
+
+  .column {
+    display: flex;
+    flex: 1;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media screen and (max-width: 768px) {
+    .hero {
+      flex-direction: column;
+      height: auto;
+      width: 100%;
+    }
+    .column {
+      padding: 0;
+    }
+  }
+</style>
+
+<section class="hero">
+  <div class="column">
+    <slot name="left" />
+  </div>
+  <div class="column">
+    <slot name="right" />
+  </div>
+</section>

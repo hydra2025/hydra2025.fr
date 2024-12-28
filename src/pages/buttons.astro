@@ -1,5 +1,6 @@
 ---
 import Button from "../components/Button.astro";
+import ButtonOcta from "../components/ButtonOcta.astro";
 import Hero2Col from "../components/Hero2Col.astro";
 import RotatingLogo from "../components/RotatingLogo.astro";
 import Layout from "../layouts/Layout.astro";
@@ -14,14 +15,9 @@ import Layout from "../layouts/Layout.astro";
       <h2 id="hero-text">
         Plonge dans l'aventure avec la mission <span id="accent">Hydra</span>
       </h2>
-      <div class="button-grid">
-        <Button>L'équipage</Button>
-        <Button>Immersion</Button>
-        <Button>La mission</Button>
-        <Button>Contact</Button>
-      </div>
+      <ButtonOcta>Hello</ButtonOcta>
     </div>
-    <RotatingLogo slot="right" />
+    <div slot="right"></div>
   </Hero2Col>
 </Layout>
 
@@ -37,6 +33,7 @@ import Layout from "../layouts/Layout.astro";
     font-size: 3em;
     text-align: left;
     margin: 0;
+    padding: 1em;
     font-family: var(--font-family-text);
   }
 
@@ -46,27 +43,5 @@ import Layout from "../layouts/Layout.astro";
     justify-content: center;
     align-items: center;
     height: 100%;
-    padding: 3em;
-  }
-
-  .button-grid {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1em 2em;
-    margin-top: 1em;
-  }
-
-  @media screen and (max-width: 768px) {
-    #hero-left {
-      padding: 1em;
-    }
-    #hero-text {
-      font-size: 2em;
-    }
-
-    .button-grid {
-      grid-template-columns: 1fr;
-    }
   }
 </style>
