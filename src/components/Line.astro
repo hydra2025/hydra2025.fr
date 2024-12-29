@@ -1,0 +1,24 @@
+---
+const {
+  color = "var(--color-primary)",
+  width = "100%",
+  height = "2px",
+  top = "0",
+  left = "0",
+  opacity = "1",
+} = Astro.props;
+---
+
+<style define:vars={{ color, width, height, top, left, opacity }}>
+  .line {
+    position: absolute;
+    background-color: var(--color, var(--color-primary));
+    width: var(--width, 100%);
+    height: var(--height, 2px);
+    top: var(--top, 0);
+    left: var(--left, 0);
+    opacity: var(--opacity, 1);
+  }
+</style>
+
+<div class="line"></div>
