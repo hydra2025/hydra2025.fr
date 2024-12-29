@@ -1,0 +1,133 @@
+---
+const { imgBouton, imgPopup, nom } = Astro.props;
+const id1 = Math.random().toString(36).slice(2, 11);
+const id2 = Math.random().toString(36).slice(2, 11);
+
+const attribut = {
+	Luca: ["Luca", "Fuster", "Président"],
+	Judith: ["Judith", "Lin", "VP TSP"],
+	TitouanVP: ["Titouan", "Gacougnolle", "VP FISA"],
+	Anaïs: ["Anaïs", "Delbecq", "VP IMTBS Bachelor"],
+	Habibata: ["Habibata", "Sangare", "VPR IMTBS PGE"],
+	NathanLS: ["Nathan", "Le Sausse", "Secrétaire"],
+	Jules: ["Jules", "Esnee", "Vice-Trésorier"],
+	Jean: ["Jean", "Vidal", "Trésorier"],
+	Alexandra: ["Alexandra", "Bert", "Respo Communication"],
+	Zeineb: ["Zeineb", "Benjemaa", "Pôle Communication"],
+	Racim: ["Racim", "Aissat", "Pôle Communication"],
+	Lucas: ["Lucas", "Dreano", "Pôle Communication"],
+	Raphaël: ["Raphaël", "Lefèvre", "Respo Séculogie"],
+	Jérôme: ["Jérôme", "Lin", "Pôle Séculogie"],
+	AlexisD: ["Alexis", "Dauphin", "Pôle Séculogie"],
+	Gustave: ["Gustave", "Beauvallet", "Respo Évènement"],
+	CharlotteK: ["Charlotte", "Kaladjian", "Pôle Évènement"],
+	Ysée: ["Ysée", "Parenti", "Pôle Évènement"],
+	Ghada: ["Ghada", "Sarhrouchni", "Pôle Évènement"],
+	Emma: ["Emma", "Weiss", "Pôle Évènement"],
+	Ylan: ["Ylan", "Mimoun", "Pougnes TSP"],
+	Amélie: ["Amélie", "Thai", "Pougnes IMTBS"],
+	Slavik: ["Slavik", "Zhyhota-Locquin", "Respo Soirée"],
+	Hugo: ["Hugo", "Kennedy", "Pôle Soirée"],
+	CharlotteV: ["Charlotte", "Vlieghe", "Pôle Soirée"],
+	Clément: ["Clément", "Bondaz", "Pôle Soirée"],
+	Lena: ["Lena", "Boiton Lendenko", "Respo RI"],
+	LéaB: ["Léa", "Beaudimont", "Respo RE"],
+	Alexandre: ["Alexandre", "Guechtouli", "Pôle RE"],
+	TitouanPrev: ["Titouan", "Gacougnolle", "Respo Prévention"],
+	Yannick: ["Yannick", "Zheng", "Pôle Prévention"],
+	AlexisR: ["Alexis", "Rossfelder", "Respo Numérique"],
+	NathanB: ["Nathan", "Beauchoux", "Pôle Numérique"],
+	Paul: ["Paul", "Lardet", "Respo DD"],
+	LéaD: ["Léa", "Dai", "Respo Ritz"],
+	Nihel: ["Nihel", "Tadjerouni", "Pôle Ritz"],
+	test: ["prénomTest", "nomTest", "poleTest"],
+};
+---
+
+<div class="overlay" id="contenu"></div>
+<div class="bouton" id={id1}>
+	<div class="imageBouton">
+		<img src={attribut[nom][3]} width="75%" />
+	</div>
+	<br /><b>{attribut[nom][0]}</b>
+	<br /><b class="caps">{attribut[nom][1]}</b>
+	<br />{attribut[nom][2]}
+</div>
+
+<script define:vars={{ attribut, nom, imgPopup, id1, id2 }}>
+	const container = document.querySelector(".overlay");
+	const bouton = document.getElementById(id1);
+	let pop = 0;
+	let onImage = 0;
+	let image = document.createElement("img");
+	image.src = attribut[nom][3];
+	image.alt = "Photo manquante";
+	image.style.width = "500px";
+	image.style.zIndex = "2000";
+	bouton.onclick = () => {
+		if (pop == 0) {
+			pop = 1;
+			container.style.height = "100%";
+			container.style.width = "100%";
+			container.appendChild(image);
+		}
+		image.onmouseover = () => {
+			onImage = 1;
+		};
+		image.onmouseleave = () => {
+			onImage = 0;
+		};
+		container.onclick = () => {
+			if (pop == 1) {
+				if (onImage == 0) {
+					pop = 0;
+					container.removeChild(image);
+					container.style.height = "0%";
+					container.style.width = "0%";
+				}
+			}
+		};
+	};
+	bouton.onmouseover = () => {
+		bouton.style.backgroundColor = "rgb(var(--accent-hydra-light))";
+	};
+	bouton.onmouseleave = () => {
+		bouton.style.backgroundColor = "rgb(var(--orange-hydra))";
+	};
+</script>
+
+<style>
+	.overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 1000;
+		backdrop-filter: blur(10px);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.bouton {
+		padding: 1rem;
+		width: 300px;
+		text-align: left;
+		background-color: rgb(var(--orange-hydra));
+		border: solid;
+		border-color: rgb(var(--grey-light));
+		font-family: OpenSans-Bold;
+	}
+	.imageBouton {
+		text-align: center;
+	}
+	.caps {
+		text-transform: uppercase;
+	}
+	@font-face {
+		font-family: "TT Mussels Stencil Trial ExtraBold";
+		src: url("/fonts/TT Mussels Stencil Trial ExtraBold.otf");
+	}
+	@font-face {
+		font-family: "OpenSans-Bold";
+		src: url("/fonts/OpenSans-Bold.ttf");
+	}
+</style>

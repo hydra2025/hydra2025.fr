@@ -1,0 +1,62 @@
+---
+import Popup from "../components/Popup.astro";
+interface Props {
+    namePole: string;
+    membres: Array<string>;
+}
+const { namePole, membres } = Astro.props;
+---
+
+<div class="pole">
+    <br /><br /><br />
+    <p>{namePole}</p><br />
+    <hr />
+    <div class="organigramme-grid">
+        {
+            membres.map((membre) => (
+                <Popup
+                    imgBouton="/creeper.jpeg"
+                    imgPopup="/creeper.jpeg"
+                    nom={membre}
+                />
+            ))
+        }
+    </div>
+</div>
+<br />
+
+<style>
+    .pole {
+        justify-content: center;
+        width: fit-content;
+        margin: auto;
+    }
+    .organigramme-grid {
+        display: flex;
+        margin: auto;
+        flex-wrap: wrap;
+        gap: 4rem;
+        width: fit-content;
+        justify-content: center;
+    }
+    hr {
+        color: rgb(var(--orange-hydra));
+    }
+    p {
+        text-align: center;
+        font-family: "OpenSans-Bold";
+        font-size: 40px;
+        width: fit-content;
+        margin: auto;
+    }
+    .truc {
+    }
+    @font-face {
+        font-family: "OpenSans-Bold";
+        src: url("/fonts/OpenSans-Bold.ttf");
+    }
+    @font-face {
+        font-family: "TT Mussels Stencil Trial ExtraBold";
+        src: url("/fonts/TT Mussels Stencil Trial ExtraBold.otf");
+    }
+</style>
