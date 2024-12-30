@@ -2,7 +2,7 @@ import sys
 import math
 
 TEMPLATE = """clip-path: polygon({});"""
-SIN_45 = "var(--sin45)"
+SIN_45 = str(math.sin(math.radians(45)))
 
 
 line_width = sys.argv[2] if len(sys.argv) > 2 else "10px"
@@ -137,6 +137,7 @@ for point in points:
 points = points_2
 
 points_final = []
+points_outer = []
 
 
 points.append(points[0])
@@ -144,8 +145,10 @@ points.append(points[0])
 for point in points:
     point.apply_cutout()
     points_final.append(point.apply_cutout())
+    points_outer.append(point.apply_cutout())
 points.reverse()
 for point in points:
     points_final.append(point.apply_line_width().apply_cutout())
 
 print(TEMPLATE.format(",".join(str(point) for point in points_final)))
+print(TEMPLATE.format(",".join(str(point) for point in points_outer)))

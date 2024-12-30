@@ -1,113 +1,54 @@
 ---
-import LayoutHydra from "../layouts/LayoutHydra.astro";
-import Popup from "../components/Popup.astro";
-import HydraLogo from "../components/HydraLogo.astro";
-import HydraTitre from "../components/HydraTitre.astro";
-import HydraTitreBlanc from "../components/HydraTitreBlanc.astro";
 import Pole from "../components/Pole.astro";
+
+import Layout from "../layouts/Layout.astro";
+import { poles } from "../organigramme";
 ---
 
-<LayoutHydra title="Découvrez notre équipage">
-	<main>
-		<div class="header">
-			<HydraLogo taille="150" />
-			<HydraTitreBlanc />
-		</div>
-		<br /><br /><br />
-		<h1>Découvrez notre <hydraTxt>équipage</hydraTxt></h1>
-		<div class="organigramme">
-			<Pole namePole="Présidence" membres={["Luca"]} />
-			<Pole
-				namePole="Vice-Présidence"
-				membres={["Judith", "Anaïs", "TitouanVP", "Habibata"]}
-			/>
-			<Pole namePole="Trésorerie" membres={["Jean", "Jules"]} />
-			<Pole namePole="Secrétaire" membres={["NathanLS"]} />
-			<Pole
-				namePole="Communication"
-				membres={["Alexandra", "Zeineb", "Racim", "Lucas"]}
-			/>
-			<Pole
-				namePole="Évènement"
-				membres={["Gustave", "CharlotteK", "Ysée", "Emma", "Ghada"]}
-			/>
-			<Pole
-				namePole="Soirée"
-				membres={["Slavik", "CharlotteV", "Hugo", "Clément"]}
-			/>
-			<Pole
-				namePole="Sécurité-Logistique"
-				membres={["Raphaël", "AlexisD", "Jérôme"]}
-			/>
-			<Pole namePole="Numérique" membres={["AlexisR", "NathanB"]} />
-			<Pole
-				namePole="Relations Entreprises"
-				membres={["LéaB", "Alexandre"]}
-			/>
-			<Pole namePole="Ritz" membres={["LéaD", "Nihel"]} />
-			<Pole namePole="Prévention" membres={["TitouanPrev", "Yannick"]} />
-			<Pole namePole="Développement Durable" membres={["Paul"]} />
-			<Pole namePole="Relations Internes" membres={["Lena"]} />
-			<Pole namePole="T&MA (Alumnis)" membres={["test"]} />
-		</div>
-	</main>
-</LayoutHydra>
+<Layout title="Découvrez notre équipage">
+  <h1>Découvrez notre <span class="accent">équipage</span></h1>
+  <div class="organigramme">
+    {poles.map((pole) => <Pole pole={pole} />)}
+  </div>
+</Layout>
 
 <style>
-	main {
-		padding: 1rem;
-		max-width: calc(100% - 2rem);
-		color: white;
-		font-size: 20px;
-		line-height: 1.6;
-	}
-	.organigramme {
-		justify-content: center;
-		display: flex;
-		flex-wrap: wrap;
-	}
+  main {
+    padding: 1rem;
+    max-width: calc(100% - 2rem);
+    font-size: 20px;
+    line-height: 1.6;
+  }
+  .organigramme {
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+  }
 
-	h1 {
-		font-family: "OpenSans-Bold";
-		font-size: 3rem;
-		font-weight: 700;
-		line-height: 1;
-		text-align: center;
-		margin-bottom: 1em;
-	}
-	hydraTxt {
-		color: rgb(var(--orange-hydra));
-		font-family: "TT Mussels Stencil Trial ExtraBold";
-	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
+  h1 {
+    font-family: var(--font-family-text);
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    margin-bottom: 1em;
+  }
+  .accent {
+    color: var(--color-primary);
+    font-family: var(--font-family-title);
+  }
 
-	strong {
-		color: rgb(var(--orange-hydra));
-	}
-	.organigramme-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 2rem;
-		padding: 0;
-	}
-	a {
-		text-decoration: none;
-	}
-	@font-face {
-		font-family: "TT Mussels Stencil Trial ExtraBold";
-		src: url("/fonts/TT Mussels Stencil Trial ExtraBold.otf");
-	}
-	@font-face {
-		font-family: "OpenSans-Bold";
-		src: url("/fonts/OpenSans-Bold.ttf");
-	}
-	.header {
-		height: 150px;
-	}
+  strong {
+    color: var(--color-primary);
+  }
+  .organigramme-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+    column-gap: 2rem;
+    padding: 0;
+  }
+  a {
+    text-decoration: none;
+  }
 </style>

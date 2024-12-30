@@ -1,8 +1,8 @@
 const colors = {
   primary: [255, 102, 0],
-  "on-primary": [0, 0, 0],
+  "on-primary": [255, 255, 255],
   secondary: [0, 102, 102],
-  "on-secondary": [0, 0, 0],
+  "on-secondary": [255, 255, 255],
   text: [255, 255, 255],
   background: [0, 0, 0],
 };

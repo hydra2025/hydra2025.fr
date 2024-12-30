@@ -1,62 +1,43 @@
 ---
 import Popup from "../components/Popup.astro";
+import type { Pole } from "../organigramme";
+import Separator from "./boxes/Separator.astro";
 interface Props {
-    namePole: string;
-    membres: Array<string>;
+  pole: Pole;
 }
-const { namePole, membres } = Astro.props;
+const { pole } = Astro.props;
 ---
 
-<div class="pole">
-    <br /><br /><br />
-    <p>{namePole}</p><br />
-    <hr />
-    <div class="organigramme-grid">
-        {
-            membres.map((membre) => (
-                <Popup
-                    imgBouton="/creeper.jpeg"
-                    imgPopup="/creeper.jpeg"
-                    nom={membre}
-                />
-            ))
-        }
-    </div>
+<div class:list={["pole", { full_width: pole.full_width }]}>
+  <h3>{pole.name}</h3>
+  <Separator />
+  <div class="organigramme-grid">
+    {pole.members.map((membre) => <Popup membre={membre} />)}
+  </div>
 </div>
-<br />
 
 <style>
-    .pole {
-        justify-content: center;
-        width: fit-content;
-        margin: auto;
-    }
-    .organigramme-grid {
-        display: flex;
-        margin: auto;
-        flex-wrap: wrap;
-        gap: 4rem;
-        width: fit-content;
-        justify-content: center;
-    }
-    hr {
-        color: rgb(var(--orange-hydra));
-    }
-    p {
-        text-align: center;
-        font-family: "OpenSans-Bold";
-        font-size: 40px;
-        width: fit-content;
-        margin: auto;
-    }
-    .truc {
-    }
-    @font-face {
-        font-family: "OpenSans-Bold";
-        src: url("/fonts/OpenSans-Bold.ttf");
-    }
-    @font-face {
-        font-family: "TT Mussels Stencil Trial ExtraBold";
-        src: url("/fonts/TT Mussels Stencil Trial ExtraBold.otf");
-    }
+  .pole {
+    justify-content: center;
+    width: fit-content;
+  }
+  .organigramme-grid {
+    display: flex;
+    margin: auto;
+    flex-wrap: wrap;
+    gap: 2rem;
+    width: fit-content;
+    justify-content: center;
+  }
+
+  .full_width {
+    width: 100%;
+  }
+
+  h3 {
+    text-align: center;
+    font-family: var(--font-family-text);
+    width: fit-content;
+    margin: 1em auto;
+  }
 </style>
