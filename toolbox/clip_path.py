@@ -22,7 +22,7 @@ class Point:
         self.flat_y = flat_y
 
     @staticmethod
-    def from_line(line):
+    def from_line(line) -> tuple["Point"]:
         x, y, d, c = line.strip().split(",")
         left = "l" in d
         top = "t" in d
@@ -93,9 +93,6 @@ class Point:
         new_point.cutout_y = None
         return new_point
 
-    def __str__(self):
-        return f"{self.x} {self.y}"
-
     def create_cutout(self, cutout: str):
         """Returns 2 new points that are a chamfered at 45° and shifted by cutout. The direction depends on top and left."""
         new_point1 = self.copy()
@@ -115,6 +112,12 @@ class Point:
             new_point2.cutout_y = "-" + cutout
         return new_point1, new_point2
 
+    def __str__(self):
+        return f"Point({self.x} {self.y})"
+
+    def to_css(self):
+        return f"{self.x} {self.y}"
+
 
 def calc(v1, operator, v2):
     # if v1.startswith("calc("):
@@ -131,24 +134,27 @@ with open(sys.argv[1], "r") as f:
     points = [Point.from_line(line) for line in f.readlines() if line.strip()]
 
 # flatten points
-points_2 = []
-for point in points:
-    points_2.extend(point)
+points_2: list[Point] = []
+for point_tuple in points:
+    points_2.extend(point_tuple)
 points = points_2
 
-points_final = []
-points_outer = []
+points_final: list[Point] = []
+points_outer: list[Point] = []
 
 
 points.append(points[0])
 
 for point in points:
-    point.apply_cutout()
     points_final.append(point.apply_cutout())
+    print(point.apply_cutout())
     points_outer.append(point.apply_cutout())
+
 points.reverse()
 for point in points:
     points_final.append(point.apply_line_width().apply_cutout())
 
-print(TEMPLATE.format(",".join(str(point) for point in points_final)))
-print(TEMPLATE.format(",".join(str(point) for point in points_outer)))
+print("/* Border */")
+print(TEMPLATE.format(",".join(point.to_css() for point in points_final)))
+print("/* Outer */")
+print(TEMPLATE.format(",".join(point.to_css() for point in points_outer)))

@@ -19,7 +19,10 @@ const { title } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- IE -->
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <!-- other browsers -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>Hydra - {title}</title>
   </head>
@@ -58,5 +61,10 @@ const { title } = Astro.props;
   h6 {
     font-family: var(--font-family-title);
     font-weight: bolder;
+  }
+
+  ::selection {
+    background: var(--color-primary);
+    color: var(--color-on-primary);
   }
 </style>

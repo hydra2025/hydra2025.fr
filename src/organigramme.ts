@@ -4,6 +4,8 @@ type Member = {
     role: string;
     img?: string;
     respo: boolean;
+    linkedin?: string;
+    facebook?: string;
 };
 
 type Pole = {
@@ -22,6 +24,7 @@ const poles: Pole[] = [
                 last_name: "Fuster",
                 role: "Président",
                 respo: true,
+                linkedin: "https://www.linkedin.com/in/luca-fuster-02a1a2246/",
             },
         ],
     },
@@ -29,6 +32,12 @@ const poles: Pole[] = [
         name: "Vice-Présidence",
         full_width: true,
         members: [
+            {
+                first_name: "Amélie",
+                last_name: "Thai",
+                role: "VPR IMTBS PGE",
+                respo: false,
+            },
             {
                 first_name: "Judith",
                 last_name: "Lin",
@@ -44,14 +53,8 @@ const poles: Pole[] = [
             {
                 first_name: "Titouan",
                 last_name: "Gacougnolle",
-                role: "VP FISA",
-                respo: true,
-            },
-            {
-                first_name: "Habibata",
-                last_name: "Sangare",
-                role: "VPR IMTBS PGE",
-                respo: true,
+                role: "VPR FISA",
+                respo: false,
             },
         ],
     },
@@ -60,16 +63,16 @@ const poles: Pole[] = [
         full_width: false,
         members: [
             {
-                first_name: "Jean",
-                last_name: "Vidal",
-                role: "Trésorier",
-                respo: true,
-            },
-            {
                 first_name: "Jules",
                 last_name: "Esnee",
                 role: "Vice-Trésorier",
                 respo: false,
+            },
+            {
+                first_name: "Jean",
+                last_name: "Vidal",
+                role: "Trésorier",
+                respo: true,
             },
         ],
     },
@@ -81,7 +84,7 @@ const poles: Pole[] = [
                 first_name: "Nathan",
                 last_name: "Le Sausse",
                 role: "Secrétaire",
-                respo: false,
+                respo: true,
             },
         ],
     },
@@ -90,16 +93,16 @@ const poles: Pole[] = [
         full_width: true,
         members: [
             {
-                first_name: "Alexandra",
-                last_name: "Bert",
-                role: "Respo Communication",
-                respo: true,
-            },
-            {
                 first_name: "Zeineb",
                 last_name: "Benjemaa",
                 role: "Pôle Communication",
                 respo: false,
+            },
+            {
+                first_name: "Alexandra",
+                last_name: "Bert",
+                role: "Respo Communication",
+                respo: true,
             },
             {
                 first_name: "Racim",
@@ -120,12 +123,6 @@ const poles: Pole[] = [
         full_width: true,
         members: [
             {
-                first_name: "Gustave",
-                last_name: "Beauvallet",
-                role: "Respo Évènement",
-                respo: true,
-            },
-            {
                 first_name: "Charlotte",
                 last_name: "Kaladjian",
                 role: "Pôle Évènement",
@@ -136,6 +133,12 @@ const poles: Pole[] = [
                 last_name: "Parenti",
                 role: "Pôle Évènement",
                 respo: false,
+            },
+            {
+                first_name: "Gustave",
+                last_name: "Beauvallet",
+                role: "Respo Évènement",
+                respo: true,
             },
             {
                 first_name: "Emma",
@@ -156,12 +159,6 @@ const poles: Pole[] = [
         full_width: true,
         members: [
             {
-                first_name: "Slavik",
-                last_name: "Zhyhota-Locquin",
-                role: "Respo Soirée",
-                respo: true,
-            },
-            {
                 first_name: "Charlotte",
                 last_name: "Vlieghe",
                 role: "Pôle Soirée",
@@ -172,6 +169,12 @@ const poles: Pole[] = [
                 last_name: "Kennedy",
                 role: "Pôle Soirée",
                 respo: false,
+            },
+            {
+                first_name: "Slavik",
+                last_name: "Zhyhota-Locquin",
+                role: "Respo Soirée",
+                respo: true,
             },
             {
                 first_name: "Clément",
@@ -186,16 +189,16 @@ const poles: Pole[] = [
         full_width: true,
         members: [
             {
-                first_name: "Raphaël",
-                last_name: "Lefèvre",
-                role: "Respo Séculogie",
-                respo: true,
-            },
-            {
                 first_name: "Alexis",
                 last_name: "Dauphin",
                 role: "Pôle Séculogie",
                 respo: false,
+            },
+            {
+                first_name: "Raphaël",
+                last_name: "Lefèvre",
+                role: "Respo Séculogie",
+                respo: true,
             },
             {
                 first_name: "Jérôme",
@@ -210,16 +213,16 @@ const poles: Pole[] = [
         full_width: false,
         members: [
             {
-                first_name: "Alexis",
-                last_name: "Rossfelder",
-                role: "Respo Numérique",
-                respo: true,
-            },
-            {
                 first_name: "Nathan",
                 last_name: "Beauchoux",
                 role: "Pôle Numérique",
                 respo: false,
+            },
+            {
+                first_name: "Alexis",
+                last_name: "Rossfelder",
+                role: "Respo Numérique",
+                respo: true,
             },
         ],
     },
