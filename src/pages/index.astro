@@ -3,19 +3,16 @@ import Button from "../components/Button.astro";
 import Hero2Col from "../components/Hero2Col.astro";
 import RotatingLogo from "../components/RotatingLogo.astro";
 import Layout from "../layouts/Layout.astro";
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout>
+<Layout title="Liste BDE TMSP 2025">
   <Hero2Col>
     <div slot="left" id="hero-left">
       <h2 id="hero-text">
         Plonge dans l'aventure avec la mission <span id="accent">Hydra</span>
       </h2>
       <div class="button-grid">
-        <Button>L'équipage</Button>
+        <Button href="/organigramme">L'équipage</Button>
         <Button>Immersion</Button>
         <Button>La mission</Button>
         <Button>Contact</Button>

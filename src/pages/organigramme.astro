@@ -1,0 +1,54 @@
+---
+import Pole from "../components/Pole.astro";
+
+import Layout from "../layouts/Layout.astro";
+import { poles } from "../organigramme";
+---
+
+<Layout title="Découvrez notre équipage">
+  <h1>Découvrez notre <span class="accent">équipage</span></h1>
+  <div class="organigramme">
+    {poles.map((pole) => <Pole pole={pole} />)}
+  </div>
+</Layout>
+
+<style>
+  main {
+    padding: 1rem;
+    max-width: calc(100% - 2rem);
+    font-size: 20px;
+    line-height: 1.6;
+  }
+  .organigramme {
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+  }
+
+  h1 {
+    font-family: var(--font-family-text);
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    margin-bottom: 1em;
+  }
+  .accent {
+    color: var(--color-primary);
+    font-family: var(--font-family-title);
+  }
+
+  strong {
+    color: var(--color-primary);
+  }
+  .organigramme-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+    column-gap: 2rem;
+    padding: 0;
+  }
+  a {
+    text-decoration: none;
+  }
+</style>

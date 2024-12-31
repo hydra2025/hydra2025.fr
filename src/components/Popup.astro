@@ -1,0 +1,253 @@
+---
+import type { Member } from "../organigramme";
+import linkedin from "../assets/socials/linkedin.svg?raw";
+import facebook from "../assets/socials/facebook.svg?raw";
+import Image from "astro/components/Image.astro";
+
+interface Props {
+  membre: Member;
+}
+
+const { membre } = Astro.props;
+
+const id1 = Math.random().toString(36).slice(2, 11);
+const id2 = Math.random().toString(36).slice(2, 11);
+---
+
+<div class="overlay" id="contenu"></div>
+<div class="bouton" id={id1}>
+  <div class:list={["border", { respo: membre.respo }]}></div>
+  <div class="imageBouton">
+    {
+      membre.img ? (
+        <img class="picture" src={membre.img} width="75%" />
+      ) : (
+        <div class="placeholder" />
+      )
+    }
+  </div>
+  <div class="bottom">
+    <div class="info">
+      <div class="first-name">{membre.first_name}</div>
+      <div class="last-name">{membre.last_name}</div>
+      <div class="role">{membre.role}</div>
+    </div>
+    <div class="socials">
+      {
+        membre.linkedin && (
+          <a
+            href={membre.linkedin}
+            title={`Page LinkedIn de ${membre.first_name}`}
+            class="social"
+            target="_blank"
+          >
+            <Fragment set:html={linkedin} />
+          </a>
+        )
+      }
+      {
+        membre.facebook && (
+          <a
+            href={membre.facebook}
+            title={`Profil Facebook de ${membre.first_name}`}
+            class="social"
+            target="_blank"
+          >
+            <Fragment set:html={facebook} />
+          </a>
+        )
+      }
+    </div>
+  </div>
+
+  <script define:vars={{ membre, id1, id2 }}>
+    const container = document.querySelector(".overlay");
+    const bouton = document.getElementById(id1);
+    let pop = 0;
+    let onImage = 0;
+    let image = document.createElement("img");
+    image.src = membre.img;
+    image.alt = "Photo manquante";
+    image.style.width = "500px";
+    image.style.zIndex = "2000";
+    bouton.onclick = () => {
+      if (pop == 0) {
+        pop = 1;
+        container.style.height = "100%";
+        container.style.width = "100%";
+        container.appendChild(image);
+      }
+      image.onmouseover = () => {
+        onImage = 1;
+      };
+      image.onmouseleave = () => {
+        onImage = 0;
+      };
+      container.onclick = () => {
+        if (pop == 1) {
+          if (onImage == 0) {
+            pop = 0;
+            container.removeChild(image);
+            container.style.height = "0%";
+            container.style.width = "0%";
+          }
+        }
+      };
+    };
+  </script>
+
+  <style>
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .bouton {
+      padding: 2.5rem 2.5rem 2rem 2.5rem;
+      box-sizing: border-box;
+      text-align: left;
+      background-color: rgba(var(--color-primary-rgb), 0.1);
+      backdrop-filter: blur(10px);
+      position: relative;
+      clip-path: polygon(
+        50px 0%,
+        0% 50px,
+        0% calc(100% - 20px),
+        20px 100%,
+        calc(80% - 10px) 100%,
+        80% calc(100% - 10px),
+        calc(100% - 30px) calc(100% - 10px),
+        100% calc(calc(100% - 10px) - 30px),
+        100% 0%,
+        50px 0%
+      );
+      transition: background-color 0.3s ease;
+    }
+
+    .picture,
+    .placeholder {
+      width: 12em;
+      height: 12em;
+      margin-bottom: 1rem;
+      background-color: var(--color-secondary);
+      transition:
+        transform 0.3s ease,
+        border-radius 0.3s ease;
+      clip-path: polygon(
+        25px 0%,
+        0% 25px,
+        0% 100%,
+        100% 100%,
+        100% 0%,
+        50px 0%
+      );
+    }
+
+    .picture {
+      object-fit: cover;
+    }
+
+    .bouton:hover .picture,
+    .bouton:hover .placeholder {
+      border-radius: 5px;
+      cursor: pointer;
+      transform: scale(1.05);
+    }
+
+    .border {
+      position: absolute;
+      inset: 0;
+      opacity: 0.3;
+      background-color: var(--color-primary);
+      z-index: 0;
+      clip-path: polygon(
+        50px 0%,
+        0% 50px,
+        0% calc(100% - 20px),
+        20px 100%,
+        calc(80% - 10px) 100%,
+        80% calc(100% - 10px),
+        calc(100% - 30px) calc(100% - 10px),
+        100% calc(calc(100% - 10px) - 30px),
+        100% 0%,
+        50px 0%,
+        calc(3px + calc(50px - calc(3px * 0.7071067811865475))) 3px,
+        calc(100% - 3px) 3px,
+        calc(100% - 3px)
+          calc(
+            calc(calc(100% - 10px) - 3px) -
+              calc(30px - calc(3px * 0.7071067811865475))
+          ),
+        calc(calc(100% - 3px) - calc(30px - calc(3px * 0.7071067811865475)))
+          calc(calc(100% - 10px) - 3px),
+        calc(calc(80% - 3px) + calc(3px * 0.7071067811865475))
+          calc(calc(100% - 3px) - 10px),
+        calc(calc(80% - 3px) - calc(10px - calc(3px * 0.7071067811865475)))
+          calc(100% - 3px),
+        calc(3px + calc(20px - calc(3px * 0.7071067811865475))) calc(100% - 3px),
+        3px calc(calc(100% - 3px) - calc(20px - calc(3px * 0.7071067811865475))),
+        3px calc(3px + calc(50px - calc(3px * 0.7071067811865475))),
+        calc(3px + calc(50px - calc(3px * 0.7071067811865475))) 3px
+      );
+
+      transition: opacity 0.3s ease;
+    }
+
+    .border.respo {
+      opacity: 0.9;
+    }
+
+    .bouton:hover .border {
+      opacity: 1;
+    }
+    .bouton:hover {
+      cursor: pointer;
+      background-color: rgba(var(--color-primary-rgb), 0.2);
+    }
+
+    .imageBouton {
+      text-align: center;
+    }
+
+    .bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-top: 1rem;
+      height: fit-content;
+    }
+    .socials {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      gap: 0.25em;
+    }
+    .social {
+      width: 1.5em;
+      height: 1.5em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+      color: var(--color-primary);
+    }
+
+    .social:hover {
+      transform: scale(1.2);
+    }
+    .last-name {
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+    .role {
+      opacity: 0.7;
+      font-size: 0.9rem;
+    }
+  </style>
+</div>

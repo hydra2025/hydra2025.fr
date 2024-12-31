@@ -1,0 +1,39 @@
+<div class="separator">
+  <div></div>
+  <div></div>
+</div>
+
+<style>
+  .separator {
+    border: none;
+    border-top: 2px solid var(--color-primary);
+    position: relative;
+    width: min(24em, calc(100% - 4em));
+    margin: 1em auto;
+    box-sizing: content-box;
+
+    --dot-size: 8px;
+  }
+
+  .separator > div {
+    content: "";
+    display: block;
+    height: var(--dot-size);
+    width: var(--dot-size);
+    background-color: var(--color-primary);
+    position: absolute;
+    top: calc(-1px - var(--dot-size) / 2);
+    border-radius: 50%;
+    z-index: 1;
+  }
+
+  .separator > div:first-child {
+    left: 0;
+    transform: translateX(-50%);
+  }
+
+  .separator > div:last-child {
+    right: 0;
+    transform: translateX(50%);
+  }
+</style>
