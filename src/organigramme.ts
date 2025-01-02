@@ -281,7 +281,7 @@ const poles: Pole[] = [
         members: [
             {
                 first_name: "Léa",
-                last_name: "Beaudimont",
+                last_name: "Baudimont",
                 role: "Respo RE",
                 respo: true,
                 facebook: "https://www.facebook.com/profile.php?id=61565433566773",
@@ -354,6 +354,28 @@ const poles: Pole[] = [
                 linkedin: "https://www.linkedin.com/in/paullardet/"
             },
         ],
+    },
+    {
+        name: "Pougnes",
+        full_width: false,
+        members: [
+            {
+                first_name: "Ylan",
+                last_name: "Mimoun",
+                role: "Respo Pougnes TSP",
+                respo: true,
+                facebook: "https://www.facebook.com/profile.php?id=61564857758611",
+                linkedin: "https://www.linkedin.com/in/ylan-mimoun/",
+            },
+            {
+                first_name: "Amélie",
+                last_name: "Thai",
+                role: "Pougnes IMTBS",
+                respo: false,
+                facebook: "https://www.facebook.com/profile.php?id=61565049044086",
+                linkedin: "https://www.linkedin.com/in/am%C3%A9lie-t-830896206/"
+            },
+        ]
     },
     {
         name: "Relations Internes",
