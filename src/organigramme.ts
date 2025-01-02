@@ -84,6 +84,7 @@ const poles: Pole[] = [
                 last_name: "Vidal",
                 role: "Trésorier",
                 respo: true,
+                linkedin: "https://www.linkedin.com/in/jean-vidal-159167334/",
                 facebook: "https://www.facebook.com/profile.php?id=61565198602532"
             },
         ],
