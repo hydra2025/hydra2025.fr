@@ -1,7 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import submarine from "../assets/logo-512.png";
-import Image from "astro/components/Image.astro";
 import Button from "../components/Button.astro";
 ---
 
@@ -208,6 +206,7 @@ import Button from "../components/Button.astro";
     async function subscribeToPushNotifications() {
       try {
         console.log("Subscribing the user");
+        notifyButton.style.display = "none";
         const registration = await navigator.serviceWorker.ready;
         const subscription = await registration.pushManager.subscribe({
           userVisibleOnly: true,
@@ -220,15 +219,16 @@ import Button from "../components/Button.astro";
           subscribe: true,
           ...subscription.toJSON(),
         });
-        notifyButton.style.display = "none";
         unsubscribeButton.style.display = "block";
       } catch (err) {
         console.log("Failed to subscribe the user: ", err);
+        notifyButton.style.display = "block";
       }
     }
 
     async function unsubscribeFromPushNotifications() {
       try {
+        unsubscribeButton.style.display = "none";
         const registration = await navigator.serviceWorker.ready;
         const subscription = await registration.pushManager.getSubscription();
         if (subscription) {
@@ -239,10 +239,10 @@ import Button from "../components/Button.astro";
           await subscription.unsubscribe();
           console.log("User is unsubscribed");
           notifyButton.style.display = "block";
-          unsubscribeButton.style.display = "none";
         }
       } catch (err) {
         console.log("Error unsubscribing", err);
+        unsubscribeButton.style.display = "block";
       }
     }
 
