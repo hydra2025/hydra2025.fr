@@ -38,7 +38,8 @@ const poles: Pole[] = [
                 last_name: "Thai",
                 role: "VPR IMTBS PGE",
                 respo: false,
-                facebook: "https://www.facebook.com/profile.php?id=61565049044086"
+                facebook: "https://www.facebook.com/profile.php?id=61565049044086",
+                linkedin: "https://www.linkedin.com/in/am%C3%A9lie-t-830896206/"
             },
             {
                 first_name: "Judith",
