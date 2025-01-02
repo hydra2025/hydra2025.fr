@@ -5,7 +5,7 @@ import "../style/TTMusselsStencilTrl.astro";
 import "@fontsource-variable/open-sans";
 
 import computed_colors from "../style/Colors.ts";
-import Background from "../components/Background.astro";
+import Background from "../layouts/Background.astro";
 
 interface Props {
   title: string;
@@ -20,10 +20,41 @@ const { title } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <!-- IE -->
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="/icons/favicon.ico" />
     <!-- other browsers -->
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/icons/favicon.ico" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/icons/logo-180.png" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="author" content="Hydra" />
+    <meta
+      name="description"
+      content="Site de la liste BDE Hydra à TMSP en 2025"
+    />
+    <meta name="keywords" content="TMSP, BDE, Hydra, 2025, TSP, IMTBS" />
+
+    <link
+      rel="preload"
+      href="/font/6939528f6b9616b11b92dcecd97d8ec8.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/font/21414351ee80e7ef082ef5aadd47509b.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/font/2e5d8ad1da71955a98f0cff56bc73971.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+
     <title>Hydra - {title}</title>
   </head>
   <body>

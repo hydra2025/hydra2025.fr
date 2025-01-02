@@ -4,20 +4,30 @@ interface Props {
   borderWidth?: string;
   cutout?: string;
   href?: string;
+  id?: string;
+  width?: string;
+  style?: string;
 }
 
-const { borderWidth = "5px", cutout = "15px", href = "" } = Astro.props;
+const {
+  borderWidth = "5px",
+  cutout = "15px",
+  href = null,
+  id = null,
+  width = "100%",
+  style = null,
+} = Astro.props;
 
 const fillColor = `rgba(${computed_colors["color-primary-rgb"]}, 0.1)`;
 const sin45 = Math.sin(Math.PI / 4);
 ---
 
-<a class="button hvr-shutter-in-vertical" href={href}>
+<a class="button hvr-shutter-in-vertical" href={href} id={id} style={style}>
   <div class="border"></div>
   <slot />
 </a>
 
-<style define:vars={{ fillColor, borderWidth, cutout, sin45 }}>
+<style define:vars={{ fillColor, borderWidth, cutout, sin45, width }}>
   .button {
     padding: 0.75em 2em;
     color: var(--color-text);
@@ -34,7 +44,7 @@ const sin45 = Math.sin(Math.PI / 4);
       calc(100% - var(--cutout)) 0,
       var(--cutout) 0
     );
-    width: 100%;
+    width: var(--width);
     text-align: center;
     box-sizing: border-box;
   }

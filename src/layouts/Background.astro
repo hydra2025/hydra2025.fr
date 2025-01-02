@@ -9,12 +9,11 @@ const balls = Array.from({ length: 5 }, () => ({
 ---
 
 <div class="background">
-  <div class="balls">
-    {
-      balls.map((ball) => (
-        <div
-          class="ball"
-          style={`
+  {
+    balls.map((ball) => (
+      <div
+        class="ball"
+        style={`
         width: ${ball.size}px;
         height: ${ball.size}px;
         left: ${ball.x}%;
@@ -22,11 +21,10 @@ const balls = Array.from({ length: 5 }, () => ({
         animation-duration: ${ball.duration}s;
         animation-delay: ${ball.delay}s;
       `}
-        />
-      ))
-    }
-    <div class="ball" id="cursor-ball"></div>
-  </div>
+      />
+    ))
+  }
+  <div class="ball" id="cursor-ball"></div>
 </div>
 
 <style>
@@ -85,34 +83,23 @@ const balls = Array.from({ length: 5 }, () => ({
   if (!prefersReducedMotion) {
     const cursorBall = document.getElementById("cursor-ball")!!;
 
-    let mouseX = 0,
-      mouseY = 0;
-    let ballX = 0,
-      ballY = 0;
+    let mouseX = window.innerWidth / 2,
+      mouseY = window.innerHeight / 2;
 
-    mouseX = window.innerWidth / 2;
-    mouseY = window.innerHeight / 2;
     cursorBall.style.opacity = "0.3";
 
     document.addEventListener("mousemove", (e) => {
-      //mouseX = e.clientX;
-      //mouseY = e.clientY;
-      ballX = e.clientX;
-      ballY = e.clientY;
+      mouseX = e.clientX;
+      mouseY = e.clientY;
     });
 
     function animate() {
-      //const distX = mouseX - ballX;
-      //const distY = mouseY - ballY;
-      //ballX += distX * 0.05;
-      //ballY += distY * 0.05;
-
-      cursorBall.style.transform = `translate(${ballX - 100}px, ${ballY - 100}px)`;
+      cursorBall.style.transform = `translate(${mouseX - 100}px, ${mouseY - 100}px)`;
       requestAnimationFrame(animate);
     }
 
     animate();
   } else {
-    document.querySelector(".balls")!!.remove();
+    document.querySelectorAll(".ball").forEach((el) => el.remove());
   }
 </script>

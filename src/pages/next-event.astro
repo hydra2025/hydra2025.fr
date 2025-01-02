@@ -1,5 +1,458 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import submarine from "../assets/logo-512.png";
+import Image from "astro/components/Image.astro";
+import Button from "../components/Button.astro";
 ---
 
-<Layout title="Prochain événement" />
+<Layout title="Prochain événement">
+  <div id="content">
+    <h2 id="title">Prochain évènement</h2>
+    <div id="timer"></div>
+    <div id="progress-container">
+      <div id="progress-border"></div>
+      <div id="progress-bar">
+        <!--<Image src={submarine} alt="S" id="logo" /> -->
+      </div>
+    </div>
+    <div id="button-container">
+      <Button id="notifyButton">Recevoir une notification</Button>
+      <Button id="unsubscribeButton" style="display: none">
+        Se désabonner des notifications
+      </Button>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = "https://api.hydra2025.fr/event";
+
+    type UpcomingEvent = {
+      title: string | null;
+      announcementDate: number;
+      date: number;
+      location: string;
+    };
+
+    type Event = {
+      status: "error" | "success";
+      title: string;
+      date: number;
+      location: string;
+      html: string;
+    };
+
+    var upcomingEvent: UpcomingEvent = {
+      title: null,
+      announcementDate: new Date("2025-01-03 20:00:00").getTime(),
+      date: new Date("3025-01-01 20:00:00").getTime(),
+      location: "INT",
+    };
+    const notifyButton = document.getElementById(
+      "notifyButton"
+    ) as HTMLButtonElement;
+    const unsubscribeButton = document.getElementById(
+      "unsubscribeButton"
+    ) as HTMLButtonElement;
+    let displayedDone = false;
+
+    const clamp = (num: number, min: number, max: number): number =>
+      Math.min(Math.max(num, min), max);
+
+    async function fetchUpcomingEventInfo(): Promise<UpcomingEvent> {
+      const response = await fetch(`${API_URL}/upcoming-event`);
+      const data: UpcomingEvent = await response.json();
+      return data;
+    }
+
+    async function fetchEventInfo(): Promise<Event> {
+      const response = await fetch(`${API_URL}/event`);
+      const data: Event = await response.json();
+      return data;
+    }
+
+    function progress(event: UpcomingEvent): number {
+      const now = new Date().getTime();
+      const totalDuration = event.date - event.announcementDate;
+      const elapsed = now - event.announcementDate;
+
+      return clamp(elapsed / totalDuration, 0, 1);
+    }
+
+    function remaining(event: UpcomingEvent): {
+      days: number;
+      hours: number;
+      minutes: number;
+      seconds: number;
+    } {
+      const now = new Date().getTime();
+      const endTime = event.date;
+      const remaining = endTime - now;
+      if (remaining < 0)
+        return {
+          days: 0,
+          hours: 0,
+          minutes: 0,
+          seconds: 0,
+        };
+
+      return {
+        days: Math.floor(remaining / (1000 * 60 * 60 * 24)),
+        hours: Math.floor(
+          (remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        ),
+        minutes: Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((remaining % (1000 * 60)) / 1000),
+      };
+    }
+
+    function updateUI() {
+      if (!upcomingEvent.title) return;
+      if (upcomingEvent.date < new Date().getTime()) return;
+
+      document.getElementById("title")!.textContent = upcomingEvent.title;
+      document.getElementById("progress-bar")!.style.width = `${clamp(
+        progress(upcomingEvent) * 100,
+        0,
+        100
+      )}%`;
+
+      const { days, hours, minutes, seconds } = remaining(upcomingEvent);
+      document.getElementById("timer")!.textContent =
+        `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    async function init() {
+      fetchUpcomingEventInfo().then((data) => {
+        upcomingEvent = data;
+        updateUI();
+      });
+
+      let interval: number = 0;
+
+      const checkEvent = () => {
+        if (upcomingEvent!.date <= new Date().getTime() && !displayedDone) {
+          console.log("Event has ended!");
+
+          // Remove the progress bar and timer
+          // Fetch "/done" and check if the response is a 404
+          fetchEventInfo()
+            .then((data) => {
+              console.log("Done event fetched", data);
+
+              if (data && data.status === "success") {
+                document.getElementById("progress-container")!.remove();
+                document.getElementById("timer")!.remove();
+                document.getElementById("button-container")!.remove();
+                document.getElementById("title")!.textContent = data.title;
+                const div = document.createElement("div");
+                div.innerHTML = data.html;
+                document.getElementById("content")!.appendChild(div);
+                displayedDone = true;
+                clearInterval(interval);
+              } else {
+                // Set the title to "Waiting for the event"
+                document.getElementById("title")!.textContent =
+                  "En attente de l'évènement ...";
+                document.getElementById("timer")!.textContent =
+                  "Pas besoin de recharger la page";
+              }
+            })
+            .catch((err) => {
+              console.error("Error fetching done event", err);
+            });
+        } else {
+          updateUI();
+        }
+      };
+      interval = setInterval(checkEvent, 1000);
+      checkEvent();
+
+      // Check if push is supported
+      if ("serviceWorker" in navigator && "PushManager" in window) {
+        try {
+          const registration = await navigator.serviceWorker.register(
+            "/sw.js",
+            {
+              scope: "/",
+            }
+          );
+          console.log("Service Worker registered");
+          initializePushNotifications(registration);
+        } catch (err) {
+          console.log("Service Worker registration failed: ", err);
+        }
+      } else {
+        console.log("Push notifications are not supported");
+        notifyButton.style.display = "none";
+      }
+    }
+
+    async function initializePushNotifications(
+      registration: ServiceWorkerRegistration
+    ) {
+      try {
+        const subscription = await registration.pushManager.getSubscription();
+        if (subscription) {
+          console.log("User is already subscribed");
+          notifyButton.style.display = "none";
+          unsubscribeButton.style.display = "block";
+        } else {
+          console.log("User is not subscribed");
+        }
+        notifyButton.disabled = false;
+      } catch (err) {
+        console.log("Error during getSubscription()", err);
+      }
+    }
+
+    async function subscribeToPushNotifications() {
+      try {
+        console.log("Subscribing the user");
+        const registration = await navigator.serviceWorker.ready;
+        const subscription = await registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(
+            "BEgMUzvptGjywH27n77_B6_96V_iE8oJ-l_1uxQaBe1A1iAQ5Zren5iAYDvqHYT3QLMOuAM8qug45k_AQ98Bi9Q"
+          ),
+        });
+        console.log("User is subscribed:", subscription);
+        await sendSubscriptionToServer({
+          subscribe: true,
+          ...subscription.toJSON(),
+        });
+        notifyButton.style.display = "none";
+        unsubscribeButton.style.display = "block";
+      } catch (err) {
+        console.log("Failed to subscribe the user: ", err);
+      }
+    }
+
+    async function unsubscribeFromPushNotifications() {
+      try {
+        const registration = await navigator.serviceWorker.ready;
+        const subscription = await registration.pushManager.getSubscription();
+        if (subscription) {
+          await sendSubscriptionToServer({
+            unsubscribe: true,
+            ...subscription.toJSON(),
+          });
+          await subscription.unsubscribe();
+          console.log("User is unsubscribed");
+          notifyButton.style.display = "block";
+          unsubscribeButton.style.display = "none";
+        }
+      } catch (err) {
+        console.log("Error unsubscribing", err);
+      }
+    }
+
+    async function sendSubscriptionToServer(
+      subscription: PushSubscriptionJSON & {
+        subscribe?: boolean;
+        unsubscribe?: boolean;
+      }
+    ) {
+      // Send the subscription details to your server
+      const response = await fetch(API_URL + "/save-subscription", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(subscription),
+      });
+      if (!response.ok) {
+        throw new Error("Bad status code from server.");
+      }
+      const responseData = await response.json();
+      if (!(responseData.data && responseData.data.success)) {
+        throw new Error("Bad response from server.");
+      }
+    }
+
+    function urlBase64ToUint8Array(base64String: string): Uint8Array {
+      const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+      const base64 = (base64String + padding)
+        .replace(/-/g, "+")
+        .replace(/_/g, "/");
+
+      const rawData = window.atob(base64);
+      const outputArray = new Uint8Array(rawData.length);
+
+      for (let i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i);
+      }
+      return outputArray;
+    }
+
+    notifyButton.addEventListener("click", async () => {
+      if (Notification.permission === "granted") {
+        console.log("Step 1: Notification permission is granted");
+
+        const registration = await navigator.serviceWorker.ready;
+        console.log("Step 2: Service Worker is ready");
+        const subscription = await registration.pushManager.getSubscription();
+        console.log("Step 3: Subscription is", subscription);
+        if (subscription) {
+          await unsubscribeFromPushNotifications();
+        } else {
+          await subscribeToPushNotifications();
+        }
+      } else {
+        const permission = await Notification.requestPermission();
+        if (permission === "granted") {
+          await subscribeToPushNotifications();
+        }
+      }
+    });
+    document
+      .getElementById("unsubscribeButton")!
+      .addEventListener("click", () => {
+        unsubscribeFromPushNotifications();
+      });
+
+    init();
+  </script>
+
+  <style>
+    #content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: calc(100% - 2 * var(--header-height));
+      width: 100%;
+    }
+    #title {
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+
+    #timer {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    #progress-container {
+      width: 80%;
+      height: 50px;
+      background-color: transparent;
+      overflow: visible;
+      margin-bottom: 50px;
+      position: relative;
+      clip-path: polygon(
+        5px 0%,
+        0% 5px,
+        0% calc(100% - 10px),
+        10px 100%,
+        calc(20% - 10px) 100%,
+        20% calc(100% - 10px),
+        calc(100% - 5px) calc(100% - 10px),
+        100% calc(calc(100% - 10px) - 5px),
+        100% 30px,
+        calc(100% - 30px) 0%,
+        5px 0%
+      );
+    }
+
+    #progress-border {
+      background-color: var(--color-primary);
+      position: absolute;
+      inset: 0;
+      clip-path: polygon(
+        5px 0%,
+        0% 5px,
+        0% calc(100% - 10px),
+        10px 100%,
+        calc(20% - 10px) 100%,
+        20% calc(100% - 10px),
+        calc(100% - 5px) calc(100% - 10px),
+        100% calc(calc(100% - 10px) - 5px),
+        100% 30px,
+        calc(100% - 30px) 0%,
+        5px 0%,
+        calc(3px + calc(5px - calc(3px * 0.7071067811865475))) 3px,
+        calc(calc(100% - 3px) - calc(30px - calc(3px * 0.7071067811865475))) 3px,
+        calc(100% - 3px) calc(3px + calc(30px - calc(3px * 0.7071067811865475))),
+        calc(100% - 3px)
+          calc(
+            calc(calc(100% - 10px) - 3px) -
+              calc(5px - calc(3px * 0.7071067811865475))
+          ),
+        calc(calc(100% - 3px) - calc(5px - calc(3px * 0.7071067811865475)))
+          calc(calc(100% - 10px) - 3px),
+        calc(calc(20% - 3px) + calc(3px * 0.7071067811865475))
+          calc(calc(100% - 3px) - 10px),
+        calc(calc(20% - 3px) - calc(10px - calc(3px * 0.7071067811865475)))
+          calc(100% - 3px),
+        calc(3px + calc(10px - calc(3px * 0.7071067811865475))) calc(100% - 3px),
+        3px calc(calc(100% - 3px) - calc(10px - calc(3px * 0.7071067811865475))),
+        3px calc(3px + calc(5px - calc(3px * 0.7071067811865475))),
+        calc(3px + calc(5px - calc(3px * 0.7071067811865475))) 3px
+      );
+    }
+
+    #progress-bar {
+      width: 90%;
+      height: 100%;
+      background-color: rgba(var(--color-primary-rgb), 0.5);
+      transition: width 0.5s ease-in-out;
+      animation: pulse 1s infinite ease-in-out;
+      clip-path: polygon(
+        0% 0%,
+        0% 100%,
+        100% 100%,
+        100% 30px,
+        calc(100% - 30px) 0%,
+        0% 0%
+      );
+    }
+
+    @keyframes pulse {
+      0% {
+        background-color: rgba(var(--color-primary-rgb), 0.5);
+      }
+      25% {
+        background-color: rgba(var(--color-primary-rgb), 0.55);
+      }
+      50% {
+        background-color: rgba(var(--color-primary-rgb), 0.5);
+      }
+      100% {
+        background-color: rgba(var(--color-primary-rgb), 0.5);
+      }
+    }
+
+    #logo {
+      position: relative;
+      width: auto;
+      height: calc(100% + 10px);
+      margin-left: auto;
+      margin-right: 0;
+      transform: translateY(-5px) translateX(50%);
+      animation: bop 1s infinite ease-in-out;
+    }
+
+    @keyframes bop {
+      0%,
+      100% {
+        transform: translateY(-10px) translateX(50%);
+      }
+
+      50% {
+        transform: translateY(0px) translateX(50%);
+      }
+    }
+    border-radius: 15px;
+
+    #button-container {
+      display: flex;
+      justify-content: center;
+      width: 20em;
+    }
+
+    #notifyButton:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+  </style>
+</Layout>
