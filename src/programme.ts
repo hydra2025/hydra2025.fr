@@ -6,7 +6,8 @@ const programmeComplet: Paragraph[] = [
     {
         name: "Les cours et les Pougnes",
         content: [
-            { content: "Revoir l'accès et le format des pougnes :", subContent: "Le site sera une database à jour avec un système de recherche avancée, catégorisant les pougnes des années précédentes et actuelles." },
+            { content: "Revoir l'accès et le format des pougnes :", subContent: "Le site sera une database à jour avec un système de recherche avancée, catégorisant les pougnes des années précédentes." },
+            "Faire des vidéos de révision pour les CFs.",
             "Des pougnes pour les bachelors.",
         ],
     },
@@ -14,7 +15,6 @@ const programmeComplet: Paragraph[] = [
         name: "La sécurité",
         content: [
             { content: "Mise en place d'un système de covoiturage", subContent: "entre le foyer et le bâtiment U6 la nuit" },
-            { content: "Une communication interactive", subContent: "avec un calendrier des événements revu (test sur le site Web de liste)." },
         ],
     },
     {
@@ -25,8 +25,8 @@ const programmeComplet: Paragraph[] = [
                     "Faire revivre les week-ends. Plusieurs points sont à prendre en compte :",
                 subContent: [
                     "Des événements la journée proposés par le BDE en fonction des sorties RA du BDA et des week-end asso,",
-                    "Des repas associatifs (car le ritz ne fonctionne pas le week-end, ce qui peut isoler certains individus),",
-                    "Des événements le soir en partenariat avec bpm et absinthe dans le style animation bpm-absinthe-bde qui dynamisera le campus tous les week-end.",
+                    "Des repas associatifs (car le Ritz ne fonctionne pas le week-end, ce qui peut isoler certains individus),",
+                    "Des événements le soir en partenariat avec bpm et absinthe dans le style animation BPM-AbsINThe-BDE qui dynamisera le campus tous les week-end.",
                 ],
             },
         ],
@@ -41,6 +41,7 @@ const programmeComplet: Paragraph[] = [
         name: "Soirées",
         content: [
             "Travail sur la communication extérieure pour attirer plus de monde aux soirées (notamment Palaiseau).",
+            { content: "Une communication interactive", subContent: "avec un calendrier des événements revu (test sur le site Web de liste)." },
         ],
     },
     {
@@ -61,14 +62,14 @@ const programmeComplet: Paragraph[] = [
         name: "La gestion des VSS",
         content: [
             { content: "Campagne de sensibilisation", subContent: "sous forme de courtes vidéos sur des situations de VSS avec des élèves associatifs." },
-            "Sur le futur site du BDE une page ressources VSS, contenant des guides ou contacts d'experts en cas de besoin.",
+            "Sur le futur site du BDE, une page ressources VSS contenant des guides ou contacts d'experts en cas de besoin.",
             {
                 content:
                     "Code couleur soirées - des bracelets fluorescents seront distribués à l'entrée de chaque soirée avec un code couleur :",
                 subContent: [
-                    "Rouge : personne qui ne veut pas être dérangée pendant la soirée, veut simplement s'amuser avec ses amis,",
-                    "Orange : personne ouverte à la discussion que si elle l'engage, mais ne souhaite pas forcément sociabiliser,",
-                    "Vert : personne ouverte aux nouvelles rencontres.",
+                    "🔴 Rouge : personne qui ne veut pas être dérangée pendant la soirée, veut simplement s'amuser avec ses amis,",
+                    "🟠 Orange : personne ouverte à la discussion que si elle l'engage, mais ne souhaite pas forcément sociabiliser,",
+                    "🟢 Vert : personne ouverte aux nouvelles rencontres.",
                 ],
             },
         ],
