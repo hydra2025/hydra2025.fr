@@ -81,7 +81,7 @@ export default defineComponent({
 }
 
 .arrow {
-    margin-right: 2.5rem;
-    margin-left: 1rem;
+    margin-right: .5rem;
+    margin-left: 2rem;
 }
 </style>
