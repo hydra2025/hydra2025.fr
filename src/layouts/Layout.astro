@@ -7,6 +7,8 @@ import "@fontsource-variable/open-sans";
 import computed_colors from "../style/Colors.ts";
 import Background from "../layouts/Background.astro";
 
+import Footer from "../components/Footer.astro";
+
 interface Props {
   title: string;
 }
@@ -62,6 +64,7 @@ const { title } = Astro.props;
     <Header />
     <main>
       <slot />
+      <Footer />
     </main>
   </body>
 </html>
