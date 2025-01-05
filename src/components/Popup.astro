@@ -60,7 +60,7 @@ const id2 = Math.random().toString(36).slice(2, 11);
     </div>
   </div>
 
-  <script define:vars={{ membre, id1, id2 }}>
+  <script define:vars={{ membre, id1, id2 }} is:inline>
     const container = document.querySelector(".overlay");
     const bouton = document.getElementById(id1);
     let pop = 0;

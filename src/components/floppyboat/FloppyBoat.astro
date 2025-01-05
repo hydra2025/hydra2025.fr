@@ -175,7 +175,6 @@ const WINDOW_HEIGHT = 500;
   let pipeSpacingDeltaDivisor = PIPE_SPACING_DELTA_DIVISOR_MIN;
   let animationFrame: number;
   let updateObjectsInterval: number;
-  let lastFrameTime = performance.now();
 
   const submarineImage = new Image();
   const bubbleImages = Array.from(
@@ -304,7 +303,6 @@ const WINDOW_HEIGHT = 500;
         Math.random() * (PIPE_HEIGHT - PIPE_GAP - PIPE_GAP_HEIGHT * 2) +
         PIPE_GAP_HEIGHT,
     }));
-    lastFrameTime = performance.now();
     requestAnimationFrame(draw);
     updateObjectsInterval = setInterval(() => {
       updateGameObjects(TARGET_FPS);
