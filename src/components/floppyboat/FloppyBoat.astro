@@ -1,0 +1,582 @@
+---
+const WINDOW_WIDTH = 500;
+const WINDOW_HEIGHT = 500;
+---
+
+<div id="gameContainer">
+  <canvas id="gameCanvas" width={WINDOW_WIDTH} height={WINDOW_HEIGHT}></canvas>
+  <button id="startButton">Chargement ...</button>
+</div>
+
+<style
+  define:vars={{ width: WINDOW_WIDTH + "px", height: WINDOW_HEIGHT + "px" }}
+>
+  #gameContainer {
+    position: relative;
+    width: var(--width);
+    height: var(--height);
+    background: transparent;
+    overflow: hidden;
+    border-radius: 0;
+    padding: 0;
+    clip-path: polygon(
+      50px 0%,
+      0% 50px,
+      0% calc(100% - 20px),
+      20px 100%,
+      calc(80% - 10px) 100%,
+      80% calc(100% - 10px),
+      calc(100% - 30px) calc(100% - 10px),
+      100% calc(calc(100% - 10px) - 30px),
+      100% 0%,
+      50px 0%
+    );
+  }
+
+  #startButton {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    background-color: transparent;
+    color: #ff6600;
+    border: 3px solid #ff6600;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: var(--font-family-title);
+    text-transform: uppercase;
+    box-shadow: 0 0 20px #000;
+    text-shadow: 2px 2px #000;
+    border-radius: 0;
+  }
+</style>
+
+<script>
+  const WS_URL = "wss://api.hydra2025.fr/floppyboat/ws";
+  const WINDOW_WIDTH = 500;
+  const WINDOW_HEIGHT = 500;
+  const GRAVITY = 0.3;
+  const DRAG = 0.98;
+  const DRAG_2 = 0.99;
+  const FLAP = -1.6 * GRAVITY;
+  const PIPE_WIDTH = 60;
+  const PIPE_SPACING = 200;
+  const PIPE_HEIGHT = WINDOW_HEIGHT;
+  const PIPE_GAP = 150;
+  const PIPE_GAP_HEIGHT = 20;
+  const PIPE_SPEED = 5;
+  const PIPE_SPACING_DELTA_DIVISOR_MIN = 0.5;
+  const PIPE_SPACING_DELTA_DIVISOR_MAX = 4;
+  const PIPE_SPACING_DELTA_DIVISOR_STEPS = 100;
+  const SUBMARINE_WIDTH = 860 * 0.1;
+  const SUBMARINE_HEIGHT = 199 * 0.1;
+  const SUBMARINE_X = 50;
+  const ERROR_MARGIN = 6;
+
+  const BACKGROUND_SPEED = 2;
+  const BACKGROUND_WIDTH = 700;
+  const BACKGROUND_HEIGHT = 500;
+
+  const BUBBLES_SPEED_X = 7;
+  const BUBBLES_SPEED_Y = 2;
+  const BUBBLES_SIZE = 10;
+  const N_BUBBLES = 10;
+
+  const N_IMAGES_BUUBLES = 3;
+  const N_IMAGES_CORAL = 3;
+
+  const CORAL_WIDTH = 50;
+  const CORAL_HEIGHT_MIN = 50;
+  const CORAL_HEIGHT_MAX = 200;
+  const CORAL_SPEED = 7;
+  const N_CORAL = 20;
+
+  const TARGET_FPS = 60;
+
+  const N_PIPES = Math.ceil(WINDOW_WIDTH / PIPE_SPACING);
+
+  function asyncExec(f: () => void) {
+    setTimeout(f, 10);
+  }
+
+  const generateParallaxBubble = () => {
+    const distance = Math.random();
+    return {
+      x: Math.random() * WINDOW_WIDTH,
+      y: Math.random() * WINDOW_HEIGHT,
+      kind: Math.floor(Math.random() * N_IMAGES_BUUBLES),
+      speedX: (distance * 0.7 + 0.3) * BUBBLES_SPEED_X,
+      speedY: (distance * 0.7 + 0.3) * BUBBLES_SPEED_Y,
+      alpha: distance,
+    };
+  };
+
+  const generateParallaxCoral = () => {
+    const distance = Math.random();
+    return {
+      top: Math.random() < 0.3,
+      x: Math.random() * WINDOW_WIDTH,
+      kind: Math.floor(Math.random() * N_IMAGES_CORAL),
+      height:
+        Math.random() * (CORAL_HEIGHT_MAX - CORAL_HEIGHT_MIN) +
+        CORAL_HEIGHT_MIN,
+      speed: (distance * 0.7 + 0.3) * CORAL_SPEED,
+      alpha: distance * 0.7 + 0.3,
+    };
+  };
+
+  const generateParallaxBubbles = () => {
+    const bubbles = [];
+    for (let i = 0; i < N_BUBBLES; i++) {
+      bubbles.push(generateParallaxBubble());
+    }
+    return bubbles;
+  };
+
+  const generateParallaxCorals = () => {
+    const coral = [];
+    for (let i = 0; i < N_CORAL; i++) {
+      coral.push(generateParallaxCoral());
+    }
+    return coral;
+  };
+
+  const connectWebSocket = (url: string, onMessage: (message: any) => void) => {
+    const socket = new WebSocket(url);
+    socket.onmessage = (event) => {
+      const message = JSON.parse(event.data);
+      onMessage(message);
+    };
+    return socket;
+  };
+
+  const canvas = document.getElementById("gameCanvas") as HTMLCanvasElement;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) {
+    alert("Impossible de jouer sur ce navigateur");
+  }
+  canvas.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+  });
+  const startButton = document.getElementById("startButton");
+
+  let submarineY = WINDOW_HEIGHT / 2;
+  let submarineVelocity = 0;
+  let jumping = false;
+  let pipes: { x: number; y: number }[] = [];
+  let score = 0;
+  let gameOver = false;
+  let loading = N_IMAGES_BUUBLES + N_IMAGES_CORAL * 2 + 6;
+  let gameStarted = false;
+  let parallaxBubbles = generateParallaxBubbles();
+  let backgroundX = 0;
+  let parallaxCoral = generateParallaxCorals();
+  let pipeSpacingDeltaDivisor = PIPE_SPACING_DELTA_DIVISOR_MIN;
+  let animationFrame: number;
+  let updateObjectsInterval: number;
+  let lastFrameTime = performance.now();
+
+  const submarineImage = new Image();
+  const bubbleImages = Array.from(
+    { length: N_IMAGES_BUUBLES },
+    () => new Image()
+  );
+  const coralTopImages = Array.from(
+    { length: N_IMAGES_CORAL },
+    () => new Image()
+  );
+  const coralBottomImages = Array.from(
+    { length: N_IMAGES_CORAL },
+    () => new Image()
+  );
+  const backgroundImage = new Image();
+
+  const socket = connectWebSocket(WS_URL, (message) => {
+    if (message.type === "scoreUpdate") {
+      pipeSpacingDeltaDivisor = Math.min(
+        PIPE_SPACING_DELTA_DIVISOR_MAX,
+        pipeSpacingDeltaDivisor +
+          (PIPE_SPACING_DELTA_DIVISOR_MAX - PIPE_SPACING_DELTA_DIVISOR_MIN) /
+            PIPE_SPACING_DELTA_DIVISOR_STEPS
+      );
+      score = message.score;
+    } else if (message.type === "gameOver") {
+      triggerGameOver();
+    } else if (message.type === "login") {
+      let username = localStorage.getItem("username");
+      if (!username) {
+        username = prompt(
+          "Veuillez entrer votre nom / Please enter your name:"
+        );
+        localStorage.setItem("username", username || "");
+      }
+      sendJsonMessage({ type: "setUsername", username });
+      loading--;
+    } else if (message.type === "loginFailed") {
+      localStorage.removeItem("username");
+      alert(message.message);
+      sendJsonMessage({ type: "login" });
+    } else if (message.type === "challenge") {
+      const functionText = message.challenge;
+      const challenge = eval(functionText);
+      challenge(sendJsonMessage, () => loading--);
+      loading--;
+    } else if (message.type === "challengeComplete") {
+      loading--;
+    }
+  });
+
+  socket.onclose = () => {
+    alert("Connexion perdue. Veuillez rafraîchir la page.");
+  };
+
+  socket.onerror = () => {
+    alert(
+      "Impossible de se connecter au serveur. Veuillez rafraîchir la page."
+    );
+    socket.onclose = () => {};
+  };
+
+  let loadingInterval = setInterval(() => {
+    if (loading === 0) {
+      clearInterval(loadingInterval);
+      startButton!!.addEventListener("click", startGame);
+      startButton!!.style.display = "block";
+      startButton!!.innerText = "Plonger !";
+    } else {
+      console.log("Loading... " + loading);
+    }
+  }, 1000);
+
+  function sendJsonMessage(message: object) {
+    asyncExec(() => socket.send(JSON.stringify(message)));
+  }
+
+  function triggerGameOver() {
+    if (gameOver) return;
+    gameOver = true;
+    sendJsonMessage({ type: "gameOver" });
+    cancelAnimationFrame(animationFrame);
+    clearInterval(updateObjectsInterval);
+    draw(); // Draw one last time
+  }
+
+  submarineImage.src = "/floppyboat/submarine50.png";
+  submarineImage.onload = () => loading--;
+
+  bubbleImages.forEach((image, i) => {
+    image.src = `/floppyboat/bubble${i}.png`;
+    image.onload = () => loading--;
+  });
+
+  coralTopImages.forEach((image, i) => {
+    image.src = `/floppyboat/coral${i}_top.png`;
+    image.onload = () => loading--;
+  });
+
+  coralBottomImages.forEach((image, i) => {
+    image.src = `/floppyboat/coral${i}_bottom.png`;
+    image.onload = () => loading--;
+  });
+
+  backgroundImage.src = "/floppyboat/background.png";
+  backgroundImage.onload = () => loading--;
+
+  const startGame = () => {
+    if (gameOver) {
+      sendJsonMessage({ type: "restart" });
+      cancelAnimationFrame(animationFrame);
+      clearInterval(updateObjectsInterval);
+    }
+
+    console.log("Starting game");
+    startButton!!.style.display = "none";
+
+    submarineY = WINDOW_HEIGHT / 2;
+    submarineVelocity = FLAP;
+    score = 0;
+    gameOver = false;
+    gameStarted = true;
+    pipes = Array.from({ length: N_PIPES }, (_, i) => ({
+      x: WINDOW_WIDTH + i * PIPE_SPACING * 2,
+      y:
+        Math.random() * (PIPE_HEIGHT - PIPE_GAP - PIPE_GAP_HEIGHT * 2) +
+        PIPE_GAP_HEIGHT,
+    }));
+    lastFrameTime = performance.now();
+    requestAnimationFrame(draw);
+    updateObjectsInterval = setInterval(() => {
+      updateGameObjects(TARGET_FPS);
+      updateObjects(TARGET_FPS);
+    }, 1000 / TARGET_FPS);
+  };
+
+  const updateObjects = (deltaTime: number) => {
+    let dt = deltaTime / TARGET_FPS;
+    if (gameStarted && !gameOver && loading === 0) {
+      parallaxBubbles.forEach((block) => {
+        block.x =
+          block.x - block.speedX * dt + BUBBLES_SIZE < 0
+            ? WINDOW_WIDTH - BUBBLES_SIZE
+            : block.x - block.speedX * dt;
+        block.y =
+          block.y - block.speedY * dt + BUBBLES_SIZE < 0
+            ? WINDOW_HEIGHT - BUBBLES_SIZE
+            : block.y - block.speedY * dt;
+      });
+
+      parallaxCoral.forEach((block, index) => {
+        if (block.x < -CORAL_WIDTH) {
+          parallaxCoral[index] = generateParallaxCoral();
+          parallaxCoral[index].x = WINDOW_WIDTH + CORAL_WIDTH;
+        } else {
+          parallaxCoral[index].x = block.x - block.speed * dt;
+        }
+      });
+
+      backgroundX = (backgroundX + BACKGROUND_SPEED * dt) % BACKGROUND_WIDTH;
+    }
+  };
+
+  const updateGameObjects = (deltaTime: number) => {
+    let dt = deltaTime / TARGET_FPS;
+    if (!gameOver && gameStarted && loading === 0) {
+      if (jumping) {
+        submarineVelocity = FLAP * dt + submarineVelocity;
+      }
+
+      submarineY = (submarineY + submarineVelocity * dt) * DRAG;
+      submarineVelocity = (submarineVelocity + GRAVITY * dt) * DRAG_2;
+
+      pipes.forEach((pipe) => {
+        pipe.x -= PIPE_SPEED * dt;
+      });
+
+      if (pipes[0].x < -PIPE_WIDTH) {
+        sendJsonMessage({ type: "pipeDeleted" });
+        const pipe = pipes.shift();
+        if (!pipe) return;
+        pipe.y =
+          Math.random() * (PIPE_HEIGHT - PIPE_GAP - PIPE_GAP_HEIGHT * 2) +
+          PIPE_GAP_HEIGHT;
+        const deltaY = Math.abs(pipe.y - pipes[pipes.length - 1].y);
+        pipe.x =
+          pipes[pipes.length - 1].x +
+          PIPE_SPACING +
+          deltaY / pipeSpacingDeltaDivisor;
+        pipes.push(pipe);
+      }
+
+      if (
+        submarineY > WINDOW_HEIGHT + ERROR_MARGIN ||
+        submarineY < -SUBMARINE_HEIGHT - ERROR_MARGIN
+      ) {
+        triggerGameOver();
+      }
+
+      pipes.forEach((pipe) => {
+        if (
+          SUBMARINE_X + SUBMARINE_WIDTH > pipe.x + ERROR_MARGIN &&
+          SUBMARINE_X < pipe.x + PIPE_WIDTH - ERROR_MARGIN
+        ) {
+          if (
+            submarineY < pipe.y - ERROR_MARGIN ||
+            submarineY + SUBMARINE_HEIGHT > pipe.y + PIPE_GAP + ERROR_MARGIN
+          ) {
+            triggerGameOver();
+          }
+        }
+      });
+    }
+  };
+
+  const draw = () => {
+    //const deltaTime = performance.now() - lastFrameTime;
+    //lastFrameTime = performance.now();
+    if (!ctx) return;
+
+    ctx.clearRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+    ctx.drawImage(
+      backgroundImage,
+      -backgroundX,
+      0,
+      BACKGROUND_WIDTH,
+      BACKGROUND_HEIGHT
+    );
+    ctx.drawImage(
+      backgroundImage,
+      -backgroundX + BACKGROUND_WIDTH - 1,
+      0,
+      BACKGROUND_WIDTH,
+      BACKGROUND_HEIGHT
+    );
+
+    parallaxCoral.forEach((block) => {
+      if (block.speed > PIPE_SPEED) return;
+      ctx.globalAlpha = block.alpha;
+      if (block.top) {
+        ctx.drawImage(
+          coralTopImages[block.kind],
+          block.x,
+          CORAL_HEIGHT_MIN - block.height,
+          CORAL_WIDTH,
+          CORAL_HEIGHT_MAX
+        );
+      } else {
+        ctx.drawImage(
+          coralBottomImages[block.kind],
+          block.x,
+          WINDOW_HEIGHT - block.height,
+          CORAL_WIDTH,
+          CORAL_HEIGHT_MAX
+        );
+      }
+      //ctx.globalAlpha = 1.0;
+    });
+
+    parallaxBubbles.forEach((block) => {
+      if (block.speedX > PIPE_SPEED) return;
+      //ctx.globalAlpha = block.alpha;
+      ctx.drawImage(
+        bubbleImages[block.kind],
+        block.x,
+        block.y,
+        BUBBLES_SIZE,
+        BUBBLES_SIZE
+      );
+      //ctx.globalAlpha = 1.0;
+    });
+    ctx.globalAlpha = 1.0;
+    ctx.drawImage(
+      submarineImage,
+      SUBMARINE_X,
+      submarineY,
+      SUBMARINE_WIDTH,
+      SUBMARINE_HEIGHT
+    );
+
+    ctx.fillStyle = "#ff6600";
+    pipes.forEach((pipe) => {
+      if (pipe.x - PIPE_WIDTH > WINDOW_WIDTH) return;
+
+      ctx.fillRect(pipe.x, 0, PIPE_WIDTH, pipe.y);
+      ctx.fillRect(
+        pipe.x,
+        pipe.y + PIPE_GAP,
+        PIPE_WIDTH,
+        PIPE_HEIGHT - pipe.y - PIPE_GAP
+      );
+    });
+    ctx.fillStyle = "black";
+    pipes.forEach((pipe) => {
+      if (pipe.x - PIPE_WIDTH > WINDOW_WIDTH) return;
+      ctx.fillRect(pipe.x + 3, 0, PIPE_WIDTH - 6, pipe.y - 3);
+      ctx.fillRect(
+        pipe.x + 3,
+        pipe.y + PIPE_GAP + 3,
+        PIPE_WIDTH - 6,
+        PIPE_HEIGHT - pipe.y - PIPE_GAP
+      );
+    });
+
+    parallaxCoral.forEach((block) => {
+      if (block.speed < PIPE_SPEED) return;
+      //ctx.globalAlpha = block.alpha;
+      if (block.top) {
+        ctx.drawImage(
+          coralTopImages[block.kind],
+          block.x,
+          CORAL_HEIGHT_MIN - block.height,
+          CORAL_WIDTH,
+          CORAL_HEIGHT_MAX
+        );
+      } else {
+        ctx.drawImage(
+          coralBottomImages[block.kind],
+          block.x,
+          WINDOW_HEIGHT - block.height,
+          CORAL_WIDTH,
+          CORAL_HEIGHT_MAX
+        );
+      }
+      //ctx.globalAlpha = 1.0;
+    });
+
+    parallaxBubbles.forEach((block) => {
+      if (block.speedX < PIPE_SPEED) return;
+      //ctx.globalAlpha = block.alpha;
+      ctx.drawImage(
+        bubbleImages[block.kind],
+        block.x,
+        block.y,
+        BUBBLES_SIZE,
+        BUBBLES_SIZE
+      );
+      //ctx.globalAlpha = 1.0;
+    });
+
+    ctx.fillStyle = "white";
+    ctx.font = "32px monospace";
+    ctx.fillText(`${score}`, 50, 33);
+
+    if (gameOver) {
+      ctx.fillStyle = "red";
+      ctx.font = "24px monospace";
+      ctx.fillText("Game Over", WINDOW_WIDTH / 2 - 50, WINDOW_HEIGHT / 2);
+    } else {
+      animationFrame = requestAnimationFrame(draw);
+    }
+  };
+
+  window.addEventListener("keydown", (e) => {
+    if (e.code === "Space") {
+      if (!gameStarted) {
+        startGame();
+      } else if (gameOver && !jumping) {
+        startGame();
+      } else {
+        sendJsonMessage({ type: "flap", p: submarineY });
+        jumping = true;
+      }
+    }
+  });
+
+  window.addEventListener("keyup", (e) => {
+    if (e.code === "Space") {
+      sendJsonMessage({ type: "stopFlap", p: submarineY });
+      jumping = false;
+    }
+  });
+
+  window.addEventListener("mousedown", () => {
+    if (gameOver && !jumping) {
+      startGame();
+    } else {
+      sendJsonMessage({ type: "flap", p: submarineY });
+      jumping = true;
+    }
+  });
+
+  window.addEventListener("mouseup", () => {
+    sendJsonMessage({ type: "stopFlap", p: submarineY });
+    jumping = false;
+  });
+
+  window.addEventListener("touchstart", () => {
+    if (!gameStarted) {
+      startGame();
+    } else if (gameOver && !jumping) {
+      startGame();
+    } else {
+      sendJsonMessage({ type: "flap", p: submarineY });
+      jumping = true;
+    }
+  });
+
+  window.addEventListener("touchend", () => {
+    sendJsonMessage({ type: "stopFlap", p: submarineY });
+    jumping = false;
+  });
+</script>

@@ -1,0 +1,146 @@
+---
+import FloppyBoat from "../components/floppyboat/FloppyBoat.astro";
+import Layout from "../layouts/Layout.astro";
+import Leaderboard from "../components/floppyboat/Leaderboard.vue";
+import Line from "../layouts/boxes/Line.astro";
+---
+
+<Layout title="Floppy Boat">
+  <h3>Floppy Boat</h3>
+  <div class="flex">
+    <div class="gamecontainer">
+      <div class="border"></div>
+      <FloppyBoat />
+    </div>
+    <div class="leaderboardcontainer">
+      <div class="border"></div>
+      <Line top="calc(100% - 13px)" left="33px" width="50%" />
+      <Line top="13px" left="calc(50% - 13px)" width="50%" />
+      <h4>Classement</h4>
+      <Leaderboard client:load />
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .gamecontainer {
+    position: relative;
+  }
+
+  .border {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background-color: var(--color-primary);
+  }
+
+  .flex {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gamecontainer .border {
+    clip-path: polygon(
+      50px 0%,
+      0% 50px,
+      0% calc(100% - 20px),
+      20px 100%,
+      calc(80% - 10px) 100%,
+      80% calc(100% - 10px),
+      calc(100% - 30px) calc(100% - 10px),
+      100% calc(calc(100% - 10px) - 30px),
+      100% 0%,
+      50px 0%,
+      calc(3px + calc(50px - calc(3px * 0.7071067811865475))) 3px,
+      calc(100% - 3px) 3px,
+      calc(100% - 3px)
+        calc(
+          calc(calc(100% - 10px) - 3px) -
+            calc(30px - calc(3px * 0.7071067811865475))
+        ),
+      calc(calc(100% - 3px) - calc(30px - calc(3px * 0.7071067811865475)))
+        calc(calc(100% - 10px) - 3px),
+      calc(calc(80% - 3px) + calc(3px * 0.7071067811865475))
+        calc(calc(100% - 3px) - 10px),
+      calc(calc(80% - 3px) - calc(10px - calc(3px * 0.7071067811865475)))
+        calc(100% - 3px),
+      calc(3px + calc(20px - calc(3px * 0.7071067811865475))) calc(100% - 3px),
+      3px calc(calc(100% - 3px) - calc(20px - calc(3px * 0.7071067811865475))),
+      3px calc(3px + calc(50px - calc(3px * 0.7071067811865475))),
+      calc(3px + calc(50px - calc(3px * 0.7071067811865475))) 3px
+    );
+  }
+
+  .leaderboardcontainer {
+    padding: 50px;
+    position: relative;
+    height: fit-content;
+    clip-path: polygon(
+      50px 0%,
+      0% 50px,
+      0% calc(100% - 20px),
+      20px 100%,
+      calc(80% - 10px) 100%,
+      80% calc(100% - 10px),
+      calc(100% - 30px) calc(100% - 10px),
+      100% calc(calc(100% - 10px) - 30px),
+      100% 0%,
+      50px 0%
+    );
+  }
+
+  .leaderboardcontainer .border {
+    clip-path: polygon(
+      50px 0%,
+      0% 50px,
+      0% calc(100% - 20px),
+      20px 100%,
+      calc(80% - 10px) 100%,
+      80% calc(100% - 10px),
+      calc(100% - 30px) calc(100% - 10px),
+      100% calc(calc(100% - 10px) - 30px),
+      100% 0%,
+      50px 0%,
+      calc(3px + calc(50px - calc(3px * 0.7071067811865475))) 3px,
+      calc(100% - 3px) 3px,
+      calc(100% - 3px)
+        calc(
+          calc(calc(100% - 10px) - 3px) -
+            calc(30px - calc(3px * 0.7071067811865475))
+        ),
+      calc(calc(100% - 3px) - calc(30px - calc(3px * 0.7071067811865475)))
+        calc(calc(100% - 10px) - 3px),
+      calc(calc(80% - 3px) + calc(3px * 0.7071067811865475))
+        calc(calc(100% - 3px) - 10px),
+      calc(calc(80% - 3px) - calc(10px - calc(3px * 0.7071067811865475)))
+        calc(100% - 3px),
+      calc(3px + calc(20px - calc(3px * 0.7071067811865475))) calc(100% - 3px),
+      3px calc(calc(100% - 3px) - calc(20px - calc(3px * 0.7071067811865475))),
+      3px calc(3px + calc(50px - calc(3px * 0.7071067811865475))),
+      calc(3px + calc(50px - calc(3px * 0.7071067811865475))) 3px
+    );
+  }
+</style>
+
+<script>
+  function scaleGame() {
+    const gameContainer = document.querySelector(
+      ".gamecontainer"
+    ) as HTMLElement;
+    if (!gameContainer) return;
+    const width = gameContainer.clientWidth;
+
+    if (width < 500) {
+      gameContainer.style.transform = `scale(${width / 500})`;
+    } else {
+      gameContainer.style.transform = "scale(1)";
+    }
+  }
+
+  window.addEventListener("resize", scaleGame);
+  window.addEventListener("DOMContentLoaded", scaleGame);
+  scaleGame();
+</script>
