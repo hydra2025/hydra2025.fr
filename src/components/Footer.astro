@@ -9,8 +9,12 @@ import youtube from "../assets/socials/youtube.svg?raw";
   <div>Copyright © 2024</div>
   <div class="separator"></div>
   <p>
-    Réalisé par : <span id="alexis">Alexis ROSSFELDER</span> & <span id="nathan"
-      >Nathan BEAUCHOUX</span
+    Réalisé par : <a
+      href="https://github.com/LiteApplication"
+      target="_blank"
+      id="alexis">Alexis&nbsp;ROSSFELDER</a
+    > & <a href="https://github.com/Naayfun" target="_blank" id="nathan"
+      >Nathan&nbsp;BEAUCHOUX</a
     >
   </p>
   <div class="socials">
@@ -72,6 +76,12 @@ import youtube from "../assets/socials/youtube.svg?raw";
   }
   .social:hover {
     transform: scale(1.2);
+  }
+
+  #alexis,
+  #nathan {
+    color: var(--color-text);
+    text-decoration: none;
   }
 
   @media screen and (max-width: 768px) {
