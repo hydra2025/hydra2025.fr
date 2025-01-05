@@ -1,6 +1,6 @@
 <template>
     <div class="collapsible-paragraph">
-        <div class="header" @click="toggle">
+        <div class="header" @click="isOpen = !isOpen">
             <span class="arrow">{{ isOpen ? "▲" : "▼" }}</span>
             <span class="title">{{ paragraph.name }}</span>
         </div>
@@ -35,12 +35,6 @@ defineProps<{
 }>();
 
 const isOpen = ref(false);
-
-const toggle = () => {
-    console.log("toggle");
-
-    isOpen.value = !isOpen.value;
-};
 </script>
 
 
@@ -83,6 +77,7 @@ export default defineComponent({
 
 .content {
     padding: 1rem;
+    font-size: 1.2rem;
     background-color: rgba(var(--color-primary-rgb), 0.5);
 }
 

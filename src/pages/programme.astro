@@ -8,8 +8,8 @@ import programmeComplet from "../programme";
   <h1>Programme BDE<br /><span class="accent">HYDRA</span></h1>
 
   {
-    programmeComplet.map((paragraph, index) => (
-      <ParagrapheProgramme paragraph={paragraph} client:idle key={index} />
+    programmeComplet.map((paragraph) => (
+      <ParagrapheProgramme paragraph={paragraph} client:load />
     ))
   }
 </Layout>

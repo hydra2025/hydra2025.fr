@@ -44,7 +44,7 @@ const programmeComplet: Paragraph[] = [
         ],
     },
     {
-        name: "Moyen de financements étudiant",
+        name: "Moyens de financements étudiant",
         content: [
             "Mises en places de groupes d'intérims.",
             "Proposer un tableau d’affichage dédié aux offres d’emplois ou de services étudiants (baby-sitting, tutorat, graphisme, etc.).",
