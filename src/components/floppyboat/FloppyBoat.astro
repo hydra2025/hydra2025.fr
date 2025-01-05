@@ -8,13 +8,11 @@ const WINDOW_HEIGHT = 500;
   <button id="startButton">Chargement ...</button>
 </div>
 
-<style
-  define:vars={{ width: WINDOW_WIDTH + "px", height: WINDOW_HEIGHT + "px" }}
->
+<style>
   #gameContainer {
     position: relative;
-    width: var(--width);
-    height: var(--height);
+    width: min(500px, 100vmin);
+    height: min(500px, 100vmin);
     background: transparent;
     overflow: hidden;
     border-radius: 0;
