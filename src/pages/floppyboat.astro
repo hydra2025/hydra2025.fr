@@ -8,7 +8,7 @@ import Line from "../layouts/boxes/Line.astro";
 <Layout title="Floppy Boat">
   <h3>Floppy Boat</h3>
   <div class="flex">
-    <div class="gamecontainer">
+    <div class="gamecontainer scalable">
       <div class="border"></div>
       <FloppyBoat />
     </div>
@@ -126,21 +126,17 @@ import Line from "../layouts/boxes/Line.astro";
 </style>
 
 <script>
-  function scaleGame() {
-    const gameContainer = document.querySelector(
-      ".gamecontainer"
-    ) as HTMLElement;
-    if (!gameContainer) return;
-    const width = gameContainer.clientWidth;
+  function scaleElement() {
+    const element = document.querySelector(".scalable") as HTMLElement;
 
-    if (width < 500) {
-      gameContainer.style.transform = `scale(${width / 500})`;
-    } else {
-      gameContainer.style.transform = "scale(1)";
-    }
+    // Calculate the scale factor
+    const scale = Math.min(window.innerWidth / 500, 1); // Use 100vmin / 500px logic
+    console.log(scale);
+
+    element.style.transform = `scale(${scale})`;
   }
 
-  window.addEventListener("resize", scaleGame);
-  window.addEventListener("DOMContentLoaded", scaleGame);
-  scaleGame();
+  // Call the function on load and on resize
+  window.addEventListener("load", scaleElement);
+  window.addEventListener("resize", scaleElement);
 </script>
