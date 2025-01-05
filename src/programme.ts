@@ -68,7 +68,7 @@ const programmeComplet: Paragraph[] = [
                     "Code couleur soirées - des bracelets fluorescents seront distribués à l'entrée de chaque soirée avec un code couleur :",
                 subContent: [
                     "🔴 Rouge : personne qui ne veut pas être dérangée pendant la soirée, veut simplement s'amuser avec ses amis,",
-                    "🟠 Orange : personne ouverte à la discussion que si elle l'engage, mais ne souhaite pas forcément sociabiliser,",
+                    "🟡 Jaune : personne ouverte à la discussion que si elle l'engage, mais ne souhaite pas forcément sociabiliser,",
                     "🟢 Vert : personne ouverte aux nouvelles rencontres.",
                 ],
             },

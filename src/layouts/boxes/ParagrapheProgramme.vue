@@ -63,8 +63,7 @@ export default defineComponent({
     align-items: center;
     background-color: rgba(var(--color-primary-rgb), 0.5);
     transition: background-color 0.3s ease;
-    font-size: 2rem;
-
+    font-size: 1.5rem;
 }
 
 .header:hover {
@@ -82,6 +81,7 @@ export default defineComponent({
 }
 
 .arrow {
-    margin-right: 0.5rem;
+    margin-right: 2.5rem;
+    margin-left: 1rem;
 }
 </style>
