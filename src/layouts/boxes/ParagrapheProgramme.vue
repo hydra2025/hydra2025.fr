@@ -75,7 +75,7 @@ export default defineComponent({
 }
 
 .content {
-    padding: 1rem;
+    padding: 1rem 6rem 1rem 4rem;
     font-size: 1.2rem;
     background-color: rgba(var(--color-primary-rgb), 0.5);
 }
