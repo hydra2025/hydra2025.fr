@@ -527,6 +527,9 @@ const WINDOW_HEIGHT = 500;
       animationFrame = requestAnimationFrame(draw);
     }
   };
+  const in_game = () => {
+    return gameStarted && !gameOver && loading === 0;
+  };
 
   window.addEventListener("keydown", (e) => {
     if (e.code === "Space") {
@@ -538,6 +541,7 @@ const WINDOW_HEIGHT = 500;
         sendJsonMessage({ type: "flap", p: submarineY });
         jumping = true;
       }
+      if (in_game()) e.preventDefault();
     }
   });
 
@@ -546,23 +550,26 @@ const WINDOW_HEIGHT = 500;
       sendJsonMessage({ type: "stopFlap", p: submarineY });
       jumping = false;
     }
+    if (in_game()) e.preventDefault();
   });
 
-  window.addEventListener("mousedown", () => {
+  window.addEventListener("mousedown", (e) => {
     if (gameOver && !jumping) {
       startGame();
     } else {
       sendJsonMessage({ type: "flap", p: submarineY });
       jumping = true;
     }
+    if (in_game()) e.preventDefault();
   });
 
-  window.addEventListener("mouseup", () => {
+  window.addEventListener("mouseup", (e) => {
     sendJsonMessage({ type: "stopFlap", p: submarineY });
     jumping = false;
+    if (in_game()) e.preventDefault();
   });
 
-  window.addEventListener("touchstart", () => {
+  window.addEventListener("touchstart", (e) => {
     if (!gameStarted) {
       startGame();
     } else if (gameOver && !jumping) {
@@ -571,10 +578,12 @@ const WINDOW_HEIGHT = 500;
       sendJsonMessage({ type: "flap", p: submarineY });
       jumping = true;
     }
+    if (in_game()) e.preventDefault();
   });
 
-  window.addEventListener("touchend", () => {
+  window.addEventListener("touchend", (e) => {
     sendJsonMessage({ type: "stopFlap", p: submarineY });
     jumping = false;
+    if (in_game()) e.preventDefault();
   });
 </script>
