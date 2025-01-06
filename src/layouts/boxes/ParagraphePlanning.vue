@@ -1,11 +1,16 @@
 <template>
     <div class="collapsible-paragraph">
         <div class="header" :class="{ pointer: event.content }" @click="isOpen = !isOpen">
-            <span class="days">{{ event.day }}</span>
-            <span class="month">{{ event.month }}</span>
-            <span class="arrow" v-if="event.content">{{ isOpen ? "▲" : "▼" }}</span>
-            <span class="arrow" v-else></span>
-            <span class="title">{{ event.title }}</span>
+            <div class="date">
+                <span class="days">{{ event.day }}</span>
+                <span class="month">{{ event.month }}</span>
+            </div>
+            <div>
+
+                <span class="arrow" v-if="event.content">{{ isOpen ? "▲" : "▼" }}</span>
+                <span class="arrow" v-else></span>
+                <span class="title">{{ event.title }}</span>
+            </div>
         </div>
         <div class="content" v-if="isOpen && event.content">
             {{ event.content }}
@@ -76,6 +81,11 @@ export default defineComponent({
     width: 1ch;
 }
 
+.date {
+    display: flex;
+    align-items: center;
+}
+
 .days {
     margin-right: 0;
     margin-left: 10rem;
@@ -85,6 +95,7 @@ export default defineComponent({
     text-align: right;
     width: 3ch;
     align-self: baseline;
+    display: block;
 }
 
 .month {
@@ -96,6 +107,7 @@ export default defineComponent({
     align-self: baseline;
     margin-right: 1rem;
     margin-left: 0;
+    display: block;
 }
 
 @media screen and (max-width: 768px) {
@@ -103,8 +115,28 @@ export default defineComponent({
         margin-left: 1rem;
     }
 
+    .header {
+        padding: 1rem;
+        flex-wrap: wrap;
+    }
+
     .content {
         padding: 1rem 2rem;
+    }
+
+    .days {
+        margin-left: unset;
+    }
+
+    .month {
+        margin-right: unset;
+    }
+}
+
+@media screen and (max-width: 570px) {
+    .header {
+        flex-direction: column;
+        align-items: center;
     }
 }
 </style>
