@@ -1,0 +1,30 @@
+---
+import ParagrapheProgramme from "../layouts/boxes/ParagrapheProgramme.vue";
+import Layout from "../layouts/Layout.astro";
+import events from "../campagne";
+import ParagraphePlanning from "../layouts/boxes/ParagraphePlanning.vue";
+---
+
+<Layout title="La mission">
+  <h1>
+    Découvrez le planning de la<br /><span class="accent"
+      >semaine de campagne</span
+    >
+  </h1>
+  {events.map((event) => <ParagraphePlanning event={event} client:load />)}
+</Layout>
+<style>
+  h1 {
+    font-family: var(--font-family-text);
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    margin-bottom: 2em;
+  }
+  .accent {
+    color: var(--color-primary);
+    font-family: var(--font-family-title);
+    font-size: 1.3em;
+  }
+</style>

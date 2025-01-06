@@ -4,6 +4,7 @@ import Button from "../components/Button.astro";
 import Hero2Col from "../layouts/Hero2Col.astro";
 import RotatingLogo from "../components/RotatingLogo.astro";
 import Layout from "../layouts/Layout.astro";
+import SubscribeButton from "../layouts/SubscribeButton.astro";
 ---
 
 <Layout title="Liste BDE TMSP 2025">
@@ -17,6 +18,18 @@ import Layout from "../layouts/Layout.astro";
         <Button href="#lore">Immersion</Button>
         <Button href="/programme">La mission</Button>
         <Button>Contact</Button>
+      </div>
+      <div id="event-counter">
+        <div id="above-bar">
+          <h2>Soirée de campagne <span class="accent">HYDRA</span></h2>
+          <span id="timer">6j 5h et 20”</span>
+        </div>
+        <div id="progress-container">
+          <div id="progress-border"></div>
+          <div id="progress-bar"></div>
+        </div>
+        <span id="final-date">7 février - 22h</span>
+        <SubscribeButton />
       </div>
     </div>
     <RotatingLogo slot="right" />
@@ -112,70 +125,242 @@ import Layout from "../layouts/Layout.astro";
       </p>
     </div>
   </Lore>
+</Layout>
 
-  <style>
-    .accent {
-      color: var(--color-primary);
-    }
-    .accent.title {
-      font-family: var(--font-family-title);
-      font-size: 1.2em;
-    }
+<script>
+  const TIME_END = 1738962000000; // 7 février 2025 22h
+  const TIME_START = 1736124983267; // 6 janvier 2025 1h 56min 23s
+  const percent = () => {
+    const now = Date.now();
+    const total = TIME_END - TIME_START;
+    const elapsed = now - TIME_START;
+    return Math.min((elapsed / total) * 100, 100);
+  };
+  const getRemainingTime = () => {
+    const now = Date.now();
+    const remaining = TIME_END - now;
+    const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(
+      (remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+    if (days) return `${days}j ${hours}h et ${minutes}"`;
+    if (hours) return `${hours}h et ${minutes}"`;
+    if (minutes) return `${minutes}"`;
+    if (seconds) return "Quelques secondes";
+    return "Maintenant !";
+  };
+  const progressBar = document.getElementById("progress-bar") as HTMLDivElement;
+  const timer = document.getElementById("timer") as HTMLSpanElement;
+  const updateProgress = () => {
+    progressBar.style.width = `${percent()}%`;
+    timer.textContent = getRemainingTime();
+  };
+  setInterval(updateProgress, 30000);
+  updateProgress();
+</script>
 
-    p {
-      font-size: 1.1em;
-      line-height: 1.5em;
-    }
+<style>
+  .accent {
+    color: var(--color-primary);
+  }
+  .accent.title {
+    font-family: var(--font-family-title);
+    font-size: 1.2em;
+  }
 
-    #accent {
-      color: var(--color-primary);
-      text-transform: uppercase;
-      font-family: var(--font-family-title);
-      font-size: 1.2em;
-    }
+  p {
+    font-size: 1.1em;
+    line-height: 1.5em;
+  }
 
-    #hero-text {
-      font-size: 3em;
-      text-align: left;
-      margin: 0;
-      font-family: var(--font-family-text);
-    }
+  #accent {
+    color: var(--color-primary);
+    text-transform: uppercase;
+    font-family: var(--font-family-title);
+    font-size: 1.2em;
+  }
 
+  #hero-text {
+    font-size: 3em;
+    text-align: left;
+    margin: 0;
+    font-family: var(--font-family-text);
+  }
+
+  #hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 3em;
+  }
+
+  .button-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1em 2em;
+    margin-top: 1em;
+  }
+
+  @media screen and (max-width: 768px) {
     #hero-left {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      padding: 3em;
+      padding: 1em;
+    }
+    #hero-text {
+      font-size: 2em;
     }
 
     .button-grid {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1em 2em;
-      margin-top: 1em;
+      grid-template-columns: 1fr;
     }
+  }
 
-    @media screen and (max-width: 768px) {
-      #hero-left {
-        padding: 1em;
-      }
-      #hero-text {
-        font-size: 2em;
-      }
+  #lore {
+    text-align: center;
+    margin-top: 3em;
+    font-family: var(--font-family-title);
+    font-size: 4em;
+  }
 
-      .button-grid {
-        grid-template-columns: 1fr;
-      }
+  /* Event counter */
+  #event-counter {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5em;
+  }
+  #above-bar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  #timer {
+    font-size: 2em;
+    margin-right: 30px;
+  }
+
+  #above-bar h2 {
+    font-size: 1.5em;
+    font-family: var(--font-family-text);
+    margin: 0;
+  }
+
+  #above-bar h2 .accent {
+    color: var(--color-primary);
+    font-family: var(--font-family-title);
+    font-weight: bolder;
+    font-size: 1.1em;
+  }
+
+  #timer {
+    font-family: var(--font-family-text);
+    font-size: 1.5em;
+    font-weight: lighter;
+    color: var(--color-text);
+  }
+
+  #progress-container {
+    width: 100%;
+    height: 50px;
+    margin-top: 3px;
+    background-color: transparent;
+    overflow: visible;
+    position: relative;
+    clip-path: polygon(
+      5px 0%,
+      0% 5px,
+      0% calc(100% - 10px),
+      10px 100%,
+      calc(20% - 10px) 100%,
+      20% calc(100% - 10px),
+      calc(100% - 5px) calc(100% - 10px),
+      100% calc(calc(100% - 10px) - 5px),
+      100% 30px,
+      calc(100% - 30px) 0%,
+      5px 0%
+    );
+  }
+
+  #progress-border {
+    background-color: var(--color-primary);
+    position: absolute;
+    inset: 0;
+    clip-path: polygon(
+      5px 0%,
+      0% 5px,
+      0% calc(100% - 10px),
+      10px 100%,
+      calc(20% - 10px) 100%,
+      20% calc(100% - 10px),
+      calc(100% - 5px) calc(100% - 10px),
+      100% calc(calc(100% - 10px) - 5px),
+      100% 30px,
+      calc(100% - 30px) 0%,
+      5px 0%,
+      calc(3px + calc(5px - calc(3px * 0.7071067811865475))) 3px,
+      calc(calc(100% - 3px) - calc(30px - calc(3px * 0.7071067811865475))) 3px,
+      calc(100% - 3px) calc(3px + calc(30px - calc(3px * 0.7071067811865475))),
+      calc(100% - 3px)
+        calc(
+          calc(calc(100% - 10px) - 3px) -
+            calc(5px - calc(3px * 0.7071067811865475))
+        ),
+      calc(calc(100% - 3px) - calc(5px - calc(3px * 0.7071067811865475)))
+        calc(calc(100% - 10px) - 3px),
+      calc(calc(20% - 3px) + calc(3px * 0.7071067811865475))
+        calc(calc(100% - 3px) - 10px),
+      calc(calc(20% - 3px) - calc(10px - calc(3px * 0.7071067811865475)))
+        calc(100% - 3px),
+      calc(3px + calc(10px - calc(3px * 0.7071067811865475))) calc(100% - 3px),
+      3px calc(calc(100% - 3px) - calc(10px - calc(3px * 0.7071067811865475))),
+      3px calc(3px + calc(5px - calc(3px * 0.7071067811865475))),
+      calc(3px + calc(5px - calc(3px * 0.7071067811865475))) 3px
+    );
+  }
+
+  #progress-bar {
+    width: 20%;
+    height: 100%;
+    background-color: rgba(var(--color-primary-rgb), 0.5);
+    transition: width 0.5s ease-in-out;
+    animation: pulse 1s infinite ease-in-out;
+    clip-path: polygon(
+      0% 0%,
+      0% 100%,
+      100% 100%,
+      100% 30px,
+      calc(100% - 30px) 0%,
+      0% 0%
+    );
+  }
+
+  @keyframes pulse {
+    0% {
+      background-color: rgba(var(--color-primary-rgb), 0.5);
     }
-
-    #lore {
-      text-align: center;
-      margin-top: 3em;
-      font-family: var(--font-family-title);
-      font-size: 4em;
+    25% {
+      background-color: rgba(var(--color-primary-rgb), 0.7);
     }
-  </style>
-</Layout>
+    50% {
+      background-color: rgba(var(--color-primary-rgb), 0.5);
+    }
+    100% {
+      background-color: rgba(var(--color-primary-rgb), 0.5);
+    }
+  }
+
+  #final-date {
+    display: block;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+</style>

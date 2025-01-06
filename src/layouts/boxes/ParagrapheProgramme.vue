@@ -84,4 +84,14 @@ export default defineComponent({
     margin-right: .5rem;
     margin-left: 2rem;
 }
+
+@media screen and (max-width: 768px) {
+    .arrow {
+        margin-left: 1rem;
+    }
+
+    .content {
+        padding: 1rem 2rem;
+    }
+}
 </style>
