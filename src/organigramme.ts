@@ -37,6 +37,7 @@ import alexandra from "./assets/profile_pictures/34-Alexandra.jpg";
 import gustave from "./assets/profile_pictures/35-Gustave.jpg";
 import nihel from "./assets/profile_pictures/36-Nihel.png";
 import paul from "./assets/profile_pictures/37-Paul.png";
+import alexisD from "./assets/profile_pictures/38-AlexisD.png";
 
 
 type Member = {
@@ -299,7 +300,8 @@ const poles: Pole[] = [
                 role: "Pôle Séculogie",
                 respo: false,
                 facebook: "https://www.facebook.com/profile.php?id=61563774628611",
-                linkedin: "https://www.linkedin.com/in/alexis-dauphin/"
+                linkedin: "https://www.linkedin.com/in/alexis-dauphin/",
+                img: alexisD
             },
             {
                 first_name: "Raphaël",
