@@ -39,6 +39,7 @@ import nihel from "./assets/profile_pictures/36-Nihel.png";
 import paul from "./assets/profile_pictures/37-Paul.png";
 import alexisD from "./assets/profile_pictures/38-AlexisD.png";
 import thomas from "./assets/profile_pictures/39-Thomas.png";
+import amelie from "./assets/profile_pictures/40-Amelie.png";
 
 
 type Member = {
@@ -93,6 +94,7 @@ const poles: Pole[] = [
                 answerExtra: "Oui",
                 facebook: "https://www.facebook.com/profile.php?id=61565049044086",
                 linkedin: "https://www.linkedin.com/in/am%C3%A9lie-t-830896206/",
+                img: amelie
             },
             {
                 first_name: "Judith",
@@ -513,7 +515,8 @@ const poles: Pole[] = [
                 questionExtra: "Carry :",
                 answerExtra: "Oui",
                 facebook: "https://www.facebook.com/profile.php?id=61565049044086",
-                linkedin: "https://www.linkedin.com/in/am%C3%A9lie-t-830896206/"
+                linkedin: "https://www.linkedin.com/in/am%C3%A9lie-t-830896206/",
+                img: amelie
             },
         ]
     },

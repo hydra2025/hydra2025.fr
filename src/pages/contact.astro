@@ -94,11 +94,11 @@ import Line from "../layouts/boxes/Line.astro";
   .box {
     position: relative;
     padding: 2em;
+    box-sizing: border-box;
     background: rgba(var(--color-background-rgb), 0.2);
     backdrop-filter: blur(1em);
 
-    column-width: 50ch;
-    column-count: auto;
+    width: min(calc(100% - 1em), 32em);
 
     clip-path: polygon(
       50px 0%,
