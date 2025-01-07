@@ -5,7 +5,7 @@ import Image from "astro/components/Image.astro";
 
 // Get the current page path
 const currentPage =
-  "/" + Astro.url.toString().replace(/\/$/, "").split("/").pop();
+  "/" + (Astro.url.toString() + "/").replace(/\/$/, "").split("/").pop();
 
 const links = [
   { href: "/", text: "Accueil" },
