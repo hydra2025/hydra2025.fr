@@ -38,6 +38,7 @@ import gustave from "./assets/profile_pictures/35-Gustave.jpg";
 import nihel from "./assets/profile_pictures/36-Nihel.png";
 import paul from "./assets/profile_pictures/37-Paul.png";
 import alexisD from "./assets/profile_pictures/38-AlexisD.png";
+import thomas from "./assets/profile_pictures/39-Thomas.png";
 
 
 type Member = {
@@ -318,15 +319,7 @@ const poles: Pole[] = [
         name: "Sécurité-Logistique",
         full_width: true,
         members: [
-            {
-                first_name: "Alexis",
-                last_name: "Dauphin",
-                role: "Pôle Séculogie",
-                respo: false,
-                facebook: "https://www.facebook.com/profile.php?id=61563774628611",
-                linkedin: "https://www.linkedin.com/in/alexis-dauphin/",
-                img: alexisD
-            },
+
             {
                 first_name: "Raphaël",
                 last_name: "Lefèvre",
@@ -429,6 +422,7 @@ const poles: Pole[] = [
                 answerExtra: "Non",
                 facebook: "https://www.facebook.com/profile.php?id=61565175063811",
                 linkedin: "https://www.linkedin.com/in/thomas-daufresne-3a24b9234/",
+                img: thomas
 
             },
             {
@@ -528,11 +522,14 @@ const poles: Pole[] = [
         full_width: false,
         members: [
             {
-                first_name: ".",
-                last_name: ".",
-                role: ".",
-                respo: false,
-            },
+                first_name: "Alexis",
+                last_name: "Dauphin",
+                role: "Pôle Alumnis",
+                respo: true,
+                facebook: "https://www.facebook.com/profile.php?id=61563774628611",
+                linkedin: "https://www.linkedin.com/in/alexis-dauphin/",
+                img: alexisD
+            }
         ],
     },
 ];
