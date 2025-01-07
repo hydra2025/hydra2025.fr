@@ -1,0 +1,123 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Line from "../layouts/boxes/Line.astro";
+---
+
+<Layout title="Clip de campagne">
+  <div class="box" id="box1">
+    <div class="border"></div>
+    <div class="line pulse"></div>
+    <video width="100%" controls>
+      <source src="/rickroll.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</Layout>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const video = document.querySelector("video") as HTMLVideoElement;
+    const line = document.querySelector(".line") as HTMLDivElement;
+
+    video.addEventListener("timeupdate", () => {
+      const progress = video.currentTime / video.duration;
+      line.style.width = `calc((100% - 76px) * ${progress})`;
+    });
+  });
+</script>
+<style>
+  .line {
+    position: absolute;
+    background-color: var(--color-primary);
+    width: calc(100% - 76px);
+    height: 2px;
+    top: 13px;
+    left: 63px;
+    opacity: 1;
+    border-radius: 1px;
+    transition: width 1s ease;
+  }
+  .box video {
+    height: auto;
+  }
+
+  .box {
+    position: relative;
+    padding: 2em;
+    box-sizing: border-box;
+    background: rgba(var(--color-background-rgb), 0.2);
+    backdrop-filter: blur(1em);
+
+    width: min(calc(100% - 1em), 75em);
+
+    clip-path: polygon(
+      50px 0%,
+      0% 50px,
+      0% calc(100% - 20px),
+      20px 100%,
+      calc(80% - 10px) 100%,
+      80% calc(100% - 10px),
+      calc(100% - 30px) calc(100% - 10px),
+      100% calc(calc(100% - 10px) - 30px),
+      100% 0%,
+      50px 0%
+    );
+  }
+  .border {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-primary);
+
+    clip-path: polygon(
+      50px 0%,
+      0% 50px,
+      0% calc(100% - 20px),
+      20px 100%,
+      calc(80% - 10px) 100%,
+      80% calc(100% - 10px),
+      calc(100% - 30px) calc(100% - 10px),
+      100% calc(calc(100% - 10px) - 30px),
+      100% 0%,
+      50px 0%,
+      calc(3px + calc(50px - calc(3px * 0.7071067811865475))) 3px,
+      calc(100% - 3px) 3px,
+      calc(100% - 3px)
+        calc(
+          calc(calc(100% - 10px) - 3px) -
+            calc(30px - calc(3px * 0.7071067811865475))
+        ),
+      calc(calc(100% - 3px) - calc(30px - calc(3px * 0.7071067811865475)))
+        calc(calc(100% - 10px) - 3px),
+      calc(calc(80% - 3px) + calc(3px * 0.7071067811865475))
+        calc(calc(100% - 3px) - 10px),
+      calc(calc(80% - 3px) - calc(10px - calc(3px * 0.7071067811865475)))
+        calc(100% - 3px),
+      calc(3px + calc(20px - calc(3px * 0.7071067811865475))) calc(100% - 3px),
+      3px calc(calc(100% - 3px) - calc(20px - calc(3px * 0.7071067811865475))),
+      3px calc(3px + calc(50px - calc(3px * 0.7071067811865475))),
+      calc(3px + calc(50px - calc(3px * 0.7071067811865475))) 3px
+    );
+  }
+
+  .pulse {
+    animation: pulse 3s infinite ease;
+  }
+
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(var(--color-primary-rgb), 0.5);
+    }
+    50% {
+      box-shadow: 0 0 0 1em rgba(var(--color-primary-rgb), 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(var(--color-primary-rgb), 0);
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .box {
+      padding: 50px 1em 20px;
+    }
+  }
+</style>
