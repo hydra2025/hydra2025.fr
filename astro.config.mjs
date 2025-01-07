@@ -5,7 +5,10 @@ import vue from "@astrojs/vue";
 
 import compress from "astro-compress";
 
+import sitemap from "@astrojs/sitemap";
+
 // https://astro.build/config
 export default defineConfig({
-  integrations: [vue(), compress()]
+  site: "https://hydra2025.fr",
+  integrations: [vue(), compress(), sitemap()],
 });
