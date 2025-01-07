@@ -473,8 +473,8 @@ const poles: Pole[] = [
                 last_name: "Zheng",
                 role: "Pôle Prévention",
                 respo: false,
-                questionExtra: "Chinois :",
-                answerExtra: "Oui",
+                questionExtra: "HYDRAtation :",
+                answerExtra: "Sans modération",
                 facebook: "https://www.facebook.com/profile.php?id=61564465656252",
                 linkedin: "https://www.linkedin.com/in/yannick-zheng/",
                 img: yannick
