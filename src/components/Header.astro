@@ -3,6 +3,10 @@ import logo512 from "../assets/logo-512.png";
 import "@fontsource-variable/open-sans";
 import Image from "astro/components/Image.astro";
 
+// Get the current page path
+const currentPage =
+  "/" + Astro.url.toString().replace(/\/$/, "").split("/").pop();
+
 const links = [
   { href: "/", text: "Accueil" },
   { href: "/programme", text: "Programme" },
@@ -80,6 +84,14 @@ const links = [
     transition:
       color 0.3s,
       text-decoration 0.3s;
+  }
+
+  nav a.active {
+    color: var(--color-primary);
+  }
+
+  .hvr-underline-from-center.active:before {
+    background-color: var(--color-primary);
   }
 
   nav a:hover,
@@ -179,7 +191,13 @@ const links = [
   <nav>
     {
       links.map((link) => (
-        <a href={link.href} class="hvr-underline-from-center">
+        <a
+          href={link.href}
+          class:list={[
+            "hvr-underline-from-center",
+            currentPage === link.href ? "active" : "",
+          ]}
+        >
           {link.text}
         </a>
       ))

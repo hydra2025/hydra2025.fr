@@ -486,6 +486,8 @@ const poles: Pole[] = [
                 last_name: "Lardet",
                 role: "Respo DD",
                 respo: true,
+                questionExtra: "Chauve :",
+                answerExtra: "Peut-être",
                 facebook: "https://www.facebook.com/godisopensource",
                 linkedin: "https://www.linkedin.com/in/paullardet/",
                 img: paul

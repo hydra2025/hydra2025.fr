@@ -1,5 +1,6 @@
 ---
 import Header from "../components/Header.astro";
+import { ClientRouter } from "astro:transitions";
 import "../style/TTMusselsStencilTrl.astro";
 
 import "@fontsource-variable/open-sans";
@@ -48,11 +49,16 @@ const { title } = Astro.props;
     />
 
     <title>Hydra - {title}</title>
+    <ClientRouter />
   </head>
   <body>
-    <Background />
+    <Background
+      transition:name="background"
+      transition:animate="none"
+      transition:persist
+    />
     <Header />
-    <main>
+    <main transition:animate="fade">
       <slot />
     </main>
     <Footer />

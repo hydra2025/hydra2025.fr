@@ -137,6 +137,7 @@ const id2 = Math.random().toString(36).slice(2, 11);
     background-color: rgba(var(--color-background-rgb), 0.5);
     backdrop-filter: blur(10px);
     box-sizing: border-box;
+    overflow: hidden;
     clip-path: polygon(
       50px 0%,
       0% 50px,
@@ -172,8 +173,9 @@ const id2 = Math.random().toString(36).slice(2, 11);
     column-gap: 1rem;
 
     grid-template-columns: auto 1fr;
-    width: 100%;
+    width: fit-content;
     height: fit-content;
+    text-wrap: nowrap;
     font-size: 1.2rem;
     color: var(--color-text);
   }
