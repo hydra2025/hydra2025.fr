@@ -106,7 +106,7 @@ export default defineComponent({
     width: 3ch;
     align-self: baseline;
     margin-right: 1rem;
-    margin-left: 0;
+    margin-left: 0.125em;
     display: block;
 }
 

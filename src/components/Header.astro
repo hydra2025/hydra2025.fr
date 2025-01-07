@@ -55,7 +55,7 @@ const links = [
     text-shadow: 3px 3px 0px var(--color-background);
   }
 
-  .title a {
+  a {
     color: var(--color-text);
     text-decoration: none;
   }
@@ -162,18 +162,20 @@ const links = [
 </style>
 
 <header>
-  <div class="logo-title">
-    <Image
-      src={logo512}
-      alt="Logo Hydra"
-      class="logo"
-      fetchpriority="high"
-      loading="eager"
-      width={100}
-      height={100}
-    />
-    <h1 class="title"><a href="/">Hydra</a></h1>
-  </div>
+  <a href="/">
+    <div class="logo-title">
+      <Image
+        src={logo512}
+        alt="Logo Hydra"
+        class="logo"
+        fetchpriority="high"
+        loading="eager"
+        width={100}
+        height={100}
+      />
+      <h1 class="title">Hydra</h1>
+    </div></a
+  >
   <nav>
     {
       links.map((link) => (

@@ -56,19 +56,19 @@ import Button from "../components/Button.astro";
     display: block;
     pointer-events: none;
     top: -1em;
-    right: 0;
-    left: 0;
+    left: 2em;
     margin: auto;
     padding: 1em;
     border: 3px solid var(--color-primary);
     background: rgba(var(--color-background-rgb), 0.1);
     border-radius: 0.5em;
-    width: 20em;
+    width: min(18em, 90vw);
+    box-sizing: border-box;
     backdrop-filter: blur(10px);
     opacity: 0;
     z-index: 10;
     text-align: left;
-    transform: translateY(100%) translateX(-50%);
+    transform: translateY(100%) translateX(-100%);
 
     transition:
       opacity 0.5s ease-out,
@@ -79,7 +79,7 @@ import Button from "../components/Button.astro";
   .info:active .info-tooltip,
   .info:focus .info-tooltip,
   .info-tooltip:hover {
-    transform: translateY(-100%) translateX(-50%);
+    transform: translateY(-105%) translateX(-100%);
     opacity: 1;
   }
 </style>

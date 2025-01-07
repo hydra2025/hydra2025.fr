@@ -1,10 +1,161 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import facebook from "../assets/socials/facebook.svg?raw";
+import instagram from "../assets/socials/instagram.svg?raw";
+import youtube from "../assets/socials/youtube.svg?raw";
+import Line from "../layouts/boxes/Line.astro";
 ---
 
-<Layout title="Nous contacter" />
-<a href="https://www.facebook.com/profile.php?id=61568342853940&locale=fr_FR">
-    Facebook
-</a>
-<a href="https://www.instagram.com/hydra_liste2025/">Instagram</a>
-<a href="https://www.youtube.com/@HydraTMSP-2025">Youtube</a>
+<Layout title="Nous contacter">
+  <div class="box" id="box1">
+    <div class="border"></div>
+    <Line left="63px" top="13px" width="calc(100% - 76px)" />
+
+    <h1>Contactez-nous</h1>
+    <p>
+      Pour toute question ou remarque, n'hésitez pas à nous contacter via nos
+      réseaux sociaux ou à vous adresser directement à l'un des membres de notre
+      équipe.
+    </p>
+    <p>
+      Vous pouvez également nous joindre par email à l'adresse suivante : <a
+        href="mailto:contact@hydra2025.fr">contact@hydra2025.fr</a
+      >.
+    </p>
+    <p>Retrouvez nos vidéos et autres créations sur notre chaîne YouTube.</p>
+    <div class="socials">
+      <a
+        class="social"
+        href="https://www.facebook.com/profile.php?id=61568342853940&locale=fr_FR"
+      >
+        <span class="icon">
+          <Fragment set:html={facebook} />
+        </span>
+        <span class="social-name"> Facebook </span>
+      </a>
+      <a class="social" href="https://www.instagram.com/hydra_liste2025/">
+        <span class="icon">
+          <Fragment set:html={instagram} />
+        </span>
+        <span class="social-name"> Instagram </span>
+      </a>
+      <a class="social" href="https://www.youtube.com/@HydraTMSP-2025">
+        <span class="icon">
+          <Fragment set:html={youtube} />
+        </span>
+        <span class="social-name"> Youtube </span>
+      </a>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .socials {
+    display: flex;
+    gap: 1em;
+    margin-top: 2em;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--color-text);
+    font-size: 1rem;
+    font-weight: bold;
+    transition: color 0.3s ease;
+  }
+
+  a:hover {
+    color: var(--color-primary);
+  }
+  .social {
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+    text-decoration: none;
+    color: var(--color-text);
+    font-family: var(--font-family-title);
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+  }
+  .social:hover {
+    color: var(--color-primary);
+  }
+
+  .icon {
+    width: 1em;
+    height: 1em;
+    align-self: first baseline;
+  }
+
+  .social-name {
+    align-self: center;
+  }
+
+  .box {
+    position: relative;
+    padding: 2em;
+    background: rgba(var(--color-background-rgb), 0.2);
+    backdrop-filter: blur(1em);
+
+    column-width: 50ch;
+    column-count: auto;
+
+    clip-path: polygon(
+      50px 0%,
+      0% 50px,
+      0% calc(100% - 20px),
+      20px 100%,
+      calc(80% - 10px) 100%,
+      80% calc(100% - 10px),
+      calc(100% - 30px) calc(100% - 10px),
+      100% calc(calc(100% - 10px) - 30px),
+      100% 0%,
+      50px 0%
+    );
+  }
+  .border {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-primary);
+
+    clip-path: polygon(
+      50px 0%,
+      0% 50px,
+      0% calc(100% - 20px),
+      20px 100%,
+      calc(80% - 10px) 100%,
+      80% calc(100% - 10px),
+      calc(100% - 30px) calc(100% - 10px),
+      100% calc(calc(100% - 10px) - 30px),
+      100% 0%,
+      50px 0%,
+      calc(3px + calc(50px - calc(3px * 0.7071067811865475))) 3px,
+      calc(100% - 3px) 3px,
+      calc(100% - 3px)
+        calc(
+          calc(calc(100% - 10px) - 3px) -
+            calc(30px - calc(3px * 0.7071067811865475))
+        ),
+      calc(calc(100% - 3px) - calc(30px - calc(3px * 0.7071067811865475)))
+        calc(calc(100% - 10px) - 3px),
+      calc(calc(80% - 3px) + calc(3px * 0.7071067811865475))
+        calc(calc(100% - 3px) - 10px),
+      calc(calc(80% - 3px) - calc(10px - calc(3px * 0.7071067811865475)))
+        calc(100% - 3px),
+      calc(3px + calc(20px - calc(3px * 0.7071067811865475))) calc(100% - 3px),
+      3px calc(calc(100% - 3px) - calc(20px - calc(3px * 0.7071067811865475))),
+      3px calc(3px + calc(50px - calc(3px * 0.7071067811865475))),
+      calc(3px + calc(50px - calc(3px * 0.7071067811865475))) 3px
+    );
+  }
+
+  @media screen and (max-width: 768px) {
+    .box {
+      padding: 50px 1em 20px;
+    }
+    .socials {
+      flex-direction: column;
+      gap: 0.5em;
+    }
+  }
+</style>

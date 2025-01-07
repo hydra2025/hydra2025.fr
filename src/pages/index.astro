@@ -22,7 +22,7 @@ import SubscribeButton from "../layouts/SubscribeButton.astro";
       <div id="event-counter">
         <div id="above-bar">
           <h2>Soirée de campagne <span class="accent">HYDRA</span></h2>
-          <span id="timer">6j 5h et 20”</span>
+          <span id="timer"></span>
         </div>
         <div id="progress-container">
           <div id="progress-border"></div>
@@ -37,7 +37,7 @@ import SubscribeButton from "../layouts/SubscribeButton.astro";
   <h2 id="lore">Le Lore</h2>
   <Lore>
     <div slot="top">
-      <p>
+      <p class="lore-p">
         <span class="accent">La planète bleue.</span> Notre Terre, âgée de 4,567
         milliards d'années, après des millénaires de tolérance silencieuse, s'est
         éveillée. Elle a décidé, enfin, de réclamer ce qui lui appartenait. Après
@@ -46,7 +46,7 @@ import SubscribeButton from "../layouts/SubscribeButton.astro";
           class="accent">nature</span
         > a repris le dessus.
       </p>
-      <p>
+      <p class="lore-p">
         La surface de la Terre est désormais une terre interdite, un
         <span class="accent">désert</span>
         irradié par les rayons du soleil. La couche d'ozone, autrefois bouclier protecteur,
@@ -61,7 +61,7 @@ import SubscribeButton from "../layouts/SubscribeButton.astro";
       </p>
     </div>
     <div slot="left">
-      <p>
+      <p class="lore-p">
         <span class="accent">L'eau</span>. Cette immensité glacée est notre seul
         refuge. Mais elle est aussi notre prison, une muraille liquide qui nous
         isole et nous oppresse. En dessous de la surface, dans les profondeurs
@@ -78,7 +78,7 @@ import SubscribeButton from "../layouts/SubscribeButton.astro";
       </p>
     </div>
     <div slot="right">
-      <p>
+      <p class="lore-p">
         Là où il y avait de la grâce et de la douceur dans les océans, il n'y a
         plus que force et hostilité. Les créatures des profondeurs ont muté,
         gagnant en taille, en résistance, comme pour rappeler aux survivants
@@ -87,7 +87,7 @@ import SubscribeButton from "../layouts/SubscribeButton.astro";
         d'un territoire que nous ne faisons qu'habiter par tolérance,
         <span class="accent">prisonniers</span> de leur monde.
       </p>
-      <p>
+      <p class="lore-p">
         Lorsque les premiers signes de cette apocalypse se firent sentir, les
         meilleurs scientifiques de notre espèce, dans un ultime sursaut, ont
         construit des <span class="accent">abris sous-marins</span>. Des
@@ -98,7 +98,7 @@ import SubscribeButton from "../layouts/SubscribeButton.astro";
         ingénieurs, des ouvriers, ont péri dans cet ouvrage insensé, se
         sacrifiant dans l'<span class="accent">espoir</span> que, quelque part, l'humanité
         puisse trouver refuge dans les <span class="accent">profondeurs</span>.
-      </p><p>
+      </p><p class="lore-p">
         Nous sommes les héritiers de cet espoir, trois siècles après les
         premières bases. <span class="accent">siècles</span> passés dans l'ombre,
         enfouis dans l'obscurité des abysses, coupés de la surface, forcés de contempler,
@@ -113,7 +113,7 @@ import SubscribeButton from "../layouts/SubscribeButton.astro";
         >drographie de <span class="accent title">D</span>étection et de <span
           class="accent title">R</span
         >echerche des <span class="accent title">A</span>nomalies.
-      </p><p>
+      </p><p class="lore-p">
         <span class="accent title">HYDRA</span> n'a qu'un seul but, audacieux, insensé
         : percer les mystères de ce monde marin, comprendre ses secrets, et, peut-être,
         identifier une solution qui permettrait à l'humanité de survivre. Qui sera
@@ -129,7 +129,7 @@ import SubscribeButton from "../layouts/SubscribeButton.astro";
 
 <script>
   const TIME_END = 1738962000000; // 7 février 2025 22h
-  const TIME_START = 1736124983267; // 6 janvier 2025 1h 56min 23s
+  const TIME_START = 1735124983267; // 6 janvier 2025 1h 56min 23s
   const percent = () => {
     const now = Date.now();
     const total = TIME_END - TIME_START;
@@ -141,7 +141,7 @@ import SubscribeButton from "../layouts/SubscribeButton.astro";
     const remaining = TIME_END - now;
     const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
     const hours = Math.floor(
-      (remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+      (remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
     );
     const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
@@ -224,6 +224,11 @@ import SubscribeButton from "../layouts/SubscribeButton.astro";
     margin-top: 3em;
     font-family: var(--font-family-title);
     font-size: 4em;
+  }
+
+  .lore-p {
+    margin-top: 0;
+    margin-bottom: 1.5em;
   }
 
   /* Event counter */
@@ -327,7 +332,7 @@ import SubscribeButton from "../layouts/SubscribeButton.astro";
   }
 
   #progress-bar {
-    width: 20%;
+    width: 0%;
     height: 100%;
     background-color: rgba(var(--color-primary-rgb), 0.5);
     transition: width 0.5s ease-in-out;

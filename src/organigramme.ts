@@ -48,6 +48,8 @@ type Member = {
     respo: boolean;
     linkedin?: string;
     facebook?: string;
+    questionExtra?: string;
+    answerExtra?: string;
     _has_overlay?: boolean; // Only one member should have this set to true
 };
 
@@ -70,6 +72,8 @@ const poles: Pole[] = [
                 linkedin: "https://www.linkedin.com/in/luca-fuster-02a1a2246/",
                 facebook: "https://www.facebook.com/luca.fuster.18",
                 img: luca,
+                questionExtra: "Coordinateur :",
+                answerExtra: "Oui",
                 _has_overlay: true
             },
 
@@ -84,6 +88,8 @@ const poles: Pole[] = [
                 last_name: "Thai",
                 role: "VPR IMTBS PGE",
                 respo: false,
+                questionExtra: "Carry :",
+                answerExtra: "Oui",
                 facebook: "https://www.facebook.com/profile.php?id=61565049044086",
                 linkedin: "https://www.linkedin.com/in/am%C3%A9lie-t-830896206/",
             },
@@ -92,6 +98,8 @@ const poles: Pole[] = [
                 last_name: "Lin",
                 role: "VP TSP",
                 respo: true,
+                questionExtra: "3h :",
+                answerExtra: "23h",
                 facebook: "https://www.facebook.com/profile.php?id=61565541022212",
                 img: judith
             },
@@ -100,6 +108,8 @@ const poles: Pole[] = [
                 last_name: "Delbecq",
                 role: "VP IMTBS Bachelor",
                 respo: true,
+                questionExtra: "Cerveau :",
+                answerExtra: "Activé",
                 linkedin: "https://www.linkedin.com/in/ana%C3%AFs-delbecq-1b1a66328/",
                 facebook: "https://www.facebook.com/profile.php?id=61564918738615",
                 img: anais
@@ -110,6 +120,8 @@ const poles: Pole[] = [
                 last_name: "Gacougnolle",
                 role: "VPR FISA",
                 respo: false,
+                questionExtra: "Boisson :",
+                answerExtra: "Eau*",
                 facebook: "https://www.facebook.com/profile.php?id=61559551011143",
                 linkedin: "https://www.linkedin.com/in/titouan-gacougnolle/",
                 img: titouan
@@ -125,6 +137,8 @@ const poles: Pole[] = [
                 last_name: "Esnée",
                 role: "Vice-Trésorier",
                 respo: false,
+                questionExtra: "Charme :",
+                answerExtra: "Maximum",
                 linkedin: "https://www.linkedin.com/in/jules-esnee-160580250/",
                 facebook: "https://www.facebook.com/profile.php?id=61561141139656",
                 img: jules
@@ -134,6 +148,8 @@ const poles: Pole[] = [
                 last_name: "Vidal",
                 role: "Trésorier",
                 respo: true,
+                questionExtra: "Argent :",
+                answerExtra: "Jamais assez",
                 linkedin: "https://www.linkedin.com/in/jean-vidal-159167334/",
                 facebook: "https://www.facebook.com/profile.php?id=61565198602532",
                 img: jean
@@ -164,6 +180,8 @@ const poles: Pole[] = [
                 last_name: "Benjemaa",
                 role: "Pôle Communication",
                 respo: false,
+                questionExtra: "Co-respo :",
+                answerExtra: "Oui",
                 linkedin: "https://www.linkedin.com/in/zeineb-benjemaa-b1330b32a/",
                 facebook: "https://www.facebook.com/profile.php?id=100010572241414",
                 img: zeineb
@@ -174,6 +192,8 @@ const poles: Pole[] = [
                 last_name: "Bert",
                 role: "Respo Communication",
                 respo: true,
+                questionExtra: "Design :",
+                answerExtra: "Incroyable",
                 facebook: "https://www.facebook.com/profile.php?id=61565551670046",
                 linkedin: "https://www.linkedin.com/in/alexandra-bert-b91308327/",
                 img: alexandra
@@ -225,6 +245,8 @@ const poles: Pole[] = [
                 last_name: "Beauvallet",
                 role: "Respo Évènement",
                 respo: true,
+                questionExtra: "Imagination :",
+                answerExtra: "Débordante",
                 linkedin: "https://www.linkedin.com/in/gustave-beauvallet/",
                 facebook: "https://www.facebook.com/gustave.beauvallet",
                 img: gustave
@@ -275,6 +297,8 @@ const poles: Pole[] = [
                 last_name: "Zhyhota-Locquin",
                 role: "Respo Soirée",
                 respo: true,
+                questionExtra: "Pôle 2 :",
+                answerExtra: "Communication",
                 facebook: "https://www.facebook.com/profile.php?id=100078652746929",
                 linkedin: "https://www.linkedin.com/in/slavik-zhyhota-locquin-93ba29274/",
                 img: slavik
@@ -308,6 +332,8 @@ const poles: Pole[] = [
                 last_name: "Lefèvre",
                 role: "Respo Séculogie",
                 respo: true,
+                questionExtra: "PR :",
+                answerExtra: "Oui",
                 linkedin: "https://www.linkedin.com/in/raphael-lefevre-871883326/",
                 facebook: "https://www.facebook.com/profile.php?id=61565069520153",
                 img: raph
@@ -333,6 +359,8 @@ const poles: Pole[] = [
                 last_name: "Beauchoux",
                 role: "Pôle Numérique",
                 respo: false,
+                questionExtra: "JavaScript :",
+                answerExtra: "Activé",
                 facebook: "https://www.facebook.com/profile.php?id=61553948484049",
                 linkedin: "https://www.linkedin.com/in/nathan-beauchoux-4655a0331/",
                 img: nathanB
@@ -342,6 +370,8 @@ const poles: Pole[] = [
                 last_name: "Rossfelder",
                 role: "Respo Numérique",
                 respo: true,
+                questionExtra: "CSS :",
+                answerExtra: "Flex",
                 facebook: "https://www.facebook.com/alex6ro",
                 linkedin: "https://www.linkedin.com/in/arossf/",
                 img: alexisR
@@ -391,10 +421,23 @@ const poles: Pole[] = [
         full_width: false,
         members: [
             {
+                first_name: "Thomas",
+                last_name: "Daufresne",
+                role: "Pôle Ritz",
+                respo: false,
+                questionExtra: "Pôle Alumnis :",
+                answerExtra: "Non",
+                facebook: "https://www.facebook.com/profile.php?id=61565175063811",
+                linkedin: "https://www.linkedin.com/in/thomas-daufresne-3a24b9234/",
+
+            },
+            {
                 first_name: "Léa",
                 last_name: "Dai",
                 role: "Respo Ritz",
                 respo: true,
+                questionExtra: "Roulés :",
+                answerExtra: "Toujours",
                 facebook: "https://www.facebook.com/profile.php?id=61550293695918",
                 linkedin: "https://www.linkedin.com/in/l%C3%A9a-dai-109391334/",
                 img: leaD
@@ -419,6 +462,8 @@ const poles: Pole[] = [
                 last_name: "Gacougnolle",
                 role: "Respo Prévention",
                 respo: true,
+                questionExtra: "Boisson :",
+                answerExtra: "Eau*",
                 facebook: "https://www.facebook.com/profile.php?id=61559551011143",
                 linkedin: "https://www.linkedin.com/in/titouan-gacougnolle/",
                 img: titouan
@@ -428,6 +473,8 @@ const poles: Pole[] = [
                 last_name: "Zheng",
                 role: "Pôle Prévention",
                 respo: false,
+                questionExtra: "Chinois :",
+                answerExtra: "Oui",
                 facebook: "https://www.facebook.com/profile.php?id=61564465656252",
                 linkedin: "https://www.linkedin.com/in/yannick-zheng/",
                 img: yannick
@@ -458,6 +505,8 @@ const poles: Pole[] = [
                 last_name: "Mimoun",
                 role: "Respo Pougnes TSP",
                 respo: true,
+                questionExtra: "Focus :",
+                answerExtra: "Oui",
                 facebook: "https://www.facebook.com/profile.php?id=61564857758611",
                 linkedin: "https://www.linkedin.com/in/ylan-mimoun/",
                 img: ylan
@@ -467,6 +516,8 @@ const poles: Pole[] = [
                 last_name: "Thai",
                 role: "Pougnes IMTBS",
                 respo: false,
+                questionExtra: "Carry :",
+                answerExtra: "Oui",
                 facebook: "https://www.facebook.com/profile.php?id=61565049044086",
                 linkedin: "https://www.linkedin.com/in/am%C3%A9lie-t-830896206/"
             },
@@ -477,9 +528,9 @@ const poles: Pole[] = [
         full_width: false,
         members: [
             {
-                first_name: "prénomTest",
-                last_name: "nomTest",
-                role: "poleTest",
+                first_name: ".",
+                last_name: ".",
+                role: ".",
                 respo: false,
             },
         ],

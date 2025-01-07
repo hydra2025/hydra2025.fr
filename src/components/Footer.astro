@@ -13,9 +13,19 @@ import youtube from "../assets/socials/youtube.svg?raw";
       href="https://github.com/LiteApplication"
       target="_blank"
       id="alexis">Alexis&nbsp;ROSSFELDER</a
-    > & <a href="https://github.com/Naayfun" target="_blank" id="nathan"
-      >Nathan&nbsp;BEAUCHOUX</a
     >
+    <span class="credit-sep">, </span>
+    <a href="https://github.com/Naayfun" target="_blank" id="nathan"
+      >Nathan&nbsp;BEAUCHOUX
+    </a>
+    <span class="credit-sep"> & </span>
+    <a
+      href="https://www.linkedin.com/in/alexandra-bert-b91308327/"
+      target="_blank"
+      id="alexandra"
+    >
+      Alexandra&nbsp;BERT
+    </a>
   </p>
   <div class="separator"></div>
 
@@ -37,6 +47,7 @@ import youtube from "../assets/socials/youtube.svg?raw";
 
 <style>
   footer {
+    position: relative;
     margin-top: 2rem;
     background-color: var(--color-background);
     width: 100%;
@@ -81,7 +92,8 @@ import youtube from "../assets/socials/youtube.svg?raw";
   }
 
   #alexis,
-  #nathan {
+  #nathan,
+  #alexandra {
     color: var(--color-text);
     text-decoration: none;
   }
@@ -106,9 +118,14 @@ import youtube from "../assets/socials/youtube.svg?raw";
       text-align: center;
     }
     #alexis,
-    #nathan {
+    #nathan,
+    #alexandra {
       display: block;
       text-align: center;
+    }
+
+    .credit-sep {
+      display: none;
     }
   }
 </style>
