@@ -14,14 +14,17 @@ type Score = {
 }
 
 const leaderboard: Ref<(Score | null)[]> = ref<(Score | null)[]>(Array.from({ length: 10 }).map((e) => null))
-let refreshInterval: number | null = null
+let refreshInterval: NodeJS.Timeout | null = null
 const refresh = () => {
-    if (import.meta.env.SSR) { clearInterval(refreshInterval!!); return; }
+    if (import.meta.env.SSR) {
+        clearInterval(refreshInterval!!);
+        return;
+    }
     fetch(ENDPOINT).then(
         (response: Response) => response.json().catch((error) => console.error(error))
     ).then((scores: Score[]) => leaderboard.value = scores).catch((error) => console.error(error))
 }
-refreshInterval = setInterval(refresh, 30000)
+refreshInterval = setInterval(refresh, 10000)
 refresh()
 
 
@@ -56,7 +59,6 @@ export default defineComponent(
 
 .name {
     columns: 2;
-    margin: auto;
     font-family: var(--font-family-title);
 }
 

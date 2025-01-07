@@ -174,7 +174,7 @@ const WINDOW_HEIGHT = 500;
   let parallaxCoral = generateParallaxCorals();
   let pipeSpacingDeltaDivisor = PIPE_SPACING_DELTA_DIVISOR_MIN;
   let animationFrame: number;
-  let updateObjectsInterval: number;
+  let updateObjectsInterval: NodeJS.Timeout;
 
   const submarineImage = new Image();
   const bubbleImages = Array.from(
@@ -234,6 +234,11 @@ const WINDOW_HEIGHT = 500;
     alert(
       "Impossible de se connecter au serveur. Veuillez rafraîchir la page."
     );
+    clearInterval(loadingInterval);
+    startButton!!.removeEventListener("click", startGame);
+    startButton!!.style.display = "block";
+    startButton!!.innerText = "Rechargez la page";
+    startButton!!.onclick = () => window.location.reload();
     socket.onclose = () => {};
   };
 
@@ -297,6 +302,7 @@ const WINDOW_HEIGHT = 500;
     score = 0;
     gameOver = false;
     gameStarted = true;
+    pipeSpacingDeltaDivisor = PIPE_SPACING_DELTA_DIVISOR_MIN;
     pipes = Array.from({ length: N_PIPES }, (_, i) => ({
       x: WINDOW_WIDTH + i * PIPE_SPACING * 2,
       y:
