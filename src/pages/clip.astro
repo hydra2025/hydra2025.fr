@@ -1,16 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Line from "../layouts/boxes/Line.astro";
 ---
 
 <Layout title="Clip de campagne">
   <div class="box" id="box1">
     <div class="border"></div>
     <div class="line pulse"></div>
-    <video width="100%" controls>
-      <source src="/rickroll.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
+    <video src="/rickroll.mp4" controls></video>
   </div>
 </Layout>
 
@@ -39,6 +35,7 @@ import Line from "../layouts/boxes/Line.astro";
   }
   .box video {
     height: auto;
+    width: 100%;
   }
 
   .box {
