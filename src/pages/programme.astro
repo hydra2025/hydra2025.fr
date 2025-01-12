@@ -1,11 +1,17 @@
 ---
 import ParagrapheProgramme from "../layouts/boxes/ParagrapheProgramme.vue";
 import Layout from "../layouts/Layout.astro";
+import Button from "../components/Button.astro";
 import programmeComplet from "../programme";
 ---
 
 <Layout title="La mission">
   <h1>Programme BDE<br /><span class="accent">HYDRA</span></h1>
+  <div id="clip-programme">
+    <Button href="/clip_programme" width="fit-content"
+      >Voir la vidéo du programme</Button
+    >
+  </div>
 
   {
     programmeComplet.map((paragraph) => (
@@ -20,11 +26,15 @@ import programmeComplet from "../programme";
     font-weight: 700;
     line-height: 1;
     text-align: center;
-    margin-bottom: 2em;
   }
   .accent {
     color: var(--color-primary);
     font-family: var(--font-family-title);
     font-size: 1.3em;
+  }
+  #clip-programme {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 4em;
   }
 </style>

@@ -9,4 +9,7 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   site: "https://hydra2025.fr",
   integrations: [vue(), sitemap(), compress()],
+  image: {
+    remotePatterns: [{ protocol: "https" }],
+  },
 });

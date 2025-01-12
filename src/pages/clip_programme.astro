@@ -1,0 +1,32 @@
+---
+import VideoPlayer from "../components/VideoPlayer.astro";
+import Layout from "../layouts/Layout.astro";
+import Button from "../components/Button.astro";
+import { videos } from "../videos";
+
+const clip = videos.find((video) => video.title === "Notre programme");
+if (!clip) {
+  throw new Error("Clip de campagne not found");
+}
+---
+
+<Layout title="Notre programme">
+  <h2>Notre programme</h2>
+  <VideoPlayer sources={clip.sources} youtube={clip.youtube} />
+
+  <div id="morevids">
+    <Button href="/all_videos" width="fit-content">Voir plus de vidéos</Button>
+  </div>
+</Layout>
+
+<style>
+  h2 {
+    text-align: center;
+    font-size: 3em;
+  }
+  #morevids {
+    display: flex;
+    justify-content: center;
+    margin-top: 2em;
+  }
+</style>

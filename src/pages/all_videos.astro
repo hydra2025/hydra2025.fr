@@ -1,0 +1,45 @@
+---
+import VideoPlayer from "../components/VideoPlayer.astro";
+import Layout from "../layouts/Layout.astro";
+import { videos } from "../videos";
+---
+
+<Layout title="Vidéos">
+  <h2>Vidéos <span class="accent">Hydra</span></h2>
+
+  <div id="videos">
+    {
+      videos.map((video) => (
+        <h3>{video.title}</h3>
+        <VideoPlayer
+          sources={video.sources}
+          youtube={video.youtube}
+        />
+      ))
+    }
+  </div>
+
+  <style>
+    h2 {
+      text-align: center;
+      font-size: 2em;
+    }
+    .accent {
+      color: var(--color-primary);
+      font-family: var(--font-family-title);
+      font-size: 1.1em;
+      text-transform: uppercase;
+    }
+    #videos {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    h3 {
+      font-size: 1.5em;
+      margin-top: 2em;
+    }
+  </style>
+</Layout>

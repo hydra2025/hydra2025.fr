@@ -24,6 +24,9 @@ const id2 = Math.random().toString(36).slice(2, 11);
           src={membre.img}
           alt={`Photo de ${membre.first_name}`}
           class="picture"
+          loading={membre.respo ? "eager" : "lazy"}
+          width={240}
+          height={240}
         />
       ) : (
         <div class="placeholder">😎</div>
@@ -42,7 +45,7 @@ const id2 = Math.random().toString(36).slice(2, 11);
     <span class="answer respo">{membre.answerExtra}</span>}
   </div>
 </div>
-<div class="bouton" id={id1}>
+<div class="bouton visible" id={id1}>
   <div class:list={["border", { respo: membre.respo }]}></div>
   <div class="imageBouton">
     {
@@ -51,6 +54,9 @@ const id2 = Math.random().toString(36).slice(2, 11);
           src={membre.img}
           alt={`Photo de ${membre.first_name}`}
           class="picture"
+          loading="eager"
+          width={192}
+          height={192}
         />
       ) : (
       <div class="placeholder">🧡</div>
@@ -93,26 +99,40 @@ const id2 = Math.random().toString(36).slice(2, 11);
 </div>
 
 <script define:vars={{ membre, id1, id2 }} is:inline>
+
   const overlay = document.querySelector(".overlay");
   const bouton = document.getElementById(id1);
   const popup = document.getElementById(id2);
 
   bouton.addEventListener("click", () => {
-    overlay.style.display = "block";
-    popup.style.display = "flex";
-    bouton.style.opacity = "0";
-
+    overlay.classList.add("visible");
+    popup.classList.add("visible");
+    bouton.classList.remove("visible");
+    
     setTimeout(() => (popup.style.width = "min(95vw, 40em)"), 300);
+    overlay.addEventListener("click", () => {
+      popup.style.width = "0";
+      setTimeout(() => {
+        overlay.classList.remove("visible");
+        popup.classList.remove("visible");
+        bouton.classList.add("visible");
+        overlay.removeEventListener("click", () => {});
+      }, 600);
+    });
   });
+  
+</script>
 
-  overlay.addEventListener("click", () => {
-    popup.style.width = "0";
-    setTimeout(() => {
-      overlay.style.display = "none";
-      popup.style.display = "none";
-      bouton.style.opacity = "1";
-    }, 600);
+<script>
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      const overlayElement = document.querySelector(".overlay") as HTMLElement;
+      if (overlayElement) {
+        overlayElement.click();
+      }
+    }
   });
+  
 </script>
 
 <style>
@@ -121,7 +141,17 @@ const id2 = Math.random().toString(36).slice(2, 11);
     position: fixed;
     inset: 0;
     z-index: 5;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    background-color: rgba(var(--color-background-rgb), 0.0);
+    transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+  }
+
+  .overlay.visible {
+    display: block;
+    background-color: rgba(var(--color-background-rgb), 0.5);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
 
   .popup {
@@ -136,6 +166,7 @@ const id2 = Math.random().toString(36).slice(2, 11);
     padding: 2rem;
     background-color: rgba(var(--color-background-rgb), 0.5);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     box-sizing: border-box;
     overflow: hidden;
     clip-path: polygon(
@@ -151,6 +182,9 @@ const id2 = Math.random().toString(36).slice(2, 11);
       50px 0%
     );
     transition: width 0.3s ease;
+  }
+  .popup.visible {
+    display: flex;
   }
 
   .popup .border {
@@ -205,7 +239,7 @@ const id2 = Math.random().toString(36).slice(2, 11);
     background-color: rgba(var(--color-primary-rgb), 0.1);
     backdrop-filter: blur(10px);
     position: relative;
-    opacity: 1;
+    opacity: 0.2;
     clip-path: polygon(
       50px 0%,
       0% 50px,
@@ -223,6 +257,10 @@ const id2 = Math.random().toString(36).slice(2, 11);
       opacity 0.5s ease;
   }
 
+  .bouton.visible {
+    opacity: 1;
+  }
+
   .picture,
   .placeholder {
     display: block;
@@ -233,7 +271,6 @@ const id2 = Math.random().toString(36).slice(2, 11);
     transition:
       transform 0.3s ease,
       border-radius 0.3s ease;
-    clip-path: polygon(25px 0%, 0% 25px, 0% 100%, 100% 100%, 100% 0%, 50px 0%);
   }
 
   .bouton .picture {
@@ -307,6 +344,9 @@ const id2 = Math.random().toString(36).slice(2, 11);
 
   .bouton .imageBouton {
     text-align: center;
+    overflow: hidden;
+    clip-path: polygon(25px 0%, 0% 25px, 0% 100%, 100% 100%, 100% 0%, 50px 0%);
+
   }
 
   .bouton .bottom {

@@ -1,8 +1,8 @@
 ---
-import ParagrapheProgramme from "../layouts/boxes/ParagrapheProgramme.vue";
 import Layout from "../layouts/Layout.astro";
 import events from "../campagne";
 import ParagraphePlanning from "../layouts/boxes/ParagraphePlanning.vue";
+import Button from "../components/Button.astro";
 ---
 
 <Layout title="La mission">
@@ -11,6 +11,10 @@ import ParagraphePlanning from "../layouts/boxes/ParagraphePlanning.vue";
       >semaine de campagne</span
     >
   </h1>
+  <div id="clip-campagne">
+    <!--     <Button href="/clip_campagne" width="fit-content"
+      >Voir le clip de campagne</Button>-->
+  </div>
   {events.map((event) => <ParagraphePlanning event={event} client:load />)}
 </Layout>
 <style>
@@ -20,11 +24,16 @@ import ParagraphePlanning from "../layouts/boxes/ParagraphePlanning.vue";
     font-weight: 700;
     line-height: 1;
     text-align: center;
-    margin-bottom: 2em;
   }
   .accent {
     color: var(--color-primary);
     font-family: var(--font-family-title);
     font-size: 1.3em;
+  }
+
+  #clip-campagne {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 4em;
   }
 </style>

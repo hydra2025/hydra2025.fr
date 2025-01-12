@@ -16,7 +16,7 @@ import SubscribeButton from "../components/SubscribeButton.astro";
       <div class="button-grid">
         <Button href="/programme">La mission</Button>
         <Button href="/organigramme">L'équipage</Button>
-        <Button href="/clip">Clip&nbsp;de&nbsp;campagne</Button>
+        <Button href="/floppyboat">Immersion</Button>
         <Button href="/contact">Contact</Button>
       </div>
       <div id="event-counter" transition:animate="none">
@@ -129,7 +129,7 @@ import SubscribeButton from "../components/SubscribeButton.astro";
 
 <script>
   const TIME_END = 1738962000000; // 7 février 2025 22h
-  const TIME_START = 1735124983267; // 6 janvier 2025 1h 56min 23s
+  const TIME_START = 1736722800000; // 6 janvier 2025 1h 56min 23s
   const percent = () => {
     const now = Date.now();
     const total = TIME_END - TIME_START;
