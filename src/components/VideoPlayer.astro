@@ -22,16 +22,10 @@ const getMimeType = (src: string) => {
 const { id = null, sources, youtube } = Astro.props;
 ---
 
-<div class="video-box" id={id}>
+<div class="video-box" id={id} transition:name={sources[0]} transition:persist>
   <div class="border"></div>
   <div class="line pulse"></div>
-  <video
-    controls
-    preload="auto"
-    crossorigin="anonymous"
-    transition:name={sources[0]}
-    transition:persist
-  >
+  <video controls preload="auto" crossorigin="anonymous">
     {sources.map((src: string) => <source src={src} type={getMimeType(src)} />)}
     {
       youtube && (
@@ -53,12 +47,16 @@ const { id = null, sources, youtube } = Astro.props;
 </div>
 
 <script>
-  document.querySelectorAll(".video-box").forEach((video_box) => {
-    const video = video_box.querySelector("video") as HTMLVideoElement;
-    video.addEventListener("timeupdate", () => {
-      const line = video_box.querySelector(".line") as HTMLDivElement;
-      const progress = video.currentTime / video.duration;
-      line.style.width = `calc((100% - 76px) * ${progress})`;
+  document.addEventListener("astro:page-load", () => {
+    console.log("Page loaded");
+
+    document.querySelectorAll(".video-box").forEach((video_box) => {
+      const video = video_box.querySelector("video") as HTMLVideoElement;
+      video.addEventListener("timeupdate", () => {
+        const line = video_box.querySelector(".line") as HTMLDivElement;
+        const progress = video.currentTime / video.duration;
+        line.style.width = `calc((100% - 76px) * ${progress})`;
+      });
     });
   });
 </script>

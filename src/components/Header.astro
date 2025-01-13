@@ -204,3 +204,21 @@ const links = [
     }
   </nav>
 </header>
+
+<script>
+  // On click on a nav link, update the active class
+  document.addEventListener("click", (event) => {
+    if (!event.target) return;
+    const target = event.target as HTMLElement;
+    if (target.tagName === "A") {
+      // Check if the target is in the header nav
+      if (!target.closest("header nav")) return;
+      // Remove the active class from the current active link
+      const currentActive = document.querySelector("nav a.active");
+      if (currentActive) {
+        currentActive.classList.remove("active");
+      }
+      target.classList.add("active");
+    }
+  });
+</script>

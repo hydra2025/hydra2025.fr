@@ -14,7 +14,6 @@ export const videos: HydraVideo[] = [
         title: "Rap de liste (Traque)",
         youtube: "https://www.youtube.com/watch?v=xTRPHDEBdjM",
         sources: [
-            "https://f.hydra2025.fr/rap_de_liste/output_0.mp4",
             "https://f.hydra2025.fr/rap_de_liste/output_1.mp4",
             "https://f.hydra2025.fr/rap_de_liste/output_2.webm"
         ],
@@ -23,7 +22,6 @@ export const videos: HydraVideo[] = [
         title: "Notre programme",
         youtube: "https://www.youtube.com/watch?v=NvpxvMistG4",
         sources: [
-            "https://f.hydra2025.fr/programme_bde_hydra_vf/output_0.mp4",
             "https://f.hydra2025.fr/programme_bde_hydra_vf/output_1.mp4",
             "https://f.hydra2025.fr/programme_bde_hydra_vf/output_2.webm"
         ],
