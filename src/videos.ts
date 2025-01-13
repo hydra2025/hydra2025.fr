@@ -11,11 +11,12 @@ export const videos: HydraVideo[] = [
     //    sources: ["https://f.hydra2025.fr/clip-de-liste.mp4"],
     //},
     {
-        title: "Rap de liste",
+        title: "Rap de liste (Traque)",
         youtube: "https://www.youtube.com/watch?v=xTRPHDEBdjM",
         sources: [
-            "https://f.hydra2025.fr/traque/output_0.mp4",
-            "https://f.hydra2025.fr/traque/output_1.webm"
+            "https://f.hydra2025.fr/rap_de_liste/output_0.mp4",
+            "https://f.hydra2025.fr/rap_de_liste/output_1.mp4",
+            "https://f.hydra2025.fr/rap_de_liste/output_2.webm"
         ],
     },
     {

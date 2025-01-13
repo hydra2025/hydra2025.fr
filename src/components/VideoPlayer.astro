@@ -47,18 +47,15 @@ const { id = null, sources, youtube } = Astro.props;
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const videos = document.querySelectorAll(
-      ".video-box"
-    ) as NodeListOf<HTMLDivElement>;
-    videos.forEach((video_box) => {
+  const videos = document.querySelectorAll(
+    ".video-box"
+  ) as NodeListOf<HTMLDivElement>;
+  videos.forEach((video_box) => {
+    video_box.querySelector("video")!!.addEventListener("timeupdate", () => {
       const video = video_box.querySelector("video") as HTMLVideoElement;
       const line = video_box.querySelector(".line") as HTMLDivElement;
-
-      video.addEventListener("timeupdate", () => {
-        const progress = video.currentTime / video.duration;
-        line.style.width = `calc((100% - 76px) * ${progress})`;
-      });
+      const progress = video.currentTime / video.duration;
+      line.style.width = `calc((100% - 76px) * ${progress})`;
     });
   });
 </script>
