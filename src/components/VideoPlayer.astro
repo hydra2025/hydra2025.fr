@@ -25,7 +25,13 @@ const { id = null, sources, youtube } = Astro.props;
 <div class="video-box" id={id}>
   <div class="border"></div>
   <div class="line pulse"></div>
-  <video controls preload="auto" crossorigin="anonymous">
+  <video
+    controls
+    preload="auto"
+    crossorigin="anonymous"
+    transition:name={sources[0]}
+    transition:persist
+  >
     {sources.map((src: string) => <source src={src} type={getMimeType(src)} />)}
     {
       youtube && (
@@ -47,12 +53,9 @@ const { id = null, sources, youtube } = Astro.props;
 </div>
 
 <script>
-  const videos = document.querySelectorAll(
-    ".video-box"
-  ) as NodeListOf<HTMLDivElement>;
-  videos.forEach((video_box) => {
-    video_box.querySelector("video")!!.addEventListener("timeupdate", () => {
-      const video = video_box.querySelector("video") as HTMLVideoElement;
+  document.querySelectorAll(".video-box").forEach((video_box) => {
+    const video = video_box.querySelector("video") as HTMLVideoElement;
+    video.addEventListener("timeupdate", () => {
       const line = video_box.querySelector(".line") as HTMLDivElement;
       const progress = video.currentTime / video.duration;
       line.style.width = `calc((100% - 76px) * ${progress})`;
