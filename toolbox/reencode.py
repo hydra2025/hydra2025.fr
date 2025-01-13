@@ -13,29 +13,39 @@ COMMAND_ZIP_RESULT = "zip -r /ssd/{project_name}.zip /ssd/{project_name}"
 
 COMPUTE_SERVER_IP = "192.168.0.4"
 
-ssh = paramiko.SSHClient()
-ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh.connect(
-    COMPUTE_SERVER_IP,
-    username=os.environ["USER"],
-    key_filename=os.path.expanduser("~/.ssh/id_ed25519"),
-)
+LOCAL = True
 
 
-session_id = random.randint(0, 10000)
-print(f"Session ID: {session_id}")
+if not LOCAL:
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh.connect(
+        COMPUTE_SERVER_IP,
+        username=os.environ["USER"],
+        key_filename=os.path.expanduser("~/.ssh/id_ed25519"),
+    )
 
+    session_id = random.randint(0, 10000)
+    print(f"Session ID: {session_id}")
 
-# Open screen session
-stdin, stdout, stderr = ssh.exec_command(f"screen -S reencoder{session_id} -d -m")
+    # Open screen session
+    stdin, stdout, stderr = ssh.exec_command(f"screen -S reencoder{session_id} -d -m")
 
 
 def send_command(command):
+    if LOCAL:
+        print(f"Executing command: {command}")
+        os.system(command)
+        return
     ssh.exec_command(f"screen -S reencoder{session_id} -X stuff '{command}\n'")
     print(f"Sent command: {command}")
 
 
 def send_file(local_path, remote_path):
+    if LOCAL:
+        print(f"Copying file {local_path} to /tmp/reencoder/{remote_path}")
+        os.system(f"cp '{local_path}' '/tmp/reencoder/{remote_path}'")
+        return
     print(f"Sending file {local_path} to {remote_path}")
     sftp = ssh.open_sftp()
     sftp.put(

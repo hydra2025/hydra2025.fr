@@ -321,15 +321,7 @@ const poles: Pole[] = [
         name: "Sécurité-Logistique",
         full_width: true,
         members: [
-            {
-                first_name: "Alexis",
-                last_name: "Dauphin",
-                role: "Pôle Séculogie",
-                respo: true,
-                facebook: "https://www.facebook.com/profile.php?id=61563774628611",
-                linkedin: "https://www.linkedin.com/in/alexis-dauphin/",
-                img: alexisD
-            },
+
             {
                 first_name: "Raphaël",
                 last_name: "Lefèvre",
@@ -535,15 +527,23 @@ const poles: Pole[] = [
         full_width: false,
         members: [
             {
-                first_name: "Simon",
-                last_name: "Pesneau",
-                role: "Respo Alumnis",
+                first_name: "Alexis",
+                last_name: "Dauphin",
+                role: "Respo Alumni",
                 respo: true,
-                questionExtra: "Style :",
-                answerExtra: "Max",
-                facebook: "https://www.facebook.com/simon.pesneau",
-
-            }
+                facebook: "https://www.facebook.com/profile.php?id=61563774628611",
+                linkedin: "https://www.linkedin.com/in/alexis-dauphin/",
+                img: alexisD
+            },
+            //{
+            //    first_name: "Simon",
+            //    last_name: "Pesneau",
+            //    role: "Respo Alumni",
+            //    respo: true,
+            //    questionExtra: "Style :",
+            //    answerExtra: "Max",
+            //    facebook: "https://www.facebook.com/simon.pesneau",
+            //}
         ],
     },
 ];
