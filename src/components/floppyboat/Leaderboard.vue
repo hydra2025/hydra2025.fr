@@ -1,6 +1,6 @@
 <template>
     <div class="scores">
-        <template v-for="(score, index) in leaderboard"><span class="rank">{{ index + 1 }}</span><span class="name">{{ score?.name }}</span><span
+        <template v-for="(score, index) in leaderboard"><span class="rank">{{ index }}</span><span class="name">{{ score?.name }}</span><span
                 class="score">{{
                     score?.score }}</span></template>
     </div>
@@ -14,7 +14,7 @@ type Score = {
     name: string
 }
 
-const leaderboard: Ref<(Score | null)[]> = ref<(Score | null)[]>(Array.from({ length: 10 }).map((e) => null))
+const leaderboard: Ref<(Score | null)[]> = ref<(Score | null)[]>(Array.from({ length: 11 }).map((e) => null))
 let refreshInterval: NodeJS.Timeout | null = null
 const refresh = () => {
     if (import.meta.env.SSR) {
