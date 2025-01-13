@@ -523,7 +523,7 @@ const poles: Pole[] = [
         ]
     },
     {
-        name: "T&MA (Alumnis)",
+        name: "T&MA (Alumni)",
         full_width: false,
         members: [
             {

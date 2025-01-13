@@ -21,7 +21,7 @@ export const videos: HydraVideo[] = [
     },
     {
         title: "Notre programme",
-        youtube: "https://www.youtube.com/@HydraTMSP-2025",
+        youtube: "https://www.youtube.com/watch?v=NvpxvMistG4",
         sources: [
             "https://f.hydra2025.fr/programme_bde_hydra_vf/output_0.mp4",
             "https://f.hydra2025.fr/programme_bde_hydra_vf/output_1.mp4",
