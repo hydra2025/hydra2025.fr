@@ -132,10 +132,10 @@ import Line from "../layouts/boxes/Line.astro";
 <script>
   function scaleElement() {
     const element = document.querySelector(".scalable") as HTMLElement;
+    if (!element) return;
 
     // Calculate the scale factor
     const scale = Math.min(window.innerWidth / 500, 1); // Use 100vmin / 500px logic
-    console.log(scale);
 
     element.style.transform = `scale(${scale})`;
   }

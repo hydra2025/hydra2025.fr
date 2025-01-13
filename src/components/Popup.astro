@@ -154,6 +154,8 @@ const id2 = Math.random().toString(36).slice(2, 11);
     -webkit-backdrop-filter: blur(10px);
   }
 
+
+
   .popup {
     width: 0;
     display: none;
@@ -161,7 +163,7 @@ const id2 = Math.random().toString(36).slice(2, 11);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 6;
+    z-index: 10;
     flex-direction: row;
     padding: 2rem;
     background-color: rgba(var(--color-background-rgb), 0.5);
@@ -192,6 +194,20 @@ const id2 = Math.random().toString(36).slice(2, 11);
     z-index: 7;
   }
 
+    /* Disable blur on mobile */
+    @media screen and (max-width: 800px) {
+    .overlay {
+      backdrop-filter: blur(0px);
+      -webkit-backdrop-filter: blur(0px);
+      background-color: rgba(var(--color-background-rgb), 0.8);
+    }
+    .popup {
+      backdrop-filter: blur(0px);
+      -webkit-backdrop-filter: blur(0px);
+      background-color: var(--color-background);
+    }
+  }
+
   .popup .picture,
   .popup .placeholder {
     width: 15rem;
@@ -210,6 +226,7 @@ const id2 = Math.random().toString(36).slice(2, 11);
     width: fit-content;
     height: fit-content;
     text-wrap: nowrap;
+    white-space: nowrap;
     font-size: 1.2rem;
     color: var(--color-text);
   }

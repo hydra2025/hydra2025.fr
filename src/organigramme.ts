@@ -170,7 +170,9 @@ const poles: Pole[] = [
                 respo: true,
                 facebook: "https://www.facebook.com/profile.php?id=100081629075881",
                 linkedin: "https://www.linkedin.com/in/nathan-le-sausse/",
-                img: nathanLS
+                img: nathanLS,
+                questionExtra: "Ratio :",
+                answerExtra: "Luca"
             },
         ],
     },
