@@ -45,7 +45,7 @@ const id2 = Math.random().toString(36).slice(2, 11);
     <span class="answer respo">{membre.answerExtra}</span>}
   </div>
 </div>
-<div class="bouton visible" id={id1}>
+<div class:list={["bouton", "visible", { respo: membre.respo }]} id={id1}>
   <div class:list={["border", { respo: membre.respo }]}></div>
   <div class="imageBouton">
     {
@@ -415,6 +415,9 @@ const id2 = Math.random().toString(36).slice(2, 11);
     .popup .infos {
       width: min(95vw, 40em);
       grid-template-columns: 1fr 1fr;
+    }
+    .bouton.respo {
+      order: -1;
     }
   }
 </style>
