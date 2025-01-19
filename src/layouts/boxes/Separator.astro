@@ -1,21 +1,28 @@
+---
+interface Props {
+  width?: string;
+}
+const { width = "min(24em, calc(100% - 4em))" } = Astro.props;
+---
+
 <div class="separator">
-  <div></div>
-  <div></div>
+  <div class="separator-dot"></div>
+  <div class="separator-dot"></div>
 </div>
 
-<style>
+<style define:vars={{ width }}>
   .separator {
     border: none;
     border-top: 2px solid var(--color-primary);
     position: relative;
-    width: min(24em, calc(100% - 4em));
+    width: var(--width);
     margin: 1em auto;
     box-sizing: content-box;
 
     --dot-size: 8px;
   }
 
-  .separator div {
+  .separator .separator-dot {
     content: "";
     display: block;
     height: var(--dot-size);
@@ -27,13 +34,11 @@
     z-index: 1;
   }
 
-  .separator div:first-child {
+  .separator .separator-dot:first-child {
     left: 0;
-    transform: translateX(-50%);
   }
 
-  .separator div:last-child {
+  .separator .separator-dot:last-child {
     right: 0;
-    transform: translateX(50%);
   }
 </style>
