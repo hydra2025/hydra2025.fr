@@ -1,45 +1,40 @@
 import type { ImageMetadata } from "astro";
 
-import adrien from "./assets/profile_pictures/1-Adrien.jpg";
-import sarah from "./assets/profile_pictures/2-Sarah.jpg";
-import nathanB from "./assets/profile_pictures/3-Nathan B.jpg";
-import slavik from "./assets/profile_pictures/4-Slavik.jpg";
-import nathanLS from "./assets/profile_pictures/5-Nathan LS.jpg";
-import yannick from "./assets/profile_pictures/6-Yannick.jpg";
-import thibaud from "./assets/profile_pictures/7-Thibaud.jpg";
-import victor from "./assets/profile_pictures/8-Victor.jpg";
-import ylan from "./assets/profile_pictures/9-Ylan.jpg";
-import ysee from "./assets/profile_pictures/10-Ysee.jpg";
-import zeineb from "./assets/profile_pictures/11-Zeineb.jpg";
-import racim from "./assets/profile_pictures/12-Racim.jpg";
-import raph from "./assets/profile_pictures/13-Raph.jpg";
-import titouan from "./assets/profile_pictures/14-Titouan.jpg";
-import luca from "./assets/profile_pictures/15-Luca.jpg";
-import clement from "./assets/profile_pictures/16-Clement.jpg";
-import lucas from "./assets/profile_pictures/17-Lucas.jpg";
-import lena from "./assets/profile_pictures/18-Lena.jpg";
-import habi from "./assets/profile_pictures/19-Habi.jpg";
-import ghada from "./assets/profile_pictures/20-Ghada.jpg";
-import judith from "./assets/profile_pictures/21-Judith.jpg";
-import leaB from "./assets/profile_pictures/22-Lea B.jpg";
-import leaD from "./assets/profile_pictures/23-Lea D.jpg";
-import hugo from "./assets/profile_pictures/24-Hugo.jpg";
-import charlotteK from "./assets/profile_pictures/25-Charlotte K.jpg";
-import jean from "./assets/profile_pictures/26-Jean.jpg";
-import emma from "./assets/profile_pictures/27-Emma.jpg";
-import charlotteV from "./assets/profile_pictures/28-Charlotte V.jpg";
-import anais from "./assets/profile_pictures/29-Anais.jpg";
-import jerome from "./assets/profile_pictures/30-Jerome.jpg";
-import jules from "./assets/profile_pictures/31-Jules.jpg";
-import alexisR from "./assets/profile_pictures/32-Alexis.jpg";
-import alexandre from "./assets/profile_pictures/33-Alexandre.jpg";
-import alexandra from "./assets/profile_pictures/34-Alexandra.jpg";
-import gustave from "./assets/profile_pictures/35-Gustave.jpg";
-import nihel from "./assets/profile_pictures/36-Nihel.png";
-import paul from "./assets/profile_pictures/37-Paul.png";
-import alexisD from "./assets/profile_pictures/38-AlexisD.png";
-import thomas from "./assets/profile_pictures/39-Thomas.png";
-import amelie from "./assets/profile_pictures/40-Amelie.png";
+import alexandra from "./assets/profile_pictures_2/Alexandra BERT.png";
+import alexandre from "./assets/profile_pictures_2/Alexandre GUECHTOULI.png";
+import alexisD from "./assets/profile_pictures_2/Alexis DAUPHIN.png";
+import alexisR from "./assets/profile_pictures_2/Alexis ROSSFELDER.png";
+import amelie from "./assets/profile_pictures_2/Amélie THAI.png";
+import anais from "./assets/profile_pictures_2/Anaïs DELBECQ.png";
+import charlotteK from "./assets/profile_pictures_2/Charlotte KALADJIAN.png";
+import charlotteV from "./assets/profile_pictures_2/Charlotte VLIEGHE.png";
+import clement from "./assets/profile_pictures_2/Clément BONDAZ.png";
+import emma from "./assets/profile_pictures_2/Emma WEISS.png";
+import ghada from "./assets/profile_pictures_2/Ghada SARHROUCHNI.png";
+import gustave from "./assets/profile_pictures_2/Gustave BEAUVALLET.png";
+import hugo from "./assets/profile_pictures_2/Hugo KENNEDY.png";
+import jean from "./assets/profile_pictures_2/Jean VIDAL.png";
+import judith from "./assets/profile_pictures_2/Judith LIN.png";
+import jules from "./assets/profile_pictures_2/Jules ESNEE.png";
+import jerome from "./assets/profile_pictures_2/Jérôme LIN.png";
+import luca from "./assets/profile_pictures_2/Luca FUSTER.png";
+import lucas from "./assets/profile_pictures_2/Lucas DREANO.png";
+import leaB from "./assets/profile_pictures_2/Léa BAUDIMONT.png";
+import leaD from "./assets/profile_pictures_2/Léa DAI.png";
+import lena from "./assets/profile_pictures_2/Léna BOITON LEDENKO.png";
+import nathanB from "./assets/profile_pictures_2/Nathan BEAUCHOUX.png";
+import nathanLS from "./assets/profile_pictures_2/Nathan LE SAUSSE.png";
+import nihel from "./assets/profile_pictures_2/Nihel TADJEROUNI.png";
+import paul from "./assets/profile_pictures_2/Paul LARDET.png";
+import racim from "./assets/profile_pictures_2/Racim AISSAT.png";
+import raph from "./assets/profile_pictures_2/Raphaël LEFEVRE-1.png";
+import slavik from "./assets/profile_pictures_2/Slavik ZHYHOTA-LOCQUIN.png";
+import thomas from "./assets/profile_pictures_2/Thomas DAUFRESNES.png";
+import titouan from "./assets/profile_pictures_2/Titouan GACOUGNOLLE.png";
+import yannick from "./assets/profile_pictures_2/Yanick ZHENG.png";
+import ylan from "./assets/profile_pictures_2/Ylan MIMOUN.png";
+import ysee from "./assets/profile_pictures_2/Ysée PARENTI.png";
+import zeineb from "./assets/profile_pictures_2/Zeineb BENJEMAA.png";
 
 
 type Member = {
@@ -500,22 +495,22 @@ const poles: Pole[] = [
         name: "Pougnes",
         full_width: false,
         members: [
-            {
-                first_name: "Ylan",
-                last_name: "Mimoun",
-                role: "Respo Pougnes TSP",
-                respo: true,
-                questionExtra: "Focus :",
-                answerExtra: "Oui",
-                facebook: "https://www.facebook.com/profile.php?id=61564857758611",
-                linkedin: "https://www.linkedin.com/in/ylan-mimoun/",
-                img: ylan
-            },
+            //{
+            //    first_name: "Ylan",
+            //    last_name: "Mimoun",
+            //    role: "Respo Pougnes TSP",
+            //    respo: true,
+            //    questionExtra: "Focus :",
+            //    answerExtra: "Oui",
+            //    facebook: "https://www.facebook.com/profile.php?id=61564857758611",
+            //    linkedin: "https://www.linkedin.com/in/ylan-mimoun/",
+            //    img: ylan
+            //},
             {
                 first_name: "Amélie",
                 last_name: "Thai",
                 role: "Pougnes IMTBS",
-                respo: false,
+                respo: true,
                 questionExtra: "Carry :",
                 answerExtra: "Oui",
                 facebook: "https://www.facebook.com/profile.php?id=61565049044086",
