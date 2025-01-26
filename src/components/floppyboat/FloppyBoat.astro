@@ -228,19 +228,26 @@ const WINDOW_HEIGHT = 500;
   });
 
   socket.onclose = () => {
+    clearInterval(loadingInterval);
+    startButton!!.removeEventListener("click", startGame);
+    startButton!!.style.display = "block";
+    startButton!!.innerText = "Rechargez la page";
+    startButton!!.onclick = () => window.location.reload();
+    if (!window.location.pathname.includes("/floppyboat")) return;
     alert("Connexion perdue. Veuillez rafraîchir la page.");
   };
 
   socket.onerror = () => {
-    alert(
-      "Impossible de se connecter au serveur. Veuillez rafraîchir la page."
-    );
     clearInterval(loadingInterval);
     startButton!!.removeEventListener("click", startGame);
     startButton!!.style.display = "block";
     startButton!!.innerText = "Rechargez la page";
     startButton!!.onclick = () => window.location.reload();
     socket.onclose = () => {};
+    if (!window.location.pathname.includes("/floppyboat")) return;
+    alert(
+      "Impossible de se connecter au serveur. Veuillez rafraîchir la page."
+    );
   };
 
   let loadingInterval = setInterval(() => {
