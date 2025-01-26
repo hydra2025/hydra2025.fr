@@ -22,7 +22,7 @@ const refresh = () => {
         console.log("SSR fetching leaderboard");
         clearInterval(refreshInterval!!);
     }
-    if (!import.meta.env.SSR && window.location.pathname.indexOf("/leaderboard") === -1) {
+    if (!import.meta.env.SSR && window.location.pathname.indexOf("/floppyboat") === -1) {
         console.log("Not on leaderboard page, not fetching leaderboard:", window.location.pathname, import.meta.env.SSR);
         return;
     }
