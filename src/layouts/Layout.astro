@@ -18,7 +18,7 @@ const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -31,15 +31,32 @@ const { title } = Astro.props;
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="generator" content={Astro.generator} />
     <meta name="author" content="Hydra" />
+    <meta name="robots" content="index, follow" />
     <meta
       name="description"
       content="HYDRA - Site de la liste BDE Hydra à TMSP en 2025"
     />
     <meta
       name="keywords"
-      content="TMSP, BDE, Hydra, 2025, TSP, IMTBS, campagne, informations, date"
+      content="hydra bde, TMSP, BDE, Hydra, 2025, TSP, IMTBS, campagne, informations, date, liste, élection, élections, élu, élue, élu.e, élu.e.s, élu·e·s, élu·es, élu·e, élu·s, élu·es"
     />
     <meta name="theme-color" content={computed_colors["color-primary"]} />
+    <meta
+      name="msapplication-TileColor"
+      content={computed_colors["color-primary"]}
+    />
+    <meta name="msapplication-TileImage" content="/icons/logo-180.png" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="Hydra" />
+    <meta name="application-name" content="Hydra" />
+    <meta
+      name="msapplication-tooltip"
+      content="HYDRA - Site de la liste BDE Hydra à TMSP en 2025"
+    />
+    <meta name="msapplication-starturl" content="/" />
+
     <link
       rel="preload"
       href="/font/2e5d8ad1da71955a98f0cff56bc73971.woff"
