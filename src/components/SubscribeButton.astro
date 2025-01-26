@@ -202,6 +202,8 @@ import Button from "../components/Button.astro";
       "unsubscribeButton"
     ) as HTMLDivElement;
 
+    if (notifyButton === null || unsubscribeButton === null) return;
+
     notifyButton.addEventListener("click", async () => {
       if (Notification.permission === "granted") {
         const registration = await navigator.serviceWorker.ready;
