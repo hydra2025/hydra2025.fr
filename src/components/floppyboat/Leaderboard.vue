@@ -17,6 +17,10 @@ type Score = {
 const leaderboard: Ref<(Score | null)[]> = ref<(Score | null)[]>(Array.from({ length: 11 }).map((e) => null))
 let refreshInterval: NodeJS.Timeout | null = null
 const refresh = () => {
+    // Check if we are on /leaderboard
+    if (window.location.pathname !== '/leaderboard') {
+        return;
+    }
     if (import.meta.env.SSR) {
         clearInterval(refreshInterval!!);
         return;
@@ -25,7 +29,7 @@ const refresh = () => {
         (response: Response) => response.json().catch((error) => console.error(error))
     ).then((scores: Score[]) => leaderboard.value = scores).catch((error) => console.error(error))
 }
-refreshInterval = setInterval(refresh, 10000)
+refreshInterval = setInterval(refresh, 30000)
 refresh()
 
 
