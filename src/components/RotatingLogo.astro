@@ -148,4 +148,20 @@ import submarine from "../assets/submarine_wireframe.svg";
       transform: rotate(360deg);
     }
   }
+
+  @media (max-width: 768px) {
+    .circle-inside {
+      animation-play-state: paused;
+    }
+
+    .rotater:hover .circle-inside {
+      animation-play-state: running;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .circle-inside {
+      animation: none !important;
+    }
+  }
 </style>
