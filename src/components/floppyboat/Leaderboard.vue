@@ -18,11 +18,11 @@ const leaderboard: Ref<(Score | null)[]> = ref<(Score | null)[]>(Array.from({ le
 let refreshInterval: NodeJS.Timeout | null = null
 const refresh = () => {
     // Check if we are on /leaderboard
-    if (window.location.pathname !== '/leaderboard') {
-        return;
-    }
     if (import.meta.env.SSR) {
+        console.log("SSR fetching leaderboard");
         clearInterval(refreshInterval!!);
+    }
+    if (!import.meta.env.SSR && window.location.pathname !== '/floppyboat') {
         return;
     }
     fetch(ENDPOINT).then(

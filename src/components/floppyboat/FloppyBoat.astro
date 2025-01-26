@@ -568,7 +568,7 @@ const WINDOW_HEIGHT = 500;
   });
 
   window.addEventListener("mousedown", (e) => {
-    if (gameOver && !jumping) {
+    if (gameOver && !jumping && loading === 0) {
       startGame();
     } else {
       sendJsonMessage({ type: "flap", p: submarineY });
@@ -586,21 +586,13 @@ const WINDOW_HEIGHT = 500;
   canvas.addEventListener("touchstart", (e) => {
     if (!gameStarted && loading === 0) {
       startGame();
-    } else if (gameOver && !jumping) {
+    } else if (gameOver && !jumping && loading === 0) {
       startGame();
     } else {
       sendJsonMessage({ type: "flap", p: submarineY });
       jumping = true;
     }
     if (in_game()) e.preventDefault();
-  });
-
-  window.addEventListener("touchstart", (e) => {
-    if (in_game()) {
-      sendJsonMessage({ type: "flap", p: submarineY });
-      jumping = true;
-      e.preventDefault();
-    }
   });
 
   window.addEventListener("touchend", (e) => {
