@@ -23,7 +23,6 @@ const refresh = () => {
         clearInterval(refreshInterval!!);
     }
     if (!import.meta.env.SSR && window.location.pathname.indexOf("/floppyboat") === -1) {
-        console.log("Not on leaderboard page, not fetching leaderboard:", window.location.pathname, import.meta.env.SSR);
         return;
     }
     fetch(ENDPOINT).then(
