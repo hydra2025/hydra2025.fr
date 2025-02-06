@@ -1,0 +1,131 @@
+---
+import Separator from "../layouts/boxes/Separator.astro";
+import Layout from "../layouts/Layout.astro";
+import Button from "../components/Button.astro";
+---
+
+<Layout title="Petit Déjeuner">
+  <div id="container">
+    <h2>Petits Déjeuners</h2>
+    <div>
+      <p>
+        Votre commande a été enregistrée, veuillez procéder au paiement de 1€
+        sur la page HelloAsso pour la valider.
+      </p>
+      <Separator width="50%" />
+      <p>Souvenez-vous de votre code commande :</p>
+
+      <h3 id="paiement-code">...</h3>
+      <Button id="copy-code">
+        Copier le code&nbsp;& Accéder au paiement
+      </Button>
+    </div>
+
+    <p>
+      En cas de question ou si vous voulez modifier votre commande, contactez
+      Alexis Rossfelder sur
+      <a class="contact-link" href="https://www.facebook.com/alex6ro"
+        >Facebook</a
+      >, ou sur
+      <a class="contact-link" href="https://wa.me/qr/LGFPHUUQ5QNBN1">WhatsApp</a
+      > au
+      <a class="contact-link" href="tel:+33652044896">+33 6 52 04 48 96</a>
+    </p>
+  </div>
+</Layout>
+
+<script>
+  const REDIRECT_PAGE =
+    "https://www.helloasso.com/associations/bde-telecom-sudparis-institut-mines-telecom-business-school/evenements/petits-dejeuners-hydra";
+  document.addEventListener("astro:page-load", () => {
+    const code = sessionStorage.getItem("code") || localStorage.getItem("code");
+    const codeContainer = document.getElementById(
+      "paiement-code"
+    ) as HTMLHeadingElement;
+    if (!codeContainer) {
+      return;
+    }
+    if (code) {
+      codeContainer.innerText = code;
+    } else {
+      codeContainer.innerText = "ERREUR";
+    }
+    const copyButton = document.getElementById(
+      "copy-code"
+    ) as HTMLAnchorElement;
+    const orderCode = codeContainer.innerText;
+    let firstClick = true;
+
+    copyButton.addEventListener("click", () => {
+      navigator.clipboard
+        .writeText(orderCode)
+        .then(() => {
+          alert(
+            "Code commande copié, vous allez être redirigé vers la page de paiement."
+          );
+          // Open the payment page
+          window.location.href = REDIRECT_PAGE;
+        })
+        .catch((err) => {
+          if (firstClick) {
+            alert(
+              "Impossible de copier le code, veuillez le copier manuellement."
+            );
+            firstClick = false;
+          } else {
+            window.location.href = REDIRECT_PAGE;
+          }
+          console.error("Erreur lors de la copie du code : ", err);
+        });
+    });
+  });
+</script>
+
+<style>
+  :root {
+    --petit-dej-col: 13ch;
+  }
+</style>
+
+<style>
+  #container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin: 0 auto;
+    max-width: 30em;
+    font-size: 1.2em;
+    width: calc(100% - 2em);
+  }
+
+  .col-1 {
+    grid-column: span 1;
+  }
+  .col-2 {
+    grid-column: span 2;
+  }
+  h2 {
+    text-align: center;
+    margin-bottom: 0;
+  }
+  h3 {
+    text-align: center;
+    margin-bottom: 0.25em;
+    margin-top: 0;
+    font-size: 3em;
+  }
+  p {
+    width: 100%;
+  }
+  form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1em;
+    width: 100%;
+  }
+
+  .contact-link {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+</style>

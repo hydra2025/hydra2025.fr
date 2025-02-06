@@ -1,0 +1,192 @@
+---
+import Line from "../../layouts/boxes/Line.astro";
+import leaf from "../../assets/leaf.svg";
+import Image from "astro/components/Image.astro";
+---
+
+<div class="menu-selector">
+  <p>Cliquez sur le menu pour le sélectionner :</p>
+  <div class="box selected" onclick="handleBoxClick(1)" id="menu-select-1">
+    <div class="border"></div>
+    <Line width="calc(70% - 2 * 18px)" top="9px" left="calc(30% + 18px)" />
+
+    <h3>
+      Menu Japonais <Image
+        src={leaf}
+        alt="Végétarien"
+        title="Végétarien"
+        height="26"
+        width="26"
+        class="vegetarian"
+      />
+    </h3>
+    <ul>
+      <li>Plat: Curry japonais</li>
+      <li class="menu-info">Riz, carottes & pommes de terre</li>
+      <li>Dessert: Dorayaki au chocolat</li>
+      <li class="menu-info">Pancakes fourrés au chocolat</li>
+      <li class="menu-secondaire">Allergènes: gluten, oeufs, soja</li>
+    </ul>
+  </div>
+
+  <div class="box" onclick="handleBoxClick(2)" id="menu-select-2">
+    <div class="border"></div>
+    <Line width="calc(70% - 2 * 18px)" top="9px" left="calc(26% + 18px)" />
+
+    <h3>
+      Menu Grec <Image
+        src={leaf}
+        alt="Végétarien"
+        title="Végétarien"
+        height="26"
+        width="26"
+        class="vegetarian"
+      />
+    </h3>
+    <ul>
+      <li>Plat: Salade de pâtes</li>
+      <li class="menu-info">
+        Feta, tomate, concombre, pâtes et sauce au vinaigre balsamique
+      </li>
+      <li>Dessert: 2 Cookies</li>
+      <li class="menu-info">Aux pépites de chocolat</li>
+      <li class="menu-secondaire">Allergènes: lactose, gluten, oeufs, soja</li>
+    </ul>
+  </div>
+
+  <div class="box" onclick="handleBoxClick(3)" id="menu-select-3">
+    <div class="border"></div>
+    <Line width="calc(70% - 2 * 18px)" top="9px" left="calc(30% + 18px)" />
+
+    <h3>Menu Brunch</h3>
+    <ul>
+      <li>2 Crêpes</li>
+      <li class="menu-info">Béchamel et jambon de poulet (HALAL)</li>
+      <li>Gâteau au yaourt marbré</li>
+      <li class="menu-info">Yaourt et cacao</li>
+      <li>Crumble à la pomme</li>
+      <li class="menu-secondaire">
+        Allergènes: oeufs, gluten, lactose, viande halal
+      </li>
+    </ul>
+  </div>
+
+  <input type="hidden" id="menu" name="menu" value="1" />
+</div>
+
+<script is:inline>
+  let selectedBox = 1;
+
+  function handleBoxClick(box) {
+    const selectedMeal = document.getElementById("menu-select-" + selectedBox);
+    selectedMeal.classList.remove("selected");
+    selectedBox = box;
+    const newSelectedMeal = document.getElementById(
+      "menu-select-" + selectedBox
+    );
+    newSelectedMeal.classList.add("selected");
+    const menuInput = document.getElementById("menu");
+    menuInput.value = selectedBox.toString();
+  }
+  document.addEventListener("astro:page-load", () => {
+    handleBoxClick(selectedBox);
+    const buttons = [
+      document.getElementById("menu-select-1"),
+      document.getElementById("menu-select-2"),
+      document.getElementById("menu-select-3"),
+    ];
+    buttons.forEach((button, index) => {
+      button.addEventListener("click", () => handleBoxClick(index + 1));
+    });
+  });
+</script>
+
+<style>
+  .menu-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+  .menu-selector p {
+    text-align: center;
+    margin: 0;
+  }
+  .menu-selector .box {
+    cursor: pointer;
+    position: relative;
+    clip-path: polygon(
+      10px 15px,
+      0% calc(15px + 10px),
+      0% 100%,
+      calc(100% - 30px) 100%,
+      100% calc(100% - 30px),
+      100% 15px,
+      calc(100% - 15px) 0%,
+      calc(30% + 15px) 0%,
+      30% 15px,
+      10px 15px
+    );
+    padding: 1em;
+    background-color: rgba(var(--color-primary-rgb), 0.1);
+
+    transition: background-color 0.3s;
+  }
+  .menu-selector .border {
+    clip-path: polygon(
+      10px 15px,
+      0% calc(15px + 10px),
+      0% 100%,
+      calc(100% - 30px) 100%,
+      100% calc(100% - 30px),
+      100% 15px,
+      calc(100% - 15px) 0%,
+      calc(30% + 15px) 0%,
+      30% 15px,
+      10px 15px,
+      calc(3px + calc(10px - calc(3px * 0.7071067811865475))) calc(15px + 3px),
+      calc(calc(30% + 3px) - calc(3px * 0.7071067811865475)) calc(3px + 15px),
+      calc(calc(30% + 3px) + calc(15px - calc(3px * 0.7071067811865475))) 3px,
+      calc(calc(100% - 3px) - calc(15px - calc(3px * 0.7071067811865475))) 3px,
+      calc(100% - 3px) calc(3px + calc(15px - calc(3px * 0.7071067811865475))),
+      calc(100% - 3px)
+        calc(calc(100% - 3px) - calc(30px - calc(3px * 0.7071067811865475))),
+      calc(calc(100% - 3px) - calc(30px - calc(3px * 0.7071067811865475)))
+        calc(100% - 3px),
+      3px calc(100% - 3px),
+      3px calc(calc(15px + 3px) + calc(10px - calc(3px * 0.7071067811865475))),
+      calc(3px + calc(10px - calc(3px * 0.7071067811865475))) calc(15px + 3px)
+    );
+    background-color: var(--color-primary);
+    position: absolute;
+    inset: 0;
+  }
+
+  .menu-selector .box.selected {
+    background-color: rgba(var(--color-primary-rgb), 0.7);
+  }
+
+  .menu-info {
+    font-size: 0.7em;
+    list-style: none;
+    opacity: 0.8;
+    margin-top: -0.3em;
+    margin-bottom: 0.5em;
+  }
+
+  .menu-secondaire {
+    list-style: none;
+    opacity: 0.5;
+    font-size: 0.8em;
+  }
+
+  .vegetarian {
+    /* position: absolute;
+    top: calc(16px + 1em);
+    right: 13px; */
+    position: relative;
+    bottom: 0;
+    height: auto;
+    width: 1em;
+    color: var(--color-text);
+  }
+</style>
