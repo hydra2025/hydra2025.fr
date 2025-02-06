@@ -11,6 +11,14 @@ export const videos: HydraVideo[] = [
     //    sources: ["https://f.hydra2025.fr/clip-de-liste.mp4"],
     //},
     {
+        title: "Clip de Campagne",
+        youtube: "https://youtu.be/D-kjCbLjEO0",
+        sources: [
+            "https://f.hydra2025.fr/clip_campagne/output_1.mp4",
+            "https://f.hydra2025.fr/clip_campagne/output_2.webm"
+        ],
+    },
+    {
         title: "Rap de liste (Traque)",
         youtube: "https://www.youtube.com/watch?v=xTRPHDEBdjM",
         sources: [

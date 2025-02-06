@@ -12,8 +12,9 @@ import Button from "../components/Button.astro";
     >
   </h1>
   <div id="clip-campagne">
-    <!--     <Button href="/video_campagne" width="fit-content"
-      >Voir le clip de campagne</Button>-->
+    <Button href="/video_campagne" width="fit-content"
+      >Voir le clip de campagne</Button
+    >
   </div>
   {events.map((event) => <ParagraphePlanning event={event} client:load />)}
 </Layout>
