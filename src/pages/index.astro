@@ -14,21 +14,21 @@ import SubscribeButton from "../components/SubscribeButton.astro";
         Plonge dans l'aventure avec la mission <span id="accent">Hydra</span>
       </h2>
       <div class="button-grid">
-        <Button href="/petit-dej">Petit Déj</Button>
+        <Button href="/prgramme">La mission</Button>
         <Button href="/organigramme">L'équipage</Button>
         <Button href="/floppyboat">Immersion</Button>
         <Button href="/contact">Contact</Button>
       </div>
       <div id="event-counter" transition:animate="none">
         <div id="above-bar">
-          <h2>Petit Déj <span class="accent">HYDRA</span></h2>
+          <h2>Voter pour <span class="accent">HYDRA</span></h2>
           <span id="timer"></span>
         </div>
         <div id="progress-container">
           <div id="progress-border"></div>
           <div id="progress-bar"></div>
         </div>
-        <span id="final-date">8 février - 13h</span>
+        <span id="final-date">10 février - 11h</span>
         <SubscribeButton transition:animate="none" transition:persist={false} />
       </div>
     </div>
@@ -128,7 +128,7 @@ import SubscribeButton from "../components/SubscribeButton.astro";
 </Layout>
 
 <script>
-  const TIME_END =   1739016000000; // 7 février 2025 22h
+  const TIME_END =   1739181600000; // 7 février 2025 22h
   const TIME_START = 1738998000000; // 6 janvier 2025 1h 56min 23s
   const percent = () => {
     const now = Date.now();
