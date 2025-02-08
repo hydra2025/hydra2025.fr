@@ -21,14 +21,14 @@ import SubscribeButton from "../components/SubscribeButton.astro";
       </div>
       <div id="event-counter" transition:animate="none">
         <div id="above-bar">
-          <h2>Soirée de campagne <span class="accent">HYDRA</span></h2>
+          <h2>Petit Déj <span class="accent">HYDRA</span></h2>
           <span id="timer"></span>
         </div>
         <div id="progress-container">
           <div id="progress-border"></div>
           <div id="progress-bar"></div>
         </div>
-        <span id="final-date">7 février - 22h</span>
+        <span id="final-date">8 février - 13h</span>
         <SubscribeButton transition:animate="none" transition:persist={false} />
       </div>
     </div>
@@ -128,8 +128,8 @@ import SubscribeButton from "../components/SubscribeButton.astro";
 </Layout>
 
 <script>
-  const TIME_END = 1738962000000; // 7 février 2025 22h
-  const TIME_START = 1736722800000; // 6 janvier 2025 1h 56min 23s
+  const TIME_END =   1739019600000; // 7 février 2025 22h
+  const TIME_START = 1738998000000; // 6 janvier 2025 1h 56min 23s
   const percent = () => {
     const now = Date.now();
     const total = TIME_END - TIME_START;
