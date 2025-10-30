@@ -1,4 +1,2 @@
 User-agent: *
-Allow: /
-
-Sitemap: https://hydra2025.fr/sitemap-index.xml
+Disallow: /

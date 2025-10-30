@@ -7,7 +7,7 @@
 </template>
 <script setup lang="ts">
 
-const ENDPOINT = "https://api.hydra2025.fr/floppyboat/leaderboard"
+const ENDPOINT = "https://hydra.minet.net/floppyboat/leaderboard"
 //const ENDPOINT = "http://localhost:8000/leaderboard"
 type Score = {
     score: number

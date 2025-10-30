@@ -7,7 +7,7 @@ import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://hydra2025.fr",
+  site: "https://hydra.minet.net",
   integrations: [
     vue(),
     sitemap(),
