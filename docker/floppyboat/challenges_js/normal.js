@@ -1,0 +1,1 @@
+(r,e)=>{let l=null;function n(){var e=100;var n=(new Date).getTime();debugger;var t=(new Date).getTime();if(t-n>e){r({type:"b",t:2});clearInterval(l)}}function t(e){return e.split("").map(e=>{const n=e.charCodeAt(0);return String.fromCharCode((n-32+95)%95+32)}).join("")}r({type:"challenge",challenge:t("{CONTENT}")});l=setInterval(n,1e3);e()};

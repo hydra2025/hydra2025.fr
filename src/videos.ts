@@ -8,30 +8,30 @@ export const videos: HydraVideo[] = [
   //{
   //    title: "Clip de liste",
   //    youtube: "https://www.youtube.com/watch?v=Ts5-b2x9d3Y",
-  //    sources: ["https://hydra.minet.net/f/clip-de-liste.mp4"],
+  //    sources: ["/f/clip-de-liste.mp4"],
   //},
   {
     title: "Clip de Campagne",
     youtube: "https://youtu.be/D-kjCbLjEO0",
     sources: [
-      "https://hydra.minet.net/f/clip_campagne/output_1.mp4",
-      "https://hydra.minet.net/f/clip_campagne/output_2.webm",
+      "/f/clip_campagne/output_1.mp4",
+      "/f/clip_campagne/output_2.webm",
     ],
   },
   {
     title: "Rap de liste (Traque)",
     youtube: "https://www.youtube.com/watch?v=xTRPHDEBdjM",
     sources: [
-      "https://hydra.minet.net/f/rap_de_liste/output_1.mp4",
-      "https://hydra.minet.net/f/rap_de_liste/output_2.webm",
+      "/f/rap_de_liste/output_1.mp4",
+      "/f/rap_de_liste/output_2.webm",
     ],
   },
   {
     title: "Notre programme",
     youtube: "https://www.youtube.com/watch?v=NvpxvMistG4",
     sources: [
-      "https://hydra.minet.net/f/programme_bde_hydra_vf/output_1.mp4",
-      "https://hydra.minet.net/f/programme_bde_hydra_vf/output_2.webm",
+      "/f/programme_bde_hydra_vf/output_1.mp4",
+      "/f/programme_bde_hydra_vf/output_2.webm",
     ],
   },
 ];
