@@ -1,0 +1,19 @@
+services:
+  web:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:1807:80"
+    volumes:
+      - ${CONTENT_DIR:-./content-data}:/srv/content:ro
+    depends_on:
+      - api
+
+  api:
+    build: ./docker/floppyboat
+    restart: unless-stopped
+    volumes:
+      - floppyboat-data:/app/data
+
+volumes:
+  floppyboat-data:
