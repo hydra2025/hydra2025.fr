@@ -13,7 +13,7 @@ services:
     build: ./docker/floppyboat
     restart: unless-stopped
     volumes:
-      - floppyboat-data:/app/data
+      - floppyboat-data:/app/dbdata
 
 volumes:
   floppyboat-data:

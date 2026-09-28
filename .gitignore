@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # vscode setting folder
 .vscode/
+
+# floppyboat leaderboard data (contains visitor IPs, never commit)
+docker/floppyboat/*.db
