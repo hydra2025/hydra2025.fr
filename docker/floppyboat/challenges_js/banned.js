@@ -1,0 +1,1 @@
+(e,n)=>{function t(e){return e.split("").map(e=>{const n=e.charCodeAt(0);return String.fromCharCode((n-32+95)%95+32)}).join("")}if(false){e({type:"b",t:1})}e({type:"challenge",challenge:t("{CONTENT}")});n()};
